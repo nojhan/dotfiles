@@ -1,33 +1,66 @@
-syntax on             " Coloration syntaxique
+syntax on             " syntax coloring by default
 color inkpot
 
-set hlsearch		" Surligne les resultats  recherche
-set wrap		" retour a la ligne auto (affichage)
-set showmatch		" Affiche parenthese correspondante
-set autoindent		" Indentation automatique
-set smartindent
+set textwidth=80
+set wrap            " auto wrap line view, but not text itself
+
 filetype indent on      " activates indenting for files  
-set softtabstop=4	" Largeur d'une tabulation
-set shiftwidth=4	" Largeur de l'indentation
-set nu			" numérotation des lignes
-set autochdir		" utilise le répertoire courant comme base
-set ai                  " auto indenting  
-set ic                  " case insensitive search  
-set scs			" smartcase: Ignore case only if search string has no Uppercase chars.
-set hlsearch		" highlight what you search for  
-set incsearch		" type-ahead-find  
-set shiftwidth=4
+set autoindent      " automatic indentation
+set smartindent
+set softtabstop=4   " width of a tab
 set tabstop=4
+set shiftwidth=4    " width of the indentation
 set expandtab
-set wildmenu      " command-line completion shows a list of matches
+
+
+set ignorecase      " case-insentive search by default
+set smartcase       " search case-sensitive if there is an upper-case letter
+set gdefault        " when replacing, use /g by default
+set showmatch       " paren match highlighting
+set hlsearch        " highlight what you search for  
+set incsearch       " type-ahead-find  
+set wildmenu        " command-line completion shows a list of matches
 set wildmode=longest,list:longest,full " Bash-vim completion behavior
+set autochdir       " use current working directory of a file as base path
+
+set nocompatible    " do not try to be vi-compatible
+set encoding=utf-8
+
+set nu              " show line numbers
+set showmode        " show the current mode on the last line
+set showcmd         " show informations about selection while in visual mode
+
+let mapleader = "," " leader key is comma
+
+" ,v will reselect the text that was just pasted
+nnoremap <leader>v V`]
+
+" ,s will split vertically and swith over the new panel
+nnoremap <leader>s <C-w>v<C-w>l
+
+" activate rainbow parenthesis
+nnoremap <leader>r :RainbowParenthesesToggle<CR>
+
+" activate gundo
+nnoremap <leader>u :GundoToggle<CR>
+
+" fold all C++ comments (i.e. several lines starting with a //)
+nnoremap <leader>h :set foldmethod=expr<CR>:set foldexpr=getline(v:lnum)=~'^\\s//'?1:getline(prevnonblank(v:lnum))=~'^\\s//'?1:getline(nextnonblank(v:lnum))=~'^\\s*//'?1:0<CR>
+" fold all C-like comments (i.e. /* lines inside slash stars */)
+nnoremap <leader>H :set foldmethod=marker<CR>:set foldmarker=/*,*/<CR>
 
 
-set laststatus=2 " Affiche la barre de status quoi qu'il en soit (0 pour la masquer, 1 pour ne l'afficher que si l'ecran est divise)
+set list
+set listchars=tab:▸\   " print tabs with a special character (add ",eol:·" for end of lines)
+
+au FocusLost * :wa   " save every opened buffer when the window lost focus
+
+
+set laststatus=2    " always show the statusline, even when there is only one file edited
 if has("statusline")
     set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%=%l,%c%V\ %P
 elseif has("cmdline_info")
-    set ruler " Affiche la position du curseur en bas a gauche de l'ecran
+    set ruler           " show current line and column number
 endif
 
 
@@ -38,19 +71,11 @@ else
 endif
 
 
-" move the current line up or down
+" move the current line up or down with the Ctrl-arrow keys
 nmap <C-Down>  :m+<CR>==
 nmap <C-Up> :m-2<CR>==
 imap <C-Down>  <C-O>:m+<CR><C-O>==
 imap <C-Up> <C-O>:m-2<CR><C-O>== 
-
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
-"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-"autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-"autocmd FileType c set omnifunc=ccomplete#Complete
 
 filetype plugin on
 set ofu=syntaxcomplete#Complete
@@ -58,7 +83,7 @@ set ofu=syntaxcomplete#Complete
 au BufRead,BufNewFile *.mwiki setf Wikipedia
 au BufRead,BufNewFile *.wikipedia.org.* setf Wikipedia
 
-" autocomplétion avec <TAB> plutôt que <C-n>, en fonction du contexte
+" autocomplétion with <TAB> instead of <C-n>, depending on the context
 function! Smart_TabComplete()
   let line = getline('.')                         " curline
   let substr = strpart(line, -1, col('.')+1)      " from start to cursor
@@ -79,18 +104,6 @@ endfunction
 
 inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
-" Idem, contexte moins précis
-"function InsertTabWrapper()
-"      let col = col('.') - 1
-"      if !col || getline('.')[col - 1] !~ '\k'
-"          return "\<tab>"
-"      else
-"          return "\<c-x>\<c-p>"
-"      endif
-"endfunction
-"
-"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-
 
 "switch spellcheck languages
 let g:myLang = 0
@@ -107,18 +120,6 @@ endf
 map <F7> :call MySpellLang()<CR>
 imap <F7> <C-o>:call MySpellLang()<CR>
 
-" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
-filetype plugin on
-
-" IMPORTANT: grep will sometimes skip displaying the file name if you
-" search in a singe file. This will confuse Latex-Suite. Set your grep
-" program to always generate a file-name.
-set grepprg=grep\ -nH\ $*
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
 
 " search the file for FIXME, TODO and put them in a handy list
 map <F10> <Plug>TaskList
@@ -146,6 +147,7 @@ let OmniCpp_MayCompleteDot = 1 " autocomplete after .
 let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
 let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
