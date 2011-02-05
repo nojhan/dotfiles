@@ -1,0 +1,75 @@
+# detach on hangup
+autodetach on
+
+# don't display the copyright page
+startup_message off
+
+# emulate .logout message
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+defscrollback 3000
+
+# suppress bold text
+attrcolor b "-b"
+
+##    Explanation of hardstatus line    ##
+
+# Ignore the ' marks if you use these examples for yourself
+
+# Note that if you want to use the color brown under konsole
+# You actually use bright yellow (%{Y}). 
+
+# Note the embeded space after the colon, I feel 
+#  it just looks nicer with a blank between the
+#  text and console edge:
+#   '%{=b}%{G} Screen(s): '
+
+# This prints the window listing in blue:
+#   '%{b}%w'
+
+# This right-aligns what follows:
+#   '%='
+
+# This displays the time (hours and minutes) in 12hr format 
+# and adds an AM/PM flag, in bold green:
+#   '%{G}%C%A'
+
+# This displays the day of the week:
+#   '%D'
+
+#This displays the date in Mon/day/year format:
+# and again I embeded a space to give me one space
+# between the text and console edge:
+#  '%M/%d/%Y '
+
+# The resulting command give you a status line that 
+#  looks like this: 
+#   | Screen(s): 0* bash           5:30PM  Fri, Jun/25/2004 |
+#  (The pipes indicate the edges of the xterm/console).
+
+# Green text, time, and date; windows in blue:
+#hardstatus alwayslastline "%{=b}%{g}%h %{r}<%w> %=%{y}%c:%s  %Y-%m-%d (%D)"
+hardstatus alwayslastline "%{=b}%{g}%h %{r}<%w> %=%{y}%c  %Y-%m-%d (%D)"
+
+
+# From http://www4.informatik.uni-erlangen.de/~jnweiger/screen-faq.html
+# Q: My xterm scrollbar does not work with screen.
+# A: The problem is that xterm will not allow scrolling if the alternate text buffer is selected. The standard definitions of the termcap initialize capabilities ti and te switch to and from the alternate text buffer. (The scrollbar also does not work when you start e.g. ‘vi’). You can tell screen not to use these initialisations by adding the line “termcapinfo xterm ti@:te@” to your ~/.screenrc file.
+termcapinfo xterm ti@:te@
+
+# auto split
+bind s eval "split" "focus down" "screen"
+
+# kill the current region
+# usefull to remove a split
+bind X remove
+
+# launch a new window under root and change the title accordingly
+# note: the $ may be a # or something else, depending on your shell prompt
+bind u screen -t '$ |root' su
+
+# default windows title with the auto-title
+# needs to add the title-escape-sequence in ~/.bashrc
+# like: export PS1="$PS2\033k\033\134"
+# of one launch top, the title will be ":top" else ":"
+shelltitle '$ |:'
