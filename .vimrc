@@ -38,17 +38,18 @@ nnoremap <leader>v V`]
 " ,s will split vertically and swith over the new panel
 nnoremap <leader>s <C-w>v<C-w>l
 
+" Wrap a paragraph and justify it
+:runtime macros/justify.vim
+nnoremap <leader>j gw}{V}:call Justify('tw',4)<CR>
+
 " activate rainbow parenthesis
 nnoremap <leader>r :RainbowParenthesesToggle<CR>
 
 " activate gundo
 nnoremap <leader>u :GundoToggle<CR>
 
-" fold all C++ comments (i.e. several lines starting with a //)
-nnoremap <leader>h :set foldmethod=expr<CR>:set foldexpr=getline(v:lnum)=~'^\\s//'?1:getline(prevnonblank(v:lnum))=~'^\\s//'?1:getline(nextnonblank(v:lnum))=~'^\\s*//'?1:0<CR>
-" fold all C-like comments (i.e. /* lines inside slash stars */)
-nnoremap <leader>H :set foldmethod=marker<CR>:set foldmarker=/*,*/<CR>
-
+" remove all C/C++ comments and blank lines
+nnoremap <leader>h :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s*\n//<CR>
 
 set list
 set listchars=tab:▸\   " print tabs with a special character (add ",eol:·" for end of lines)
