@@ -54,7 +54,7 @@ nnoremap <leader>h :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s
 set list
 set listchars=tab:▸\   " print tabs with a special character (add ",eol:·" for end of lines)
 
-au FocusLost * :wa   " save every opened buffer when the window lost focus
+"au FocusLost * :wa   " save every opened buffer when the window lost focus
 
 
 set laststatus=2    " always show the statusline, even when there is only one file edited
@@ -152,4 +152,8 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
+
+" close the buffer without deleting its window
+:runtime plugins/bclose.vim
+nmap :bc <Plug>Kwbd
 
