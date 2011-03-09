@@ -33,8 +33,20 @@ defbindings("WMPlex.toplevel", {
 	-- nouveau bureau
     kpress(META.."F3", "mod_query.query_workspace(_)"),
 
+	-- firefox
+    kpress(META.."F4", "ioncore.exec_on(_, 'firefox')"),
+
+	-- firefox
+    kpress(META.."F5", "ioncore.exec_on(_, 'nautilus --no-desktop')"),
+
 	-- menu général ion3
     kpress(META.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')")
+})
+
+
+defbindings("WMPlex", {
+    bdoc("Close current object."),
+    kpress_wait(META.."X", "WRegion.rqclose_propagate(_, _sub)"),
 })
 
 defbindings("WScreen", {
@@ -80,13 +92,13 @@ defbindings("WFrame", {
 	-- Aller à la fenetre suivante dans le cadre
 	kpress(META.."Tab", "_:switch_prev()"),
 	--kpress(ALTMETA.."Tab", "_:switch_next()")
-	kpress(META.."A", "_:switch_next()")
+	kpress(META.."B", "_:switch_next()")
 })
 
 defbindings("WFrame.toplevel", {
 	-- Attacher la fenetre marquée (avec META.."T" par défaut)
-    kpress(META.."Z", "WRegion.set_tagged(_sub, 'toggle')", "_sub:non-nil"),
-    kpress(META.."E", "ioncore.tagged_attach(_)")
+    kpress(META.."U", "WRegion.set_tagged(_sub, 'toggle')", "_sub:non-nil"),
+    kpress(META.."A", "ioncore.tagged_attach(_)")
 })
 
 -- pour mettre la stalonetray dans le dock
