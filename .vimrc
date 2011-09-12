@@ -30,13 +30,19 @@ set nu              " show line numbers
 set showmode        " show the current mode on the last line
 set showcmd         " show informations about selection while in visual mode
 
+set guioptions-=T   "remove toolbar
+
+set colorcolumn=80,120  " highligth the 80th and 120th column
+" dark bckgrd for inkpot
+hi ColorColumn ctermbg=lightgrey guibg=#1a1a22 
+
 let mapleader = "," " leader key is comma
 
 " ,v will reselect the text that was just pasted
 nnoremap <leader>v V`]
 
 " ,s will split vertically and swith over the new panel
-nnoremap <leader>s <C-w>v<C-w>l
+nnoremap <leader>s <C-w>v<C-w>l:bn<CR>
 
 " Wrap a paragraph and justify it
 :runtime macros/justify.vim
