@@ -85,8 +85,8 @@ if has("gui_running")
     hi Type           gui=NONE   guifg=#ff8bff   guibg=NONE
     hi Underlined     gui=BOLD   guifg=#ffffcd   guibg=NONE
     hi TaglistTagName gui=BOLD   guifg=#808bed   guibg=NONE
-    hi Pmenu          gui=NONE   guifg=white   guibg=black
-
+    hi Pmenu          gui=NONE   guifg=white     guibg=black
+    hi ColorColumn                               guibg=#1a1a22
 else
     exec "hi Normal         cterm=NONE   ctermfg=" . <SID>X("78") . "   ctermbg=" . <SID>X(80) . ""
     exec "hi IncSearch      cterm=BOLD   ctermfg=" . <SID>X("80") . "   ctermbg=" . <SID>X(73) . ""

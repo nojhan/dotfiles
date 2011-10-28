@@ -1,7 +1,9 @@
 syntax on             " syntax coloring by default
-color inkpot
+"color inkpot
+color solarized
+set background=dark
 
-set textwidth=80
+set textwidth=120
 set wrap            " auto wrap line view, but not text itself
 
 filetype indent on      " activates indenting for files  
@@ -33,8 +35,8 @@ set showcmd         " show informations about selection while in visual mode
 set guioptions-=T   "remove toolbar
 
 set colorcolumn=80,120  " highligth the 80th and 120th column
-" dark bckgrd for inkpot
-hi ColorColumn ctermbg=lightgrey guibg=#1a1a22 
+
+hi CursorLine cterm=NONE ctermbg=lightgrey ctermfg=NONE guibg=#2a2a32 guifg=NONE
 
 let mapleader = "," " leader key is comma
 
@@ -139,9 +141,10 @@ map <F12> :MiniBufExplorer<cr>
 
 " configure tags - add additional tags here or comment out not-used ones
 set tags+=~/.vim/tags/cpp
-"set tags+=~/.vim/tags/gl
-"set tags+=~/.vim/tags/sdl
-"set tags+=~/.vim/tags/qt4
+set tags+=~/.vim/tags/bmdd
+set tags+=~/.vim/tags/bmddsolver
+set tags+=~/.vim/tags/dae
+set tags+=~/.vim/tags/eodev
 " build tags of your own project with CTRL+F12
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
