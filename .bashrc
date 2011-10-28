@@ -96,6 +96,7 @@ alias ll='ls -l'
 alias tree='tree -Csu'		# nice alternative to 'ls'
 
 alias psg='ps aux|grep ' # grep a process
+alias agrep="ack-grep"
 
 # Find a file with a pattern in name from the current directory
 # ff name
@@ -167,3 +168,6 @@ alias ipy='ipython -pylab -p scipy --editor="gvim"'
 # nautilus file manager in browser mode without ddestkop management
 alias nautile='nautilus --no-desktop --browser'
 
+
+# Added by autojump install.sh
+source /etc/profile.d/autojump.bash
