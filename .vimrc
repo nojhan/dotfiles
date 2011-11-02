@@ -36,7 +36,7 @@ set guioptions-=T   "remove toolbar
 
 set colorcolumn=80,120  " highligth the 80th and 120th column
 
-hi CursorLine cterm=NONE ctermbg=lightgrey ctermfg=NONE guibg=#2a2a32 guifg=NONE
+set cursorline 
 
 let mapleader = "," " leader key is comma
 
