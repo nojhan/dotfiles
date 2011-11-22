@@ -40,6 +40,9 @@ set cursorline
 
 let mapleader = "," " leader key is comma
 
+" xx will delete the line without copying it into the default register
+nnoremap xx "_dd
+
 " ,v will reselect the text that was just pasted
 nnoremap <leader>v V`]
 
