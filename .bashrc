@@ -157,6 +157,18 @@ alias clean='mv *~ ~/.Trash/'
 
 # do not permits to recall dangerous commands in bash history
 export HISTIGNORE='&:[bf]g:exit:*>|*:history*::*rm*-rf*:*rm*-f*'
+# append history rather than overwrite
+shopt -s histappend
+unset HISTFILESIZE
+HISTSIZE=1000000
+# ignore commands that start with a space AND duplicate commands
+HISTCONTROL=ignoreboth
+# add the full date and time to lines
+HISTTIMEFORMAT='%F %T'
+# one command per line
+shopt -s cmdhist
+# store history immediately
+PROMPT_COMMAND='history -a; history -n'
 
 # baskcup shortcuts
 alias rcp='rsync -avz --rsh "ssh -l nojhan" '
