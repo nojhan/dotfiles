@@ -60,7 +60,24 @@ nnoremap <leader>r :RainbowParenthesesToggle<CR>
 nnoremap <leader>u :GundoToggle<CR>
 
 " remove all C/C++ comments and blank lines
-nnoremap <leader>h :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s*\n//<CR>
+nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s*\n//<CR>
+
+" set a tiny guifont size 
+nnoremap <leader>h :set guifont=Inconsolata\ 4<CR>
+
+" set a normal guifont size 
+nnoremap <leader>f :set guifont=Inconsolata\ 12<CR>
+
+" set a big guifont size
+nnoremap <leader>ç :set guifont=Inconsolata\ 16<CR>
+
+
+
+" double percentage sign in command mode is expanded
+" to directory of current file - http://vimcasts.org/e/14
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>p :CtrlP %%<cr>
+
 
 set list
 set listchars=tab:▸\   " print tabs with a special character (add ",eol:·" for end of lines)
@@ -168,4 +185,6 @@ set completeopt=menuone,menu,longest,preview
 " close the buffer without deleting its window
 :runtime plugins/bclose.vim
 nmap :bc <Plug>Kwbd
+
+
 
