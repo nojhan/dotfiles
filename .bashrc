@@ -128,8 +128,10 @@ fi
 # add job count
 PS1="$PS1${LIGHT_BLUE}\$(jobcount)${NO_COL}"
 
-# add git branch and status
-PS1="$PS1\$(git_branch_color)\$(git_branch)${NO_COL}"
+if [ $USR = nou_root ] ; then
+    # add git branch and status
+    PS1="$PS1\$(git_branch_color)\$(git_branch)${NO_COL}"
+fi
 
 # add prompt mark
 if [ $USR = nou_root ] ; then
@@ -137,6 +139,77 @@ if [ $USR = nou_root ] ; then
 elif [ $USR = u_root ] ; then
     PS1="$PS1${RED}\\$ ${NO_COL}"
 fi
+
+battery()
+{
+    red=`tput setaf 1`
+    green=`tput setaf 2`
+    yellow=`tput setaf 3`
+    sgr0=`tput sgr0`
+    b=`acpi --battery | sed "s/^Battery .*, \([0-9]*\)%/\1/"`
+    if [ $? == 0 ] ; then
+        if [ $b -ge 50 ] ; then # more than 50% of battery, green
+            echo -ne "/${green}$b%${sgr0}"
+        elif [ $b -ge 10 ] ; then # more than 10%, yellow
+            echo -ne "/${yellow}$b%${sgr0}"
+        else # less than 10%, red
+            echo -ne "/${red}$b%${sgr0}"
+        fi
+    else
+        echo -n ""
+    fi
+}
+# add battery status
+PS1="\$(battery)]$PS1"
+
+load_out()
+{
+  echo -n "$(uptime | sed -e "s/.*load average: \(.*\...\), \(.*\...\), \(.*\...\).*/\1/" -e "s/ //g")"
+}
+
+load_color()
+{
+  gray=0
+  red=1
+  green=2
+  yellow=3
+  blue=4
+  magenta=5
+  cyan=6
+  white=7
+
+  # Colour progression is important ...
+  #   bold gray -> bold green -> bold yellow -> bold red -> 
+  #   black on red -> bold white on red
+  #
+  # Then we have to choose the values at which the colours switch, with
+  # anything past yellow being pretty important.
+
+  tmp=$(echo $(load_out)*100 | bc)
+  let load100=${tmp%.*}
+
+  if [ ${load100} -lt 70 ]
+  then
+    tput bold ; tput setaf ${gray}
+  elif [ ${load100} -ge 70 ] && [ ${load100} -lt 120 ]
+  then
+    tput bold ; tput setaf ${green}
+  elif [ ${load100} -ge 120 ] && [ ${load100} -lt 200 ]
+  then
+    tput bold ; tput setaf ${yellow}
+  elif [ ${load100} -ge 200 ] && [ ${load100} -lt 300 ]
+  then
+    tput bold ; tput setaf ${red}
+  elif [ ${load100} -ge 300 ] && [ ${load100} -lt 500 ]
+  then
+    tput setaf ${gray} ; tput setab ${red}
+  else
+    tput bold ; tput setaf ${white} ; tput setab ${red}
+  fi
+}
+
+# add colored load average
+PS1="[\[\$(load_color)\]\$(load_out)${NO_COL}$PS1"
 
 # Glue the bash prompt always go to the first column .
 # Avoid glitches after interrupting a command with Ctrl-C
