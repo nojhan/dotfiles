@@ -57,20 +57,90 @@ WHITE="\[\033[1;37m\]"
 RED="\[\033[0;31m\]"
 NO_COL="\[\033[00m\]"
 
-#Set some prompts...
+jobcount()
+{
+    rep=""
+    running=`jobs -r | wc -l | tr -d " "`
+    stopped=`jobs -s | wc -l | tr -d " "`
+
+    if [ $running != "0" -a $stopped != "0" ] ; then
+        rep=" ${running}r/${stopped}s "
+
+    elif [ $running != "0" -a $stopped == "0" ] ; then
+        rep=" ${running}r "
+
+    elif [ $running == "0" -a $stopped != "0" ] ; then
+        rep=" ${stopped}s "
+    fi
+
+    echo -ne "$rep"
+}
+
+git_branch()
+{
+    if git rev-parse --git-dir >/dev/null 2>&1 ; then
+        gitver=$(git branch 2>/dev/null| sed -n '/^\*/s/^\* //p')
+    else
+        return 0
+    fi
+    echo -e " $gitver"
+}
+
+git_branch_color()
+{
+    if git rev-parse --git-dir >/dev/null 2>&1 ; then
+        red=`tput setaf 1`
+        green=`tput setaf 2`
+        yellow=`tput setaf 3`
+     
+        color=""
+        if git diff --quiet 2>/dev/null >&2 ; then
+            if git rev-list --quiet origin/master..master 2>&1 >/dev/null ; then
+                color="${yellow}" # some commits to push
+            else
+                color="${green}" # nothing to commit or push
+            fi
+        else
+            color="${red}" # changes to commit
+        fi
+    else
+        return 0
+    fi
+    echo -ne $color
+}
+
+# different colors depending on connexion type and user
 if [ $CONN = lcl -a $USR = nou_root ] ; then
-  PS1="${WHITE}[\u \w]\\$ ${NO_COL}"
+    PS1="${WHITE}[\u \w]${NO_COL}"
 elif [ $CONN = lcl -a $USR = u_root ] ; then
-  PS1="${YELLOW}[\w]\\$ ${NO_COL}"
+  PS1="${YELLOW}[\w]${NO_COL}"
 elif [ $CONN = tel -a $USR = nou_root ] ; then
-  PS1="[\u${LIGHT_GREEN}@\h${NO_COL} \w]\\$ "
+  PS1="[\u${LIGHT_GREEN}@\h${NO_COL} \w]${NO_COL}"
 elif [ $CONN = tel -a $USR = u_root ] ; then
-  PS1="${RED}[\u @${YELLOW}\h${RED} \w]\\$ ${NO_COL}"
+  PS1="${RED}[\u @${YELLOW}\h${RED} \w]${NO_COL}"
 elif [ $CONN = ssh -a $USR = nou_root ] ; then
-  PS1="[\u @${LIGHT_BLUE}\h${NO_COL} \w]\\$ "
+  PS1="[\u @${LIGHT_BLUE}\h${NO_COL} \w]${NO_COL}"
 elif [ $CONN = ssh -a $USR = u_root ] ; then
-  PS1="${RED}[\u @${LIGHT_BLUE}\h${RED} \w]\\$ ${NO_COL}"
+  PS1="${RED}[\u @${LIGHT_BLUE}\h${RED} \w]${NO_COL}"
 fi
+
+# add job count
+PS1="$PS1${LIGHT_BLUE}\$(jobcount)${NO_COL}"
+
+# add git branch and status
+PS1="$PS1\$(git_branch_color)\$(git_branch)${NO_COL}"
+
+# add prompt mark
+if [ $USR = nou_root ] ; then
+    PS1="$PS1${WHITE}\\$ ${NO_COL}"
+elif [ $USR = u_root ] ; then
+    PS1="$PS1${RED}\\$ ${NO_COL}"
+fi
+
+# Glue the bash prompt always go to the first column .
+# Avoid glitches after interrupting a command with Ctrl-C
+PS1="\[\033[G\]$PS1"
+
 
 # Prevents accidentally clobbering files.
 alias mv='mv -i'
@@ -167,12 +237,14 @@ HISTCONTROL=ignoreboth
 HISTTIMEFORMAT='%F %T'
 # one command per line
 shopt -s cmdhist
+# append history rather than overwritting it
+PROMPT_COMMAND='history -a' 
 # store history immediately
-PROMPT_COMMAND='history -a; history -n'
+#; history -n'
 
 # baskcup shortcuts
-alias rcp='rsync -avz --rsh "ssh -l nojhan" '
-alias rcp_443='rsync -avz --rsh "ssh -p 443 -l nojhan" '
+alias rcp='rsync -avz --ignore-existing --progress --rsh "ssh -l nojhan" '
+alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443 -l nojhan" '
 
 # ipython shell with correct default apps
 alias ipy='ipython -pylab -p scipy --editor="gvim"'
@@ -180,6 +252,9 @@ alias ipy='ipython -pylab -p scipy --editor="gvim"'
 # nautilus file manager in browser mode without ddestkop management
 alias nautile='nautilus --no-desktop --browser'
 
+alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning magenta | colout pragma green standard"
+
 
 # Added by autojump install.sh
 source /etc/profile.d/autojump.bash
+/usr/games/fortune vimtips
