@@ -82,6 +82,8 @@ map <leader>p :CtrlP %%<cr>
 set list
 set listchars=tab:▸\   " print tabs with a special character (add ",eol:·" for end of lines)
 
+au VimEnter * echomsg system('/usr/games/fortune vimtweets')
+
 "au FocusLost * :wa   " save every opened buffer when the window lost focus
 
 
