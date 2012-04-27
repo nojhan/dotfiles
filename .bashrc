@@ -323,12 +323,15 @@ alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443 -l nojh
 # ipython shell with correct default apps
 alias ipy='ipython -pylab -p scipy --editor="gvim"'
 
-# nautilus file manager in browser mode without ddestkop management
+# nautilus file manager in browser mode without destkop management
 alias nautile='nautilus --no-desktop --browser'
 
+# colored gcc output using the colout command
 alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning magenta | colout pragma green standard"
-
 
 # Added by autojump install.sh
 source /etc/profile.d/autojump.bash
+
+# print a vim fortune at startup
 /usr/games/fortune vimtips
+
