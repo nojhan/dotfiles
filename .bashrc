@@ -15,9 +15,18 @@ function noproxy()
 	export ftp_proxy=""
 }
 
-# Set up prompts. Color code them for logins. Red for root, 
-# white for user logins, green for ssh sessions, cyan for telnet,
-# magenta with red "(ssh)" for ssh + su, magenta for telnet.
+# Below are function for having a flexible dynamic prompt for power user:
+# - display the colored hostname when connected via ssh
+# - when root, color in yellow the [username path] and in red the sharp
+# - when user, print the colored git branch name (if in a git repository): 
+#     red = some changes are not commited, yellow = some commits are not pushed, 
+#     green = no changes or commits
+# - if necessary, print a counter for jobs that are attached to the current term (e.g. xterm &)
+#     or that are sleeping (e.g. Ctrl-z)
+# - display the load average, colored with a colormap
+# - display the battery level (if necessary), with colormap
+
+# Where are we?
 THIS_TTY=tty`ps aux | grep $$ | grep bash | awk '{ print $7 }'`
 SESS_SRC=`who | grep $THIS_TTY | awk '{ print $6 }'`
 
@@ -40,7 +49,7 @@ else
   CONN=tel
 fi
 
-# Okay...Now who we be?
+# Who are we?
 if [ `/usr/bin/whoami` = "root" ] ; then
   USR=u_root
 else
@@ -112,7 +121,7 @@ git_branch_color()
 
 # different colors depending on connexion type and user
 if [ $CONN = lcl -a $USR = nou_root ] ; then
-    PS1="${WHITE}[\u \w]${NO_COL}"
+  PS1="${WHITE}[\u \w]${NO_COL}"
 elif [ $CONN = lcl -a $USR = u_root ] ; then
   PS1="${YELLOW}[\w]${NO_COL}"
 elif [ $CONN = tel -a $USR = nou_root ] ; then
