@@ -92,7 +92,7 @@ git_branch()
     else
         return 0
     fi
-    echo -e " $gitver"
+    echo -e "$gitver"
 }
 
 git_branch_color()
@@ -104,7 +104,7 @@ git_branch_color()
      
         color=""
         if git diff --quiet 2>/dev/null >&2 ; then
-            branch=$(git_branch)
+            branch="$(git_branch)"
             has_commit=`git rev-list origin/$branch..$branch`
             if [ "$has_commit" != "" ] ; then
                 color="${yellow}" # some commits to push
