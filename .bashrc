@@ -73,13 +73,13 @@ jobcount()
     stopped=`jobs -s | wc -l | tr -d " "`
 
     if [ $running != "0" -a $stopped != "0" ] ; then
-        rep=" ${running}r/${stopped}s "
+        rep=" ${running}r/${stopped}s"
 
     elif [ $running != "0" -a $stopped == "0" ] ; then
-        rep=" ${running}r "
+        rep=" ${running}r"
 
     elif [ $running == "0" -a $stopped != "0" ] ; then
-        rep=" ${stopped}s "
+        rep=" ${stopped}s"
     fi
 
     echo -ne "$rep"
@@ -140,7 +140,7 @@ PS1="$PS1${LIGHT_BLUE}\$(jobcount)${NO_COL}"
 
 if [ $USR = nou_root ] ; then
     # add git branch and status
-    PS1="$PS1\$(git_branch_color)\$(git_branch)${NO_COL}"
+    PS1="$PS1 \$(git_branch_color)\$(git_branch)${NO_COL}"
 fi
 
 # add prompt mark
