@@ -104,11 +104,12 @@ git_branch_color()
      
         color=""
         if git diff --quiet 2>/dev/null >&2 ; then
-            has_commit=`git rev-list origin/master..master`
-            if [ "$has_commit" == "" ] ; then
-                color="${green}" # nothing to commit or push
-            else
+            branch=$(git_branch)
+            has_commit=`git rev-list origin/$branch..$branch`
+            if [ "$has_commit" != "" ] ; then
                 color="${yellow}" # some commits to push
+            else
+                color="${green}" # nothing to commit or push
             fi
         else
             color="${red}" # changes to commit
