@@ -1,3 +1,5 @@
+set guifont=Inconsolata\ 9
+
 syntax on             " syntax coloring by default
 "color inkpot
 color solarized
@@ -66,10 +68,10 @@ nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s
 nnoremap <leader>h :set guifont=Inconsolata\ 4<CR>
 
 " set a normal guifont size 
-nnoremap <leader>f :set guifont=Inconsolata\ 12<CR>
+nnoremap <leader>f :set guifont=Inconsolata\ 9<CR>
 
 " set a big guifont size
-nnoremap <leader>ç :set guifont=Inconsolata\ 16<CR>
+nnoremap <leader>ç :set guifont=Inconsolata\ 11<CR>
 
 
 
