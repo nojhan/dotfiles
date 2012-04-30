@@ -152,29 +152,56 @@ fi
 
 battery()
 {
-    red=`tput setaf 1`
-    green=`tput setaf 2`
-    yellow=`tput setaf 3`
-    sgr0=`tput sgr0`
-    b=`acpi --battery | sed "s/^Battery .*, \([0-9]*\)%/\1/"`
+    bat=`acpi --battery | sed "s/^Battery .*, \([0-9]*\)%.*$/\1/"`
+    if [ ${bat} -lt 90 ] ; then
+        echo -n " ${bat}%"
+    else
+        echo -n ""
+    fi
+}
+
+battery_color()
+{
+    gray=0
+    red=1
+    green=2
+    yellow=3
+    blue=4
+    magenta=5
+    cyan=6
+    white=7
+    bat=`acpi --battery | sed "s/^Battery .*, \([0-9]*\)%.*$/\1/"`
     if [ $? == 0 ] ; then
-        if [ $b -ge 50 ] ; then # more than 50% of battery, green
-            echo -ne "/${green}$b%${sgr0}"
-        elif [ $b -ge 10 ] ; then # more than 10%, yellow
-            echo -ne "/${yellow}$b%${sgr0}"
-        else # less than 10%, red
-            echo -ne "/${red}$b%${sgr0}"
+        if [ ${bat} -gt 80 ] ; then
+            tput bold ; tput setaf ${gray}
+        elif [ ${bat} -le 80 ] && [ ${bat} -gt 60 ] ; then
+            tput bold ; tput setaf ${green}
+        elif [ ${bat} -le 60 ] && [ ${bat} -gt 40 ] ; then
+            tput bold ; tput setaf ${yellow}
+        elif [ ${bat} -le 40 ] && [ ${bat} -gt 20 ] ; then
+            tput bold ; tput setaf ${red}
+        elif [ ${bat} -le 20 ] && [ ${bat} -gt 0 ] ; then
+            tput setaf ${gray} ; tput setab ${red}
+        else
+            tput bold ; tput setaf ${white} ; tput setab ${red}
         fi
     else
         echo -n ""
     fi
 }
 # add battery status
-PS1="\$(battery)]$PS1"
+PS1="\[\$(battery_color)\]\$(battery) ${NO_COL}$PS1"
 
 load_out()
 {
-  echo -n "$(uptime | sed -e "s/.*load average: \(.*\...\), \(.*\...\), \(.*\...\).*/\1/" -e "s/ //g")"
+    load=`uptime | sed -e "s/.*load average: \(.*\...\), \(.*\...\), \(.*\...\).*/\1/" -e "s/ //g"`
+    tmp=$(echo $load*100 | bc)
+    load100=${tmp%.*}
+    if [ ${load100} -gt 50 ] ; then
+        echo -n $load
+    else
+        echo -n ""
+    fi
 }
 
 load_color()
@@ -195,31 +222,30 @@ load_color()
   # Then we have to choose the values at which the colours switch, with
   # anything past yellow being pretty important.
 
-  tmp=$(echo $(load_out)*100 | bc)
-  let load100=${tmp%.*}
+  load=$(load_out)
+  if [ "$load" != "" ] ; then
 
-  if [ ${load100} -lt 70 ]
-  then
-    tput bold ; tput setaf ${gray}
-  elif [ ${load100} -ge 70 ] && [ ${load100} -lt 120 ]
-  then
-    tput bold ; tput setaf ${green}
-  elif [ ${load100} -ge 120 ] && [ ${load100} -lt 200 ]
-  then
-    tput bold ; tput setaf ${yellow}
-  elif [ ${load100} -ge 200 ] && [ ${load100} -lt 300 ]
-  then
-    tput bold ; tput setaf ${red}
-  elif [ ${load100} -ge 300 ] && [ ${load100} -lt 500 ]
-  then
-    tput setaf ${gray} ; tput setab ${red}
-  else
-    tput bold ; tput setaf ${white} ; tput setab ${red}
+      tmp=$(echo $load*100 | bc)
+      load100=${tmp%.*}
+
+      if [ ${load100} -lt 70 ] ; then
+        tput bold ; tput setaf ${gray}
+      elif [ ${load100} -ge 70 ] && [ ${load100} -lt 120 ] ; then
+        tput bold ; tput setaf ${green}
+      elif [ ${load100} -ge 120 ] && [ ${load100} -lt 200 ] ; then
+        tput bold ; tput setaf ${yellow}
+      elif [ ${load100} -ge 200 ] && [ ${load100} -lt 300 ] ; then
+        tput bold ; tput setaf ${red}
+      elif [ ${load100} -ge 300 ] && [ ${load100} -lt 500 ] ; then
+        tput setaf ${gray} ; tput setab ${red}
+      else
+        tput bold ; tput setaf ${white} ; tput setab ${red}
+      fi
   fi
 }
 
 # add colored load average
-PS1="[\[\$(load_color)\]\$(load_out)${NO_COL}$PS1"
+PS1="\[\$(load_color)\]\$(load_out)${NO_COL}$PS1"
 
 # Glue the bash prompt always go to the first column .
 # Avoid glitches after interrupting a command with Ctrl-C
