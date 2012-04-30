@@ -263,7 +263,7 @@ alias ks='ls'
 alias ms='ls'
 
 alias ls='ls -hF --color'       # add colors for filetype recognition
-alias l='ls'
+alias l='ls -1'
 alias la='ls -Al'               # show hidden files
 alias lx='ls -lXB'              # sort by extension
 alias lk='ls -lSr'              # sort by size
