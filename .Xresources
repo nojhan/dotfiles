@@ -22,3 +22,6 @@
 XTerm*background:            #002b36
 XTerm*foreground:            #93a1a1
 
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintslight
+
