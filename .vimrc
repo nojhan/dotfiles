@@ -73,8 +73,6 @@ nnoremap <leader>f :set guifont=Inconsolata\ 9<CR>
 " set a big guifont size
 nnoremap <leader>ç :set guifont=Inconsolata\ 11<CR>
 
-
-
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -82,7 +80,8 @@ map <leader>p :CtrlP %%<cr>
 
 
 set list
-set listchars=tab:▸\   " print tabs with a special character (add ",eol:·" for end of lines)
+" print tabs with a special character (add ",eol:·" for end of lines)
+set listchars=trail:·,nbsp:·,tab:▸\,
 
 au VimEnter * echomsg system('/usr/games/fortune vimtweets')
 
