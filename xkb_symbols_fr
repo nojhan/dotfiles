@@ -467,7 +467,7 @@ xkb_symbols "latin9_nodeadkeys" {
 // ┃       ┃       ┃       ┃ Espace inséc.   Espace inséc. fin ┃       ┃       ┃       ┃
 // ┃Ctrl   ┃Meta   ┃Alt    ┃ ␣ (Espace)      _               ␣ ┃AltGr ⇮┃Menu   ┃Ctrl   ┃
 // ┗━━━━━━━┻━━━━━━━┻━━━━━━━┹───────────────────────────────────┺━━━━━━━┻━━━━━━━┻━━━━━━━┛
-partial alphanumeric_keyav s
+partial alphanumeric_keys
 xkb_symbols "bepo" {
 
     include "level3(ralt_switch)"
