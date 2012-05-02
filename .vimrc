@@ -78,6 +78,8 @@ nnoremap <leader>ç :set guifont=Inconsolata\ 11<CR>
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>p :CtrlP %%<cr>
 
+" use shift-space as escape
+inoremap <S-Space> <Esc>
 
 set list
 " print tabs with a special character (add ",eol:·" for end of lines)
