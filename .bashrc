@@ -365,7 +365,7 @@ alias nautile='nautilus --no-desktop --browser'
 # colored gcc output using the colout command
 alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning magenta | colout pragma green standard"
 
-alias bepo="setxkbmap -model pc105 -layout fr -variant bepo -option -option compose:102"
+alias bepo="setxkbmap -layout fr -variant bepo -option"
 
 # Added by autojump install.sh
 source /etc/profile.d/autojump.bash
