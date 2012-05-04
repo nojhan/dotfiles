@@ -31,7 +31,7 @@ main = xmonad $ gnomeConfig
         -- add a fullscreen tabbed layout that does not avoid covering
         -- up desktop panels before the desktop layouts
         -- desktopLayoutModifiers still allow toggling panel visibility
-        , layoutHook = windowNavigation( desktopLayoutModifiers( simpleTabbed ||| rtall ) )
+        , layoutHook = windowNavigation $ desktopLayoutModifiers $ simpleTabbed ||| rtall
     }
     -- Simple notation ala emacs
     `additionalKeysP`
@@ -74,21 +74,14 @@ main = xmonad $ gnomeConfig
             , ("M-S-<Left>", sendMessage $ Swap L)
             , ("M-S-<Up>", sendMessage $ Swap U)
             , ("M-S-<Down>", sendMessage $ Swap D)
-
             -- Swap the focused window and the master window
-            , ("C-M-<Return>", windows W.swapMaster)
+            , ("M-S-<Return>", windows W.swapMaster)
 
             -- Move focus to the master window
             , ("M-m", windows W.focusMaster  )
             -- Scratchpad
             , ("M-<Space>", scratchpadSpawnAction gnomeConfig { terminal = "$XTERMCMD" } )
             , ("M-<XF86Calculator>", scratchpadSpawnAction gnomeConfig { terminal = "$XTERMCMD" } )
-            -- Swap the focused window and the master window
-            , ("M-S-<Return>", windows W.swapMaster)
-            -- Swap the focused window with the next window
-            , ("M-S-<Down>", windows W.swapDown  )
-            -- Swap the focused window with the previous window
-            , ("M-S-<Up>", windows W.swapUp    )
 
             -- Move focus to the next physical xinerama screen
             , ("M-$", onPrevNeighbour W.view)
