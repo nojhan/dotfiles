@@ -14,6 +14,8 @@ import XMonad.Actions.PhysicalScreens
 import XMonad.Layout.BorderResize
 import XMonad.Layout.TwoPane
 import XMonad.Layout.Combo
+import XMonad.Layout.IM
+import Data.Ratio ((%))
 
 import qualified XMonad.Actions.FlexibleManipulate as Flex
 import qualified XMonad.StackSet as W
@@ -33,7 +35,7 @@ main = xmonad $ gnomeConfig
         -- add a fullscreen tabbed layout that does not avoid covering
         -- up desktop panels before the desktop layouts
         -- desktopLayoutModifiers still allow toggling panel visibility
-        , layoutHook = windowNavigation $ desktopLayoutModifiers $ simpleTabbed ||| combineTwo (TwoPane 0.03 0.5) (simpleTabbed) (simpleTabbed) ||| ResizableTall 1 (3/100) (1/2) []
+        , layoutHook = windowNavigation $ desktopLayoutModifiers $ simpleTabbed ||| combineTwo (TwoPane 0.03 0.5) (simpleTabbed) (simpleTabbed) ||| ResizableTall 1 (3/100) (1/2) [] ||| withIM (1%7) (And (ClassName "Pidgin") (Role "buddy_list")) (Mirror( ResizableTall 1 (3/100) (1/2) [] ))
     }
     -- Simple notation ala emacs
     `removeKeysP`
