@@ -35,7 +35,16 @@ main = xmonad $ gnomeConfig
         -- add a fullscreen tabbed layout that does not avoid covering
         -- up desktop panels before the desktop layouts
         -- desktopLayoutModifiers still allow toggling panel visibility
-        , layoutHook = windowNavigation $ desktopLayoutModifiers $ simpleTabbed ||| combineTwo (TwoPane 0.03 0.5) (simpleTabbed) (simpleTabbed) ||| ResizableTall 1 (3/100) (1/2) [] ||| withIM (1%7) (And (ClassName "Pidgin") (Role "buddy_list")) (Mirror( ResizableTall 1 (3/100) (1/2) [] ))
+        , layoutHook = windowNavigation $ desktopLayoutModifiers $ 
+            -- fullscreen with tabs
+                simpleTabbed
+            -- Two panes, each one with its own tabs
+            ||| combineTwo (TwoPane 0.03 0.5) simpleTabbed simpleTabbed
+            -- 2/3 of the screen for a master window, other ones on the right
+            ||| ResizableTall 1 (3/100) (2/3) []
+            -- buddy lists on a small vertical pane at right,
+            -- master windows on top of the remaining space, other ones below
+            ||| withIM (15/100) (Role "buddy_list") (Mirror( ResizableTall 1 (3/100) (2/3) [] ))
     }
     -- Simple notation ala emacs
     `removeKeysP`
