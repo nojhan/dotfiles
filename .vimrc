@@ -1,4 +1,4 @@
-set guifont=Inconsolata\ 9
+set guifont=Inconsolata\ 12
 
 syntax on             " syntax coloring by default
 "color inkpot
@@ -68,10 +68,10 @@ nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s
 nnoremap <leader>h :set guifont=Inconsolata\ 4<CR>
 
 " set a normal guifont size 
-nnoremap <leader>f :set guifont=Inconsolata\ 9<CR>
+nnoremap <leader>f :set guifont=Inconsolata\ 12<CR>
 
 " set a big guifont size
-nnoremap <leader>ç :set guifont=Inconsolata\ 11<CR>
+nnoremap <leader>ç :set guifont=Inconsolata\ 14<CR>
 
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
