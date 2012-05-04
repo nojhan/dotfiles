@@ -11,9 +11,11 @@ import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadManageHook, scra
 import XMonad.Layout.WindowNavigation
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.PhysicalScreens
+import XMonad.Layout.BorderResize
+import XMonad.Layout.TwoPane
+import XMonad.Layout.Combo
 
 import qualified XMonad.Actions.FlexibleManipulate as Flex
-
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
@@ -31,9 +33,13 @@ main = xmonad $ gnomeConfig
         -- add a fullscreen tabbed layout that does not avoid covering
         -- up desktop panels before the desktop layouts
         -- desktopLayoutModifiers still allow toggling panel visibility
-        , layoutHook = windowNavigation $ desktopLayoutModifiers $ simpleTabbed ||| rtall
+        , layoutHook = windowNavigation $ desktopLayoutModifiers $ simpleTabbed ||| combineTwo (TwoPane 0.03 0.5) (simpleTabbed) (simpleTabbed) ||| ResizableTall 1 (3/100) (1/2) []
     }
     -- Simple notation ala emacs
+    `removeKeysP`
+        [
+            ("M-<Space>")
+        ]
     `additionalKeysP`
         [
             -- Quit session
@@ -74,6 +80,13 @@ main = xmonad $ gnomeConfig
             , ("M-S-<Left>", sendMessage $ Swap L)
             , ("M-S-<Up>", sendMessage $ Swap U)
             , ("M-S-<Down>", sendMessage $ Swap D)
+
+            -- Swap windows within tabbed two panes
+            , ("M-S-<Home>", sendMessage $ Move L)
+            , ("M-S-<End>", sendMessage $ Move R)
+            , ("M-S-<Page_Up>", sendMessage $ Move U)
+            , ("M-S-<Page_Down>", sendMessage $ Move D)
+
             -- Swap the focused window and the master window
             , ("M-S-<Return>", windows W.swapMaster)
 
@@ -106,8 +119,6 @@ main = xmonad $ gnomeConfig
             -- Resize windows with M-mouse3
             , ((modm, 3), (\w -> focus w >> windows W.shiftMaster >> Flex.mouseWindow Flex.resize w >> snapMagicMouseResize 100 (Just 50) (Just 50) w))
         ]
-    where
-        rtall = ResizableTall 1 (3/100) (1/2) []
 
 
 -- Workspace switching using first row keycodes
