@@ -14,6 +14,7 @@ import XMonad.Actions.PhysicalScreens
 import XMonad.Layout.BorderResize
 import XMonad.Layout.TwoPane
 import XMonad.Layout.Combo
+import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import Data.Ratio ((%))
 
@@ -37,19 +38,21 @@ main = xmonad $ gnomeConfig
         -- desktopLayoutModifiers still allow toggling panel visibility
         , layoutHook = windowNavigation $ desktopLayoutModifiers $ 
             -- fullscreen with tabs
-                simpleTabbed
+                simpleTabbedAlways
             -- Two panes, each one with its own tabs
             ||| combineTwo (TwoPane 0.03 0.5) simpleTabbed simpleTabbed
             -- 2/3 of the screen for a master window, other ones on the right
             ||| ResizableTall 1 (3/100) (2/3) []
             -- buddy lists on a small vertical pane at right,
             -- master windows on top of the remaining space, other ones below
-            ||| withIM (15/100) (Role "buddy_list") (Mirror( ResizableTall 1 (3/100) (2/3) [] ))
+            -- ||| withIM (10/100) (Or (Role "buddy_list") (Role "contact_list")) (Mirror( ResizableTall 1 (3/100) (2/3) [] ))
+            ||| withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (combineTwo (Mirror(TwoPane 0.03 0.8)) simpleTabbedAlways Grid)
     }
     -- Simple notation ala emacs
     `removeKeysP`
         [
             ("M-<Space>")
+            , ("M-S-<Up>")
         ]
     `additionalKeysP`
         [
