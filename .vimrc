@@ -1,9 +1,21 @@
 call pathogen#infect()
+" Interesting plugins:
+" pathogen - easy plugin installation
+" surround - easily delete, change and add surrounding pairs of characters
+" Gundo - visualizing the undo tree
+" RainbowParenthesis - highlights matching parenthesis with a rainbow of colors
+" tComment - smart comments toggle
+" omnicppcomplete - C/C++ completion with ctags (what about clangcomplete?)
+" ack - run ack-grep from vim, and shows the results in a split window
+" bclose - The :Bclose command deletes a buffer without changing the window layout
+" minibufexpl - list your open buffers as tabs along the top or bottom of your screen
+" tasklist - search the file for FIXME, TODO, … and put them in a handy list
+" yankring - maintains a list of numbered registers containing the last deletes, see :YRShow
+" taglist - groups and displays the functions, classes, … in a Vim window
 
 set guifont=Inconsolata\ 12
 
 syntax on             " syntax coloring by default
-"color inkpot
 color solarized
 set background=dark
 
@@ -17,7 +29,6 @@ set softtabstop=4   " width of a tab
 set tabstop=4
 set shiftwidth=4    " width of the indentation
 set expandtab
-
 
 set ignorecase      " case-insentive search by default
 set smartcase       " search case-sensitive if there is an upper-case letter
