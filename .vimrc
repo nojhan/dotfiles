@@ -38,7 +38,11 @@ set guioptions-=T   "remove toolbar
 
 set colorcolumn=80,120  " highligth the 80th and 120th column
 
-set cursorline 
+set cursorline " highlight current line
+
+" all operations such as yy, D, and P work with the clipboard.
+" No need to prefix them with "* or "+
+set clipboard=unnamed
 
 let mapleader = "," " leader key is comma
 
