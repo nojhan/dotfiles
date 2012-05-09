@@ -1,3 +1,5 @@
+call pathogen#infect()
+
 set guifont=Inconsolata\ 12
 
 syntax on             " syntax coloring by default
