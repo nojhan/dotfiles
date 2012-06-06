@@ -46,7 +46,8 @@ main = xmonad $ gnomeConfig
             -- buddy lists on a small vertical pane at right,
             -- master windows on top of the remaining space, other ones below
             -- ||| withIM (10/100) (Or (Role "buddy_list") (Role "contact_list")) (Mirror( ResizableTall 1 (3/100) (2/3) [] ))
-            ||| withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (combineTwo (Mirror(TwoPane 0.03 0.8)) simpleTabbedAlways Grid)
+            -- ||| withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (combineTwo (Mirror(TwoPane 0.03 0.8)) simpleTabbedAlways Grid)
+            ||| withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (Mirror(ResizableTall 1 (3/100) (3/4) []))
     }
     -- Simple notation ala emacs
     `removeKeysP`
