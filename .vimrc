@@ -100,7 +100,7 @@ inoremap <S-Space> <Esc>
 
 set list
 " print tabs with a special character (add ",eol:·" for end of lines)
-set listchars=trail:·,nbsp:·,tab:▸\,
+set listchars=trail:·,nbsp:·,tab:▸\ ,
 
 au VimEnter * echomsg system('/usr/games/fortune vimtweets')
 
