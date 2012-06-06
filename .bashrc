@@ -1,6 +1,9 @@
 if [ -f /etc/bashrc ]; then
         . /etc/bashrc   # --> Read /etc/bashrc, if present.
 fi
+# if [ -f /etc/bash_completion ]; then
+#     . /etc/bash_completion
+# fi
 
 function proxy()
 {
@@ -336,7 +339,7 @@ export EDITOR='gvim'
 alias clean='mv *~ ~/.Trash/'
 
 # do not permits to recall dangerous commands in bash history
-export HISTIGNORE='&:[bf]g:exit:*>|*:history*::*rm*-rf*:*rm*-f*'
+export HISTIGNORE='&:[bf]g:exit:*>|*::*rm*-rf*:*rm*-f*'
 # append history rather than overwrite
 shopt -s histappend
 unset HISTFILESIZE
@@ -344,7 +347,7 @@ HISTSIZE=1000000
 # ignore commands that start with a space AND duplicate commands
 HISTCONTROL=ignoreboth
 # add the full date and time to lines
-HISTTIMEFORMAT='%F %T'
+HISTTIMEFORMAT='%F %T '
 # one command per line
 shopt -s cmdhist
 # append history rather than overwritting it
@@ -368,8 +371,8 @@ alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning mage
 alias bepo="setxkbmap -layout fr -variant bepo -option"
 
 # Added by autojump install.sh
-source /etc/profile.d/autojump.bash
+#source /etc/profile.d/autojump.bash
 
 # print a vim fortune at startup
-/usr/games/fortune vimtips
+#/usr/games/fortune vimtips
 
