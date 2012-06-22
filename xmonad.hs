@@ -17,6 +17,7 @@ import XMonad.Layout.Combo
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import Data.Ratio ((%))
+import XMonad.Layout.PerWorkspace
 
 import qualified XMonad.Actions.FlexibleManipulate as Flex
 import qualified XMonad.StackSet as W
@@ -28,6 +29,21 @@ myTerminal :: String
 -- myTerminal = "$XTERMCMD"
 myTerminal = "xterm"
 myScratchPad = scratchpadSpawnActionTerminal myTerminal
+
+myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $ 
+            -- fullscreen with tabs
+                simpleTabbedAlways
+            -- Two panes, each one with its own tabs
+            ||| combineTwo (TwoPane 0.03 0.5) simpleTabbed simpleTabbed
+            -- 2/3 of the screen for a master window, other ones on the right
+            ||| ResizableTall 1 (3/100) (2/3) []
+
+            -- buddy lists on a small vertical pane at right,
+            -- master windows on top of the remaining space, other ones below
+myIMLayoutHook = windowNavigation $ desktopLayoutModifiers $
+            withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (Mirror(ResizableTall 1 (3/100) (3/4) []))
+
+myLayoutHook = onWorkspace "1" myIMLayoutHook $ myDefaultLayoutHook
 
 main = xmonad $ gnomeConfig
     {
@@ -42,20 +58,9 @@ main = xmonad $ gnomeConfig
         -- add a fullscreen tabbed layout that does not avoid covering
         -- up desktop panels before the desktop layouts
         -- desktopLayoutModifiers still allow toggling panel visibility
-        , layoutHook = windowNavigation $ desktopLayoutModifiers $ 
-            -- fullscreen with tabs
-                simpleTabbedAlways
-            -- Two panes, each one with its own tabs
-            ||| combineTwo (TwoPane 0.03 0.5) simpleTabbed simpleTabbed
-            -- 2/3 of the screen for a master window, other ones on the right
-            ||| ResizableTall 1 (3/100) (2/3) []
-            -- buddy lists on a small vertical pane at right,
-            -- master windows on top of the remaining space, other ones below
-            -- ||| withIM (10/100) (Or (Role "buddy_list") (Role "contact_list")) (Mirror( ResizableTall 1 (3/100) (2/3) [] ))
-            -- ||| withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (combineTwo (Mirror(TwoPane 0.03 0.8)) simpleTabbedAlways Grid)
-            ||| withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (Mirror(ResizableTall 1 (3/100) (3/4) []))
+        , layoutHook = myLayoutHook
     }
-    -- Simple notation ala emacs
+        -- Simple notation ala emacs
     `removeKeysP`
         [
             ("M-<Space>")
