@@ -37,6 +37,7 @@ myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $
             ||| combineTwo (TwoPane 0.03 0.5) simpleTabbed simpleTabbed
             -- 2/3 of the screen for a master window, other ones on the right
             ||| ResizableTall 1 (3/100) (2/3) []
+            ||| GridRatio (4/3)
 
             -- buddy lists on a small vertical pane at right,
             -- master windows on top of the remaining space, other ones below
