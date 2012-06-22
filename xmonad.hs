@@ -54,7 +54,14 @@ main = xmonad $ gnomeConfig
         , borderWidth = 3
         -- Switch workspaces with default first azerty row instead of plain numbers
         , keys = \c -> bepoKeys c `M.union` keys gnomeConfig c
-        , manageHook = manageHook gnomeConfig <+> manageScratchPad <+> composeAll [ className =? "Gimp"      --> doFloat ]
+        , manageHook = manageHook gnomeConfig <+> manageScratchPad <+> composeAll 
+            [
+                className =? "Thunderbird" --> doShift "1",
+                className =? "Xchat"       --> doShift "1",
+                className =? "Pidgin"      --> doShift "1",
+                className =? "Fdclock" --> doShift "1",
+                className =? "Gimp"        --> doFloat
+            ]
 
         -- add a fullscreen tabbed layout that does not avoid covering
         -- up desktop panels before the desktop layouts
