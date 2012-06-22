@@ -7,7 +7,7 @@ import XMonad.Util.EZConfig
 import XMonad.Actions.CycleWS
 import XMonad.Layout.ResizableTile
 import XMonad.Actions.WindowGo
-import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadManageHook, scratchpadFilterOutWorkspace)
+import XMonad.Util.Scratchpad (scratchpadSpawnAction, scratchpadSpawnActionTerminal, scratchpadManageHook, scratchpadFilterOutWorkspace)
 import XMonad.Layout.WindowNavigation
 import XMonad.Actions.FloatSnap
 import XMonad.Actions.PhysicalScreens
@@ -24,14 +24,20 @@ import qualified Data.Map as M
 
 modm = mod1Mask
 
+myTerminal :: String
+-- myTerminal = "$XTERMCMD"
+myTerminal = "xterm"
+myScratchPad = scratchpadSpawnActionTerminal myTerminal
+
 main = xmonad $ gnomeConfig
     {
-          terminal = "$XTERMCMD"
+          terminal = myTerminal
         , XMonad.modMask = modm
         , focusedBorderColor = "#ffbb00"
         , borderWidth = 3
         -- Switch workspaces with default first azerty row instead of plain numbers
         , keys = \c -> bepoKeys c `M.union` keys gnomeConfig c
+        , manageHook = manageHook gnomeConfig <+> manageScratchPad
 
         -- add a fullscreen tabbed layout that does not avoid covering
         -- up desktop panels before the desktop layouts
@@ -108,8 +114,8 @@ main = xmonad $ gnomeConfig
             -- Move focus to the master window
             , ("M-m", windows W.focusMaster  )
             -- Scratchpad
-            , ("M-<Space>", scratchpadSpawnAction gnomeConfig { terminal = "$XTERMCMD" } )
-            , ("M-<XF86Calculator>", scratchpadSpawnAction gnomeConfig { terminal = "$XTERMCMD" } )
+            , ("M-<Space>", myScratchPad )
+            , ("M-<XF86Calculator>", myScratchPad )
 
             -- Move focus to the next physical xinerama screen
             , ("M-$", onPrevNeighbour W.view)
@@ -152,3 +158,10 @@ bepoKeys conf@(XConfig {modMask = modm}) = M.fromList $
         | (i, k) <- zip (workspaces conf) numBepoNoj,
           (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
+manageScratchPad :: ManageHook
+manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+  where
+    h = 0.5     -- terminal height, 10%
+    w = 0.5       -- terminal width, 100%
+    t = 0.25   -- distance from top edge, 90%
+    l = 0.25   -- distance from left edge, 0%
