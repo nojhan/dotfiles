@@ -61,7 +61,7 @@ main = xmonad $ gnomeConfig
                 className =? "Thunderbird" --> doShift "1",
                 className =? "Xchat"       --> doShift "1",
                 className =? "Pidgin"      --> doShift "1",
-                className =? "Fdclock" --> doShift "1",
+                className =? "XClock"     --> doShift "1",
                 className =? "Gimp"        --> doFloat
             ]
 
