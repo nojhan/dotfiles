@@ -42,7 +42,9 @@ myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $
             -- buddy lists on a small vertical pane at right,
             -- master windows on top of the remaining space, other ones below
 myIMLayoutHook = windowNavigation $ desktopLayoutModifiers $
-            withIM (10/100) (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) (Mirror(ResizableTall 1 (3/100) (3/4) []))
+            withIM (10/100) -- keep a small column on the right…
+                (Or (Or (Role "buddy_list") (Role "contact_list")) (ClassName "gimp-toolbox")) -- … for buddy lists
+                (Mirror(ResizableTall 1 (3/100) (41/60) [0.75,1.25,1])) -- a large master on top, getting ~ two-third of the screen, the first slave on left being a bit larger than the others
 
 myLayoutHook = onWorkspace "1" myIMLayoutHook $ myDefaultLayoutHook
 
