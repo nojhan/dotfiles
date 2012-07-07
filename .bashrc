@@ -18,9 +18,6 @@ function noproxy()
 	export ftp_proxy=""
 }
 
-# Super nice prompt
-source .prompt.bash
-
 # Prevents accidentally clobbering files.
 alias mv='mv -i'
 alias mkdir='mkdir -p'
@@ -135,6 +132,14 @@ alias nautile='nautilus --no-desktop --browser'
 alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning magenta | colout pragma green standard"
 
 alias bepo="setxkbmap -layout fr -variant bepo -option"
+
+function md() {
+    mkdir $1
+    cd $1
+}
+
+# Super nice prompt
+source ~/.prompt.bash
 
 # Added by autojump install.sh
 #source /etc/profile.d/autojump.bash
