@@ -77,6 +77,11 @@ alias lm='ls -al --color=none|less'  # pipe through 'less'
 alias ll='ls -l'
 alias tree='tree -Csu'          # nice alternative to 'ls'
 
+# changes the default head/tail behaviour to output x lines,
+# where x is the number of lines currently displayed on your terminal
+alias head='head -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
+alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
+
 # nautilus file manager in browser mode without destkop management
 alias nautile='nautilus --no-desktop --browser'
 
