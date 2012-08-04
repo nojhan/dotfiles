@@ -57,6 +57,11 @@ set cursorline " highlight current line
 " No need to prefix them with "* or "+
 set clipboard=unnamed
 
+" New split plaed below
+set splitbelow
+" New vsplit placed right
+set splitright
+
 let mapleader = "," " leader key is comma
 
 " xx will delete the line without copying it into the default register
