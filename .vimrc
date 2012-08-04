@@ -62,6 +62,9 @@ let mapleader = "," " leader key is comma
 " xx will delete the line without copying it into the default register
 nnoremap xx "_dd
 
+" When jumping to a given line, center the screen
+nnoremap G Gzz
+
 " ,v will reselect the text that was just pasted
 nnoremap <leader>v V`]
 
