@@ -63,7 +63,9 @@ main = xmonad $ gnomeConfig
                 className =? "Pidgin"      --> doShift "1",
                 className =? "XClock"      --> doShift "1",
                 className =? "Gimp"        --> doFloat,
-                appName =? "filechooserdialog" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5) --x y w h
+                appName =? "filechooserdialog" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5), --x y w h
+                appName =? "thunderbird" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5), --x y w h
+                appName =? "soffice" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5) --x y w h
             ]
 
         -- add a fullscreen tabbed layout that does not avoid covering
