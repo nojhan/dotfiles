@@ -51,7 +51,7 @@ set guioptions-=T   "remove toolbar
 
 set colorcolumn=80,120  " highligth the 80th and 120th column
 
-set cursorline " highlight current line
+"set cursorline " highlight current line
 
 " all operations such as yy, D, and P work with the clipboard.
 " No need to prefix them with "* or "+
@@ -81,7 +81,7 @@ nnoremap <leader>s <C-w>v<C-w>l:bn<CR>
 nnoremap <leader>j gw}{V}:call Justify('tw',4)<CR>
 
 " activate rainbow parenthesis
-nnoremap <leader>r :RainbowParenthesesToggle<CR>
+nnoremap <leader>R :RainbowParenthesesToggle<CR>
 
 " activate gundo
 nnoremap <leader>u :GundoToggle<CR>
