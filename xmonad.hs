@@ -1,7 +1,7 @@
 import XMonad
 import XMonad.Config.Gnome
 import XMonad.Config.Desktop
-import XMonad.Hooks.ManageHelpers (isFullscreen,doFullFloat)
+import XMonad.Hooks.ManageHelpers (isFullscreen,doFullFloat,doCenterFloat,doRectFloat)
 import XMonad.Layout.Tabbed
 import XMonad.Util.EZConfig
 import XMonad.Actions.CycleWS
@@ -61,8 +61,9 @@ main = xmonad $ gnomeConfig
                 className =? "Thunderbird" --> doShift "1",
                 className =? "Xchat"       --> doShift "1",
                 className =? "Pidgin"      --> doShift "1",
-                className =? "XClock"     --> doShift "1",
-                className =? "Gimp"        --> doFloat
+                className =? "XClock"      --> doShift "1",
+                className =? "Gimp"        --> doFloat,
+                appName =? "filechooserdialog" --> doRectFloat(W.RationalRect 0.25 0.25 0.5 0.5) --x y w h
             ]
 
         -- add a fullscreen tabbed layout that does not avoid covering
