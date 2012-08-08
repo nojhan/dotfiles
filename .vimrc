@@ -16,8 +16,14 @@ call pathogen#infect()
 set guifont=Inconsolata\ 12
 
 syntax on             " syntax coloring by default
+
 color solarized
 set background=dark
+
+if &t_Co >= 256 && ! has("gui_running")
+    " do not use solarized within term with 256 colors
+    colorscheme inkpot
+endif
 
 set textwidth=120
 set wrap            " auto wrap line view, but not text itself
