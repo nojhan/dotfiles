@@ -1,3 +1,6 @@
+*customization: -color
+XTerm*termName:  xterm-256color
+
 !! drop in Solarized colorscheme for Xresources/Xdefaults
 
 !!SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      RGB         HSB
