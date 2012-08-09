@@ -18,6 +18,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.IM
 import Data.Ratio ((%))
 import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Maximize
 
 import qualified XMonad.Actions.FlexibleManipulate as Flex
 import qualified XMonad.StackSet as W
@@ -30,7 +31,7 @@ myTerminal :: String
 myTerminal = "xterm"
 myScratchPad = scratchpadSpawnActionTerminal myTerminal
 
-myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $ 
+myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $ maximize $
             -- fullscreen with tabs
                 simpleTabbedAlways
             -- Two panes, each one with its own tabs
@@ -128,6 +129,9 @@ main = xmonad $ gnomeConfig
 
             -- Swap the focused window and the master window
             , ("M-S-<Return>", windows W.swapMaster)
+
+            -- Put the focused window (nearly) full screen
+            , ("M-<Backspace>", withFocused (sendMessage . maximizeRestore))
 
             -- Move focus to the master window
             , ("M-m", windows W.focusMaster  )
