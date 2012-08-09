@@ -1,3 +1,6 @@
+
+term screen-256color
+
 # detach on hangup
 autodetach on
 
