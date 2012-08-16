@@ -137,10 +137,12 @@ endif
 
 
 " move the current line up or down with the Ctrl-arrow keys
-nmap <C-Down>  :m+<CR>==
-nmap <C-Up> :m-2<CR>==
-imap <C-Down>  <C-O>:m+<CR><C-O>==
-imap <C-Up> <C-O>:m-2<CR><C-O>== 
+nmap <C-Down> :<C-u>move .+1<CR>
+nmap <C-Up>   :<C-u>move .-2<CR>
+imap <C-Down> <C-o>:<C-u>move .+1<CR>
+imap <C-Up>   <C-o>:<C-u>move .-2<CR>
+vmap <C-Down> :move '>+1<CR>gv
+vmap <C-Up> :move '<-2<CR>gv
 
 filetype plugin on
 set ofu=syntaxcomplete#Complete
@@ -201,11 +203,11 @@ imap <F7> <C-o>:call MySpellLang()<CR>
 " search the file for FIXME, TODO and put them in a handy list
 map <F10> <Plug>TaskList
 
-" F11 - taglist window
+" side pane of class and functions
 map <F11> :TlistToggle<cr>
 
-" open buffers as tabs along the top or bottom of your screen
-map <F12> :MiniBufExplorer<cr>
+" side pane of files
+map <F12> :NERDTreeToggle<cr>
 
 " configure tags - add additional tags here or comment out not-used ones
 set tags+=~/.vim/tags/cpp
