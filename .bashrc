@@ -170,7 +170,7 @@ HISTTIMEFORMAT='%F %T '
 alias bepo="setxkbmap -layout fr -variant bepo -option"
 
 # Super nice prompt
-source ~/.liquidprompt.bash
+source ~/.liquidprompt
 
 # Added by autojump install.sh
 #source /etc/profile.d/autojump.bash
