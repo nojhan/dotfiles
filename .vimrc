@@ -68,6 +68,13 @@ set splitbelow
 " New vsplit placed right
 set splitright
 
+set foldmethod=syntax
+set foldlevelstart=20 " buffer are always loaded with opened folds
+
+" persistent undo across sessions
+set undofile
+set undodir=~/.vim/undodir
+
 let mapleader = "," " leader key is comma
 
 " xx will delete the line without copying it into the default register
@@ -110,7 +117,7 @@ cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>p :CtrlP %%<cr>
 
 " use shift-space as escape
-inoremap <S-Space> <Esc>
+"inoremap <S-Space> <Esc>
 
 set list
 " print tabs with a special character (add ",eol:·" for end of lines)
