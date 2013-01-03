@@ -28,7 +28,7 @@ endif
 set textwidth=120
 set wrap            " auto wrap line view, but not text itself
 
-filetype indent on      " activates indenting for files  
+filetype indent on  " activates indenting for files
 set autoindent      " automatic indentation
 set smartindent
 set softtabstop=4   " width of a tab
@@ -75,6 +75,9 @@ set foldlevelstart=20 " buffer are always loaded with opened folds
 set undofile
 set undodir=~/.vim/undodir
 
+" always keep lines around the cursor
+set scrolloff=5
+
 let mapleader = "," " leader key is comma
 
 " xx will delete the line without copying it into the default register
@@ -119,9 +122,9 @@ map <leader>p :CtrlP %%<cr>
 " use shift-space as escape
 "inoremap <S-Space> <Esc>
 
-set list
 " print tabs with a special character (add ",eol:·" for end of lines)
-set listchars=trail:·,nbsp:·,tab:▸\ ,
+set listchars=trail:·,nbsp:·,tab:▸\ ,extends:»,precedes:«,
+set list
 
 au VimEnter * echomsg system('/usr/games/fortune vimtweets')
 
