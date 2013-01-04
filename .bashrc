@@ -12,6 +12,7 @@ fi
 function proxy()
 {
     export http_proxy="http://localhost:8888"
+    export https_proxy="http://localhost:8888"
     export ftp_proxy="ftp://localhost:8888"
     echo "localhost:8888"
 }
@@ -19,6 +20,7 @@ function proxy()
 function noproxy()
 {
     export http_proxy=""
+    export https_proxy=""
     export ftp_proxy=""
 }
 
