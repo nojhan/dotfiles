@@ -153,6 +153,10 @@ echo "rcp : copy with rsync/ssh"
 # default editor
 export EDITOR='gvim'
 
+# If the output is smaller than the screen height is smaller, 
+# less will just cat it
+export LESS="-FX"
+
 # do not permits to recall dangerous commands in bash history
 export HISTIGNORE='&:[bf]g:exit:*>|*::*rm*-rf*:*rm*-f*'
 # append history rather than overwrite
