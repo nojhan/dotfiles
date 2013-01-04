@@ -71,8 +71,8 @@ alias l='ls -1'
 alias la='ls -Al'               # show hidden files
 alias lx='ls -lXB'              # sort by extension
 alias lk='ls -lSr'              # sort by size
-alias lc='ls -lcr'              # sort by change time  
-alias lu='ls -lur'              # sort by access time   
+alias lc='ls -lcr'              # sort by change time
+alias lu='ls -lur'              # sort by access time
 alias lr='ls -lR'               # recursive ls
 alias lt='ls -ltr'              # sort by date
 alias lm='ls -al --color=none|less'  # pipe through 'less'
@@ -83,6 +83,10 @@ alias tree='tree -Csu'          # nice alternative to 'ls'
 # where x is the number of lines currently displayed on your terminal
 alias head='head -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
 alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
+
+# If the output is smaller than the screen height is smaller,
+# less will just cat it
+export LESS="-FX"
 
 # nautilus file manager in browser mode without destkop management
 alias nautile='nautilus --no-desktop --browser'
@@ -118,11 +122,20 @@ function repeat()
     done
 }
 
+# default editor
+export EDITOR='gvim'
+
+# print a vim fortune at startup
+#/usr/games/fortune vimtips
+
 # ipython shell with correct default apps
 alias ipy='ipython -pylab -p scipy --editor="gvim"'
 
 # colored gcc output using the colout command
 alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning magenta | colout pragma green standard"
+
+# shortcut to display the url config of remote repo in a git root
+alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
 
 
 #################
@@ -150,13 +163,6 @@ echo "psg : ps aux | grep "
 echo "rcp : copy with rsync/ssh"
 }
 
-# default editor
-export EDITOR='gvim'
-
-# If the output is smaller than the screen height is smaller,
-# less will just cat it
-export LESS="-FX"
-
 # do not permits to recall dangerous commands in bash history
 export HISTIGNORE='&:[bf]g:exit:*>|*::*rm*-rf*:*rm*-f*'
 # append history rather than overwrite
@@ -175,15 +181,9 @@ HISTTIMEFORMAT='%F %T '
 # Manually switch to the bépo keyboard layout
 alias bepo="setxkbmap -layout fr -variant bepo -option"
 
-# shortcut to display the url config of remote repo in a git root
-alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
-
 # Super nice prompt
 source ~/.liquidprompt
 
 # Added by autojump install.sh
 #source /etc/profile.d/autojump.bash
-
-# print a vim fortune at startup
-#/usr/games/fortune vimtips
 
