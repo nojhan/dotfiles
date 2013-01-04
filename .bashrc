@@ -153,7 +153,7 @@ echo "rcp : copy with rsync/ssh"
 # default editor
 export EDITOR='gvim'
 
-# If the output is smaller than the screen height is smaller, 
+# If the output is smaller than the screen height is smaller,
 # less will just cat it
 export LESS="-FX"
 
@@ -174,6 +174,9 @@ HISTTIMEFORMAT='%F %T '
 
 # Manually switch to the bépo keyboard layout
 alias bepo="setxkbmap -layout fr -variant bepo -option"
+
+# shortcut to display the url config of remote repo in a git root
+alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
 
 # Super nice prompt
 source ~/.liquidprompt
