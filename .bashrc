@@ -102,7 +102,8 @@ alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
 
 # If the output is smaller than the screen height is smaller,
 # less will just cat it
-export LESS="-FX"
+# + support ANSI colors
+export LESS="-FX -R"
 
 # nautilus file manager in browser mode without destkop management
 alias nautile='nautilus --no-desktop --browser'
