@@ -154,6 +154,9 @@ alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning mage
 # shortcut to display the url config of remote repo in a git root
 alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
 
+# Pretty git log
+alias gitlog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
 
 #################
 # Configuration #
