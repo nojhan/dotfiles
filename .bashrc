@@ -155,6 +155,8 @@ alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[re
 # Configuration #
 #################
 
+alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoclean -y && sudo apt-get clean"
+
 # alias I want to learn
 function h()
 {
