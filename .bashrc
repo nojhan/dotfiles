@@ -105,6 +105,9 @@ alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
 # + support ANSI colors
 export LESS="-FX -R"
 
+# Syntax coloring with pygments in less, when opening source files
+export LESSOPEN='|~/code/dotfiles/lessfilter.sh %s'
+
 # nautilus file manager in browser mode without destkop management
 alias nautile='nautilus --no-desktop --browser'
 
