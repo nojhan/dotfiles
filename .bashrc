@@ -66,6 +66,9 @@ up()
     cd $str
 }
 
+alias ..='cd ..'
+alias ...='cd ../../'
+
 # move backup files to trash
 alias clean='mv *~ ~/.Trash/'
 
