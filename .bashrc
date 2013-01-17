@@ -53,6 +53,19 @@ function del()
     done
 }
 
+# go up n directories
+up()
+{
+    local str=""
+    local count=0
+    while [[ "$count" -lt "$1" ]] ;
+    do
+        str=$str"../"
+        let count=count+1
+    done
+    cd $str
+}
+
 # move backup files to trash
 alias clean='mv *~ ~/.Trash/'
 
