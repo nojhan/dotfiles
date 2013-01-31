@@ -159,8 +159,15 @@ alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning mage
 alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
 
 # Pretty git log
-alias gitlog="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias git_log="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
+function git_ignore()
+{
+    if [[ ! -f .gitignore ]] ; then
+        echo ".gitignore" > .gitignore
+    fi
+    git ls-files --other --exclude-standard >> .gitignore
+}
 
 #################
 # Configuration #
