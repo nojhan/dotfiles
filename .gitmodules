@@ -28,3 +28,12 @@
 [submodule "rainbow_parentheses.vim"]
     path = .vim/bundle/rainbow_parentheses.vim
     url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "gundo"]
+    path = .vim/bundle/gundo
+    url = https://github.com/sjl/gundo.vim.git
+[submodule "minibufexpl"]
+    path = .vim/bundle/minibufexpl
+    url = https://github.com/fholgado/minibufexpl.vim.git
+[submodule "tagbar"]
+    path = .vim/bundle/tagbar
+    url = https://github.com/majutsushi/tagbar.git
