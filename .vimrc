@@ -1,17 +1,6 @@
+set nocompatible    " do not try to be vi-compatible
+
 call pathogen#infect()
-" Interesting plugins:
-" pathogen - easy plugin installation
-" surround - easily delete, change and add surrounding pairs of characters
-" Gundo - visualizing the undo tree
-" RainbowParenthesis - highlights matching parenthesis with a rainbow of colors
-" tComment - smart comments toggle
-" omnicppcomplete - C/C++ completion with ctags (what about clangcomplete?)
-" ack - run ack-grep from vim, and shows the results in a split window
-" bclose - The :Bclose command deletes a buffer without changing the window layout
-" minibufexpl - list your open buffers as tabs along the top or bottom of your screen
-" tasklist - search the file for FIXME, TODO, … and put them in a handy list
-" yankring - maintains a list of numbered registers containing the last deletes, see :YRShow
-" taglist - groups and displays the functions, classes, … in a Vim window
 
 set guifont=Inconsolata\ 12
 
@@ -36,6 +25,9 @@ set tabstop=4
 set shiftwidth=4    " width of the indentation
 set expandtab
 
+" don't un-indent hashes at the BOL
+inoremap # #
+
 set ignorecase      " case-insentive search by default
 set smartcase       " search case-sensitive if there is an upper-case letter
 set gdefault        " when replacing, use /g by default
@@ -46,7 +38,6 @@ set wildmenu        " command-line completion shows a list of matches
 set wildmode=longest,list:longest,full " Bash-vim completion behavior
 set autochdir       " use current working directory of a file as base path
 
-set nocompatible    " do not try to be vi-compatible
 set encoding=utf-8
 
 set nu              " show line numbers
@@ -78,6 +69,12 @@ set undodir=~/.vim/undodir
 " always keep lines around the cursor
 set scrolloff=5
 
+" Let cursor move past the last char in visual block mode
+set virtualedit=block
+
+" show more matching characters
+set matchpairs+=<:>
+
 let mapleader = "," " leader key is comma
 
 " xx will delete the line without copying it into the default register
@@ -88,6 +85,11 @@ nnoremap G Gzz
 
 " ,v will reselect the text that was just pasted
 nnoremap <leader>v V`]
+
+" ,w will disable autowrap line break
+nnoremap <leader>w :set tw=0
+nnoremap <leader>W :set tw=80
+nnoremap <leader>x :set tw=120
 
 " ,s will split vertically and swith over the new panel
 nnoremap <leader>s <C-w>v<C-w>l:bn<CR>
@@ -132,12 +134,12 @@ au VimEnter * echomsg system('/usr/games/fortune vimtweets')
 
 
 set laststatus=2    " always show the statusline, even when there is only one file edited
-if has("statusline")
-    "set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%{fugitive#statusline()}%=%l,%c%V\ %P
-    set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%=%l,%c%V\ %P
-elseif has("cmdline_info")
-    set ruler           " show current line and column number
-endif
+" if has("statusline")
+"     "set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%{fugitive#statusline()}%=%l,%c%V\ %P
+"     set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%=%l,%c%V\ %P
+" elseif has("cmdline_info")
+"     set ruler           " show current line and column number
+" endif
 
 
 if has("fname_case")
