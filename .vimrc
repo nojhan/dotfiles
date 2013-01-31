@@ -18,15 +18,10 @@ set textwidth=120
 set wrap            " auto wrap line view, but not text itself
 
 filetype indent on  " activates indenting for files
-set autoindent      " automatic indentation
-set smartindent
 set softtabstop=4   " width of a tab
 set tabstop=4
 set shiftwidth=4    " width of the indentation
 set expandtab
-
-" don't un-indent hashes at the BOL
-inoremap # #
 
 set ignorecase      " case-insentive search by default
 set smartcase       " search case-sensitive if there is an upper-case letter
@@ -54,7 +49,7 @@ set colorcolumn=80,120  " highligth the 80th and 120th column
 " No need to prefix them with "* or "+
 set clipboard=unnamed
 
-" New split plaed below
+" New split placed below
 set splitbelow
 " New vsplit placed right
 set splitright
@@ -219,9 +214,11 @@ map <F10> <Plug>TaskList
 " side pane of class and functions
 "map <F11> :TlistToggle<cr>
 nmap <F11> :TagbarToggle<CR>
+nnoremap <leader>b :TagbarToggle<CR>
 
 " side pane of files
 map <F12> :NERDTreeToggle<cr>
+nnoremap <leader>t :NERDTreeToggle<cr>
 
 " configure tags - add additional tags here or comment out not-used ones
 set tags+=~/.vim/tags/cpp
@@ -249,6 +246,4 @@ set completeopt=menuone,menu,longest,preview
 " close the buffer without deleting its window
 :runtime plugins/bclose.vim
 nmap :bc <Plug>Kwbd
-
-
 
