@@ -162,25 +162,25 @@ au BufRead,BufNewFile *.mwiki setf Wikipedia
 au BufRead,BufNewFile *.wikipedia.org.* setf Wikipedia
 
 " autocomplétion with <TAB> instead of <C-n>, depending on the context
-function! Smart_TabComplete()
-  let line = getline('.')                         " curline
-  let substr = strpart(line, -1, col('.')+1)      " from start to cursor
-  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-  if (strlen(substr)==0)                          " nothing to match on empty string
-    return "\<tab>"
-  endif
-  let has_period = match(substr, '\.') != -1      " position of period, if any
-  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-  if (!has_period && !has_slash)
-    return "\<C-X>\<C-P>"                         " existing text matching
-  elseif ( has_slash )
-    return "\<C-X>\<C-F>"                         " file matching
-  else
-    return "\<C-X>\<C-O>"                         " plugin matching
-  endif
-endfunction
+"   function! Smart_TabComplete()
+"     let line = getline('.')                         " curline
+"     let substr = strpart(line, -1, col('.')+1)      " from start to cursor
+"     let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+"     if (strlen(substr)==0)                          " nothing to match on empty string
+"       return "\<tab>"
+"     endif
+"     let has_period = match(substr, '\.') != -1      " position of period, if any
+"     let has_slash = match(substr, '\/') != -1       " position of slash, if any
+"     if (!has_period && !has_slash)
+"       return "\<C-X>\<C-P>"                         " existing text matching
+"     elseif ( has_slash )
+"       return "\<C-X>\<C-F>"                         " file matching
+"     else
+"       return "\<C-X>\<C-O>"                         " plugin matching
+"     endif
+"   endfunction
 
-inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+" inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
 
 " Append modeline after last line in buffer.
@@ -215,7 +215,8 @@ imap <F7> <C-o>:call MySpellLang()<CR>
 map <F10> <Plug>TaskList
 
 " side pane of class and functions
-map <F11> :TlistToggle<cr>
+"map <F11> :TlistToggle<cr>
+nmap <F11> :TagbarToggle<CR>
 
 " side pane of files
 map <F12> :NERDTreeToggle<cr>
