@@ -1,0 +1,30 @@
+[submodule "vim/vim-pathogen"]
+    path = .vim/bundle/vim-pathogen
+    url = https://github.com/tpope/vim-pathogen.git
+[submodule "vim/nerdtree"]
+    path = .vim/bundle/nerdtree
+    url = https://github.com/scrooloose/nerdtree.git
+[submodule "vim/vim-statline"]
+    path = .vim/bundle/vim-statline
+    url = https://github.com/millermedeiros/vim-statline.git
+[submodule "vim/supertab"]
+    path = .vim/bundle/supertab
+    url = https://github.com/ervandew/supertab.git
+[submodule "vim/Command-T"]
+    path = .vim/bundle/Command-T
+    url = https://github.com/wincent/Command-T.git
+[submodule "tlib_vim"]
+    path = .vim/bundle/tlib_vim
+    url = https://github.com/tomtom/tlib_vim.git
+[submodule "tcomment_vim"]
+    path = .vim/bundle/tcomment_vim
+    url = https://github.com/tomtom/tcomment_vim.git
+[submodule "vim-eunuch"]
+    path = .vim/bundle/vim-eunuch
+    url = https://github.com/tpope/vim-eunuch.git
+[submodule "vim-surround"]
+    path = .vim/bundle/vim-surround
+    url = https://github.com/tpope/vim-surround.git
+[submodule "rainbow_parentheses.vim"]
+    path = .vim/bundle/rainbow_parentheses.vim
+    url = https://github.com/kien/rainbow_parentheses.vim.git
