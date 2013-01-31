@@ -130,6 +130,7 @@ alias psg='ps aux|grep ' # grep a process
 ##########
 
 alias agrep="ack-grep"
+alias ag="~/apps/the_silver_searcher-master/ag"
 
 # repeat n times command
 # repeat 10 echo "ok"
