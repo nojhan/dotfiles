@@ -16,6 +16,7 @@ import XMonad.Layout.TwoPane
 import XMonad.Layout.Combo
 import XMonad.Layout.Grid
 import XMonad.Layout.IM
+import XMonad.Layout.ThreeColumns
 import Data.Ratio ((%))
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Maximize
@@ -35,10 +36,11 @@ myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $ maximize $
             -- fullscreen with tabs
                 simpleTabbedAlways
             -- Two panes, each one with its own tabs
-            ||| combineTwo (TwoPane 0.03 0.5) simpleTabbed simpleTabbed
+            -- ||| combineTwo (TwoPane 0.03 0.5) simpleTabbed simpleTabbed
             -- 2/3 of the screen for a master window, other ones on the right
             ||| ResizableTall 1 (3/100) (2/3) []
             ||| GridRatio (4/3)
+            ||| ThreeCol 1 (3/100) (1/3)
 
             -- buddy lists on a small vertical pane at right,
             -- master windows on top of the remaining space, other ones below
