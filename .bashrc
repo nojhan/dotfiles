@@ -147,7 +147,7 @@ function repeat()
 }
 
 # default editor
-export EDITOR='gvim'
+export EDITOR='gvim --nofork'
 
 # print a vim fortune at startup
 #/usr/games/fortune vimtips
