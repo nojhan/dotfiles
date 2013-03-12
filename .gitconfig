@@ -8,7 +8,7 @@
     co = checkout
     # create branch
     cb = checkout -b
-    ci = commit
+    ci = commit -a -v
     br = branch
     sta = stash
 [core]
