@@ -118,6 +118,10 @@ function md() {
 }
 
 
+# use up/down to search history, matching the current line start
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
 #############
 # Processes #
 #############
