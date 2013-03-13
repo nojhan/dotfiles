@@ -16,6 +16,6 @@
     # -R is necessary to display colors in less
     # the '+' calls a command at start, that will jump to the first diff section
     # then, you just have to type 'n' to iterate over diff sections
-    pager = less -R +'/-{3}'
+    pager = less -R +'/^\\@\\@\\s'
 [color]
     ui = auto
