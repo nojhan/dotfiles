@@ -29,7 +29,7 @@ modm = mod1Mask
 
 myTerminal :: String
 -- myTerminal = "$XTERMCMD"
-myTerminal = "xterm"
+myTerminal = "gnome-terminal"
 myScratchPad = scratchpadSpawnActionTerminal myTerminal
 
 myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $ maximize $
@@ -151,7 +151,7 @@ main = xmonad $ gnomeConfig
 -- Extended notation, for F keys (?)
     `additionalKeys` 
         [
-              ((modm, xK_F1), spawn "xterm")
+              ((modm, xK_F1), spawn "gnome-terminal")
             , ((modm, xK_F2), spawn "gmrun")
             -- Launch firefox or raise its window if already running
             , ((modm, xK_F4), runOrRaise "firefox" (className =? "Firefox" <||> className =? "Firefox-bin"))
