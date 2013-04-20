@@ -13,7 +13,7 @@ call pathogen#infect()
 " yankring - maintains a list of numbered registers containing the last deletes, see :YRShow
 " taglist - groups and displays the functions, classes, … in a Vim window
 
-set guifont=Inconsolata\ 12
+set guifont=Inconsolata\ 11
 
 syntax on             " syntax coloring by default
 
@@ -55,7 +55,7 @@ set showcmd         " show informations about selection while in visual mode
 
 set guioptions-=T   "remove toolbar
 
-set colorcolumn=80,120  " highligth the 80th and 120th column
+set colorcolumn=72,120  " highligth the 80th and 120th column
 
 "set cursorline " highlight current line
 
@@ -83,6 +83,9 @@ let mapleader = "," " leader key is comma
 " xx will delete the line without copying it into the default register
 nnoremap xx "_dd
 
+" Yank the line, comment it, paste it
+nnoremap yp yygccp
+
 " When jumping to a given line, center the screen
 nnoremap G Gzz
 
@@ -91,6 +94,9 @@ nnoremap <leader>v V`]
 
 " ,s will split vertically and swith over the new panel
 nnoremap <leader>s <C-w>v<C-w>l:bn<CR>
+
+" ,S will split horizontally and swith over the new panel
+nnoremap <leader>S <C-w>s<C-w>l:bn<CR>
 
 " Wrap a paragraph and justify it
 :runtime macros/justify.vim
@@ -109,7 +115,7 @@ nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s
 nnoremap <leader>h :set guifont=Inconsolata\ 4<CR>
 
 " set a normal guifont size 
-nnoremap <leader>f :set guifont=Inconsolata\ 12<CR>
+nnoremap <leader>f :set guifont=Inconsolata\ 11<CR>
 
 " set a big guifont size
 nnoremap <leader>ç :set guifont=Inconsolata\ 14<CR>
@@ -118,6 +124,10 @@ nnoremap <leader>ç :set guifont=Inconsolata\ 14<CR>
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>p :CtrlP %%<cr>
+
+" semantic selection expansion/shrink
+map + <Plug>(expand_region_expand)
+map - <Plug>(expand_region_shrink)
 
 " use shift-space as escape
 "inoremap <S-Space> <Esc>
