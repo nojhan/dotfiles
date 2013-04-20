@@ -1,17 +1,6 @@
+set nocompatible    " do not try to be vi-compatible
+
 call pathogen#infect()
-" Interesting plugins:
-" pathogen - easy plugin installation
-" surround - easily delete, change and add surrounding pairs of characters
-" Gundo - visualizing the undo tree
-" RainbowParenthesis - highlights matching parenthesis with a rainbow of colors
-" tComment - smart comments toggle
-" omnicppcomplete - C/C++ completion with ctags (what about clangcomplete?)
-" ack - run ack-grep from vim, and shows the results in a split window
-" bclose - The :Bclose command deletes a buffer without changing the window layout
-" minibufexpl - list your open buffers as tabs along the top or bottom of your screen
-" tasklist - search the file for FIXME, TODO, … and put them in a handy list
-" yankring - maintains a list of numbered registers containing the last deletes, see :YRShow
-" taglist - groups and displays the functions, classes, … in a Vim window
 
 set guifont=Inconsolata\ 11
 
@@ -29,8 +18,6 @@ set textwidth=120
 set wrap            " auto wrap line view, but not text itself
 
 filetype indent on  " activates indenting for files
-set autoindent      " automatic indentation
-set smartindent
 set softtabstop=4   " width of a tab
 set tabstop=4
 set shiftwidth=4    " width of the indentation
@@ -46,7 +33,6 @@ set wildmenu        " command-line completion shows a list of matches
 set wildmode=longest,list:longest,full " Bash-vim completion behavior
 set autochdir       " use current working directory of a file as base path
 
-set nocompatible    " do not try to be vi-compatible
 set encoding=utf-8
 
 set nu              " show line numbers
@@ -63,7 +49,7 @@ set colorcolumn=72,120  " highligth the 80th and 120th column
 " No need to prefix them with "* or "+
 set clipboard=unnamed
 
-" New split plaed below
+" New split placed below
 set splitbelow
 " New vsplit placed right
 set splitright
@@ -78,6 +64,12 @@ set undodir=~/.vim/undodir
 " always keep lines around the cursor
 set scrolloff=5
 
+" Let cursor move past the last char in visual block mode
+set virtualedit=block
+
+" show more matching characters
+set matchpairs+=<:>
+
 let mapleader = "," " leader key is comma
 
 " xx will delete the line without copying it into the default register
@@ -91,6 +83,11 @@ nnoremap G Gzz
 
 " ,v will reselect the text that was just pasted
 nnoremap <leader>v V`]
+
+" ,w will disable autowrap line break
+nnoremap <leader>w :set tw=0
+nnoremap <leader>W :set tw=80
+nnoremap <leader>x :set tw=120
 
 " ,s will split vertically and swith over the new panel
 nnoremap <leader>s <C-w>v<C-w>l:bn<CR>
@@ -142,12 +139,12 @@ au VimEnter * echomsg system('/usr/games/fortune vimtweets')
 
 
 set laststatus=2    " always show the statusline, even when there is only one file edited
-if has("statusline")
-    "set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%{fugitive#statusline()}%=%l,%c%V\ %P
-    set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%=%l,%c%V\ %P
-elseif has("cmdline_info")
-    set ruler           " show current line and column number
-endif
+" if has("statusline")
+"     "set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%{fugitive#statusline()}%=%l,%c%V\ %P
+"     set statusline=\ %f%m%r\ [%{strlen(&ft)?&ft:'aucun'},%{strlen(&fenc)?&fenc:&enc},%{&fileformat},ts:%{&tabstop}]%=%l,%c%V\ %P
+" elseif has("cmdline_info")
+"     set ruler           " show current line and column number
+" endif
 
 
 if has("fname_case")
@@ -172,25 +169,25 @@ au BufRead,BufNewFile *.mwiki setf Wikipedia
 au BufRead,BufNewFile *.wikipedia.org.* setf Wikipedia
 
 " autocomplétion with <TAB> instead of <C-n>, depending on the context
-function! Smart_TabComplete()
-  let line = getline('.')                         " curline
-  let substr = strpart(line, -1, col('.')+1)      " from start to cursor
-  let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
-  if (strlen(substr)==0)                          " nothing to match on empty string
-    return "\<tab>"
-  endif
-  let has_period = match(substr, '\.') != -1      " position of period, if any
-  let has_slash = match(substr, '\/') != -1       " position of slash, if any
-  if (!has_period && !has_slash)
-    return "\<C-X>\<C-P>"                         " existing text matching
-  elseif ( has_slash )
-    return "\<C-X>\<C-F>"                         " file matching
-  else
-    return "\<C-X>\<C-O>"                         " plugin matching
-  endif
-endfunction
+"   function! Smart_TabComplete()
+"     let line = getline('.')                         " curline
+"     let substr = strpart(line, -1, col('.')+1)      " from start to cursor
+"     let substr = matchstr(substr, "[^ \t]*$")       " word till cursor
+"     if (strlen(substr)==0)                          " nothing to match on empty string
+"       return "\<tab>"
+"     endif
+"     let has_period = match(substr, '\.') != -1      " position of period, if any
+"     let has_slash = match(substr, '\/') != -1       " position of slash, if any
+"     if (!has_period && !has_slash)
+"       return "\<C-X>\<C-P>"                         " existing text matching
+"     elseif ( has_slash )
+"       return "\<C-X>\<C-F>"                         " file matching
+"     else
+"       return "\<C-X>\<C-O>"                         " plugin matching
+"     endif
+"   endfunction
 
-inoremap <tab> <c-r>=Smart_TabComplete()<CR>
+" inoremap <tab> <c-r>=Smart_TabComplete()<CR>
 
 
 " Append modeline after last line in buffer.
@@ -225,10 +222,13 @@ imap <F7> <C-o>:call MySpellLang()<CR>
 map <F10> <Plug>TaskList
 
 " side pane of class and functions
-map <F11> :TlistToggle<cr>
+"map <F11> :TlistToggle<cr>
+nmap <F11> :TagbarToggle<CR>
+nnoremap <leader>b :TagbarToggle<CR>
 
 " side pane of files
 map <F12> :NERDTreeToggle<cr>
+nnoremap <leader>t :NERDTreeToggle<cr>
 
 " configure tags - add additional tags here or comment out not-used ones
 set tags+=~/.vim/tags/cpp
@@ -256,6 +256,4 @@ set completeopt=menuone,menu,longest,preview
 " close the buffer without deleting its window
 :runtime plugins/bclose.vim
 nmap :bc <Plug>Kwbd
-
-
 

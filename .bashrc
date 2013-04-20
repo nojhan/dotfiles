@@ -118,6 +118,10 @@ function md() {
 }
 
 
+# use up/down to search history, matching the current line start
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
 #############
 # Processes #
 #############
@@ -144,7 +148,7 @@ function repeat()
 }
 
 # default editor
-export EDITOR='gvim'
+export EDITOR='gvim --nofork'
 
 # print a vim fortune at startup
 #/usr/games/fortune vimtips
@@ -215,6 +219,7 @@ HISTTIMEFORMAT='%F %T '
 alias bepo="setxkbmap -layout fr -variant bepo -option"
 
 # Super nice prompt
+source ~/.liquidpromptrc
 source ~/.liquidprompt
 
 # Added by autojump install.sh

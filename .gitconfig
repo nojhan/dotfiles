@@ -1,0 +1,21 @@
+[user]
+    name = nojhan
+    email = nojhan@nojhan.net
+[alias]
+    up = pull origin
+    st = status
+    di = diff
+    co = checkout
+    # create branch
+    cb = checkout -b
+    ci = commit -a -v
+    br = branch
+    sta = stash
+[pager]
+    #  use less as pager
+    # -R is necessary to display colors in less
+    # the '+' calls a command at start, that will jump to the first diff section
+    # then, you just have to type 'n' to iterate over diff sections
+    diff = less -R +'/^\\@\\@\\s'
+[color]
+    ui = auto
