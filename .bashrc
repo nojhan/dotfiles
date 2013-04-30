@@ -11,10 +11,11 @@ fi
 
 function proxy()
 {
-    export http_proxy="http://localhost:8888"
-    export https_proxy="http://localhost:8888"
-    export ftp_proxy="ftp://localhost:8888"
-    echo "localhost:8888"
+    proxy_url="$(~/proxy.sh)"
+    export  http_proxy="$proxy_url"
+    export https_proxy="$proxy_url"
+    export   ftp_proxy="$proxy_url"
+    echo ${proxy_url##*@}
 }
 
 function noproxy()
@@ -126,7 +127,7 @@ bind '"\e[B": history-search-forward'
 # Processes #
 #############
 
-alias psg='ps aux|grep ' # grep a process
+alias psg='ps aux|grep -v grep | grep -i --color=auto ' # grep a process
 
 
 ##########
