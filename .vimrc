@@ -76,7 +76,7 @@ let mapleader = "," " leader key is comma
 nnoremap xx "_dd
 
 " Yank the line, comment it, paste it
-nnoremap yp yygccp
+nnoremap <leader>g yygccp
 
 " When jumping to a given line, center the screen
 nnoremap G Gzz
