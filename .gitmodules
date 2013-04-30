@@ -37,6 +37,6 @@
 [submodule ".vim/bundle/tagbar"]
 	path = .vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule ".vim/vim-pathogen"]
-	path = .vim/vim-pathogen
-	url = https://github.com/tpope/vim-pathogen.git
+[submodule ".vim/vim-multiple-cursors"]
+	path = .vim/vim-multiple-cursors
+    url  = https://github.com/terryma/vim-multiple-cursors.git
