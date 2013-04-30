@@ -29,7 +29,7 @@ modm = mod1Mask
 
 myTerminal :: String
 -- myTerminal = "$XTERMCMD"
-myTerminal = "gnome-terminal"
+myTerminal = "urxvt"
 myScratchPad = scratchpadSpawnActionTerminal myTerminal
 
 myDefaultLayoutHook = windowNavigation $ desktopLayoutModifiers $ maximize $
