@@ -39,7 +39,19 @@
 	url = https://github.com/majutsushi/tagbar.git
 [submodule ".vim/bundle/vim-multiple-cursors"]
 	path = .vim/bundle/vim-multiple-cursors
-    url  = https://github.com/terryma/vim-multiple-cursors.git
+	url = http://github.com/terryma/vim-multiple-cursors.git
 [submodule ".vim/bundle/vim-gitgutter"]
 	path = .vim/bundle/vim-gitgutter
-    url  = https://github.com/airblade/vim-gitgutter.git
+	url = http://github.com/airblade/vim-gitgutter.git
+[submodule ".vim/bundle/vim-expand-region"]
+	path = .vim/bundle/vim-expand-region
+	url = http://github.com/terryma/vim-expand-region.git
+[submodule ".vim/bundle/quickfixsigns_vim"]
+	path = .vim/bundle/quickfixsigns_vim
+	url = http://github.com/tomtom/quickfixsigns_vim.git
+[submodule ".vim/bundle/TaskList.vim"]
+	path = .vim/bundle/TaskList.vim
+	url = http://github.com/vim-scripts/TaskList.vim.git
+[submodule ".vim/bundle/rainbow"]
+	path = .vim/bundle/rainbow
+	url = http://github.com/oblitum/rainbow.git
