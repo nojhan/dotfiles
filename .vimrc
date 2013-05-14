@@ -75,6 +75,8 @@ let mapleader = "," " leader key is comma
 " xx will delete the line without copying it into the default register
 nnoremap xx "_dd
 
+nnoremap <leader>t :set noexpandtab<CR>
+
 " Yank the line, comment it, paste it
 nnoremap <leader>g yygccp
 
@@ -85,9 +87,9 @@ nnoremap G Gzz
 nnoremap <leader>v V`]
 
 " ,w will disable autowrap line break
-nnoremap <leader>w :set tw=0
-nnoremap <leader>W :set tw=80
-nnoremap <leader>x :set tw=120
+nnoremap <leader>w :set tw=0<CR>
+nnoremap <leader>W :set tw=80<CR>
+nnoremap <leader>x :set tw=120<CR>
 
 " ,s will split vertically and swith over the new panel
 nnoremap <leader>s <C-w>v<C-w>l:bn<CR>
@@ -100,7 +102,8 @@ nnoremap <leader>S <C-w>s<C-w>l:bn<CR>
 nnoremap <leader>j gw}{V}:call Justify('tw',4)<CR>
 
 " activate rainbow parenthesis
-nnoremap <leader>R :RainbowParenthesesToggle<CR>
+" nnoremap <leader>R :RainbowParenthesesToggle<CR>
+nnoremap <leader>r :RainbowToggle<CR>
 
 " activate gundo
 nnoremap <leader>u :GundoToggle<CR>
@@ -228,7 +231,7 @@ nnoremap <leader>b :TagbarToggle<CR>
 
 " side pane of files
 map <F12> :NERDTreeToggle<cr>
-nnoremap <leader>t :NERDTreeToggle<cr>
+" nnoremap <leader>t :NERDTreeToggle<cr>
 
 " configure tags - add additional tags here or comment out not-used ones
 set tags+=~/.vim/tags/cpp
