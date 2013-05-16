@@ -157,8 +157,13 @@ export EDITOR='gvim --nofork'
 # ipython shell with correct default apps
 alias ipy='ipython -pylab -p scipy --editor="gvim"'
 
-# colored gcc output using the colout command
-alias cgcc="colout :[0-9]+: yellow standard | colout error | colout warning magenta | colout pragma green standard"
+# colored cmake/gcc output using the colout command
+# usage: cm ./build_script
+function cm()
+{
+    $@ 2>&1 | colout -t cmake | colout -t g++
+}
+
 
 # shortcut to display the url config of remote repo in a git root
 alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
