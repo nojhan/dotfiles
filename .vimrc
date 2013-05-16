@@ -226,11 +226,11 @@ map <F10> <Plug>TaskList
 
 " side pane of class and functions
 "map <F11> :TlistToggle<cr>
-nmap <F11> :TagbarToggle<CR>
+nmap <F12> :TagbarToggle<CR>
 nnoremap <leader>b :TagbarToggle<CR>
 
 " side pane of files
-map <F12> :NERDTreeToggle<cr>
+map <F11> :NERDTreeToggle<cr>
 " nnoremap <leader>t :NERDTreeToggle<cr>
 
 " configure tags - add additional tags here or comment out not-used ones
