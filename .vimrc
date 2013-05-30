@@ -2,7 +2,7 @@ set nocompatible    " do not try to be vi-compatible
 
 call pathogen#infect()
 
-set guifont=Inconsolata\ 11
+set guifont=Deja\ Vu\ Sans\ Mono\ 9
 
 syntax on             " syntax coloring by default
 
@@ -27,8 +27,8 @@ set ignorecase      " case-insentive search by default
 set smartcase       " search case-sensitive if there is an upper-case letter
 set gdefault        " when replacing, use /g by default
 set showmatch       " paren match highlighting
-set hlsearch        " highlight what you search for  
-set incsearch       " type-ahead-find  
+set hlsearch        " highlight what you search for
+set incsearch       " type-ahead-find
 set wildmenu        " command-line completion shows a list of matches
 set wildmode=longest,list:longest,full " Bash-vim completion behavior
 set autochdir       " use current working directory of a file as base path
@@ -78,7 +78,7 @@ nnoremap xx "_dd
 nnoremap <leader>t :set noexpandtab<CR>
 
 " Yank the line, comment it, paste it
-nnoremap <leader>g yygccp
+nmap <leader>g yygccp
 
 " When jumping to a given line, center the screen
 nnoremap G Gzz
@@ -111,14 +111,14 @@ nnoremap <leader>u :GundoToggle<CR>
 " remove all C/C++ comments and blank lines
 nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s*\n//<CR>
 
-" set a tiny guifont size 
-nnoremap <leader>h :set guifont=Inconsolata\ 4<CR>
+" set a tiny guifont size
+nnoremap <leader>h :set guifont=Deja\ Vu\ Sans\ Mono\ 4<CR>
 
-" set a normal guifont size 
-nnoremap <leader>f :set guifont=Inconsolata\ 11<CR>
+" set a normal guifont size
+nnoremap <leader>f :set guifont=Deja\ Vu\ Sans\ Mono\ 9<CR>
 
 " set a big guifont size
-nnoremap <leader>ç :set guifont=Inconsolata\ 14<CR>
+nnoremap <leader>ç :set guifont=Deja\ Vu\ Sans\ Mono\ 11<CR>
 
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
@@ -129,11 +129,15 @@ map <leader>p :CtrlP %%<cr>
 map + <Plug>(expand_region_expand)
 map - <Plug>(expand_region_shrink)
 
+" reload config after editing vimrc
+autocmd! BufWritePost .vimrc source $MYVIMRC
+
 " use shift-space as escape
 "inoremap <S-Space> <Esc>
 
 " print tabs with a special character (add ",eol:·" for end of lines)
-set listchars=trail:·,nbsp:·,tab:▸\ ,extends:»,precedes:«,
+" set listchars=trail:·,nbsp:·,tab:▸\ ,extends:»,precedes:«,
+set listchars=trail:·,nbsp:·,tab:˲\ ,extends:»,precedes:«,
 set list
 
 au VimEnter * echomsg system('/usr/games/fortune vimtweets')
@@ -149,6 +153,11 @@ set laststatus=2    " always show the statusline, even when there is only one fi
 "     set ruler           " show current line and column number
 " endif
 
+" Style of the status line of the current window
+hi StatusLine   ctermfg=15 ctermbg=239 cterm=bold guifg=#000000 guibg=#ffaa00 gui=bold
+
+" Style of the status line of the Non-Current window
+"hi StatusLineNC ctermfg=249 guifg=#b2b2b2 ctermbg=237 guibg=#3a3a3a cterm=none gui=none
 
 if has("fname_case")
   au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.sawfishrc,*.pddl setf lisp
@@ -234,13 +243,18 @@ map <F11> :NERDTreeToggle<cr>
 " nnoremap <leader>t :NERDTreeToggle<cr>
 
 " configure tags - add additional tags here or comment out not-used ones
+set tags+=./tags;$HOME
+set tags+=~/code/paradiseo/tags
 set tags+=~/.vim/tags/cpp
-set tags+=~/.vim/tags/bmdd
-set tags+=~/.vim/tags/bmddsolver
-set tags+=~/.vim/tags/dae
-set tags+=~/.vim/tags/eodev
+
 " build tags of your own project with CTRL+F12
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" go to definition and center screen (navigate forward in the tags stack)
+nnoremap <leader><Up> <C-]>zz
+" jump back from definition (navigate backward in the tags stack)
+nnoremap <leader><Down> <C-T>
+" open the definition in a vertical split and center screen
+nnoremap <leader><Right> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>zz
 
 " OmniCppComplete
 let OmniCpp_NamespaceSearch = 1
@@ -257,6 +271,6 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 
 " close the buffer without deleting its window
-:runtime plugins/bclose.vim
+":runtime bundle/bclose.vim
 nmap :bc <Plug>Kwbd
 
