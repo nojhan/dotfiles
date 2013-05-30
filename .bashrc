@@ -134,7 +134,7 @@ alias psg='ps aux|grep -v grep | grep -i --color=auto ' # grep a process
 # Coding #
 ##########
 
-alias agrep="ack-grep"
+alias agrep="ag"
 alias ag="~/apps/the_silver_searcher-master/ag"
 
 # repeat n times command
