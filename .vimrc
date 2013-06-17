@@ -76,6 +76,7 @@ let mapleader = "," " leader key is comma
 nnoremap xx "_dd
 
 nnoremap <leader>t :set noexpandtab<CR>
+nnoremap <leader>T :set expandtab<CR>
 
 " Yank the line, comment it, paste it
 nmap <leader>g yygccp
