@@ -1,42 +1,42 @@
 [submodule ".vim/bundle/vim-pathogen"]
 	path = .vim/bundle/vim-pathogen
-	url = https://github.com/tpope/vim-pathogen.git
+	url = http://github.com/tpope/vim-pathogen.git
 [submodule ".vim/bundle/nerdtree"]
 	path = .vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
+	url = http://github.com/scrooloose/nerdtree.git
 [submodule ".vim/bundle/vim-statline"]
 	path = .vim/bundle/vim-statline
-	url = https://github.com/millermedeiros/vim-statline.git
+	url = http://github.com/millermedeiros/vim-statline.git
 [submodule ".vim/bundle/supertab"]
 	path = .vim/bundle/supertab
-	url = https://github.com/ervandew/supertab.git
+	url = http://github.com/ervandew/supertab.git
 [submodule ".vim/bundle/Command-T"]
 	path = .vim/bundle/Command-T
-	url = https://github.com/wincent/Command-T.git
+	url = http://github.com/wincent/Command-T.git
 [submodule ".vim/bundle/tlib_vim"]
 	path = .vim/bundle/tlib_vim
-	url = https://github.com/tomtom/tlib_vim.git
+	url = http://github.com/tomtom/tlib_vim.git
 [submodule ".vim/bundle/tcomment_vim"]
 	path = .vim/bundle/tcomment_vim
-	url = https://github.com/tomtom/tcomment_vim.git
+	url = http://github.com/tomtom/tcomment_vim.git
 [submodule ".vim/bundle/vim-eunuch"]
 	path = .vim/bundle/vim-eunuch
-	url = https://github.com/tpope/vim-eunuch.git
+	url = http://github.com/tpope/vim-eunuch.git
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
-	url = https://github.com/tpope/vim-surround.git
+	url = http://github.com/tpope/vim-surround.git
 [submodule ".vim/bundle/rainbow_parentheses.vim"]
 	path = .vim/bundle/rainbow_parentheses.vim
-	url = https://github.com/kien/rainbow_parentheses.vim.git
+	url = http://github.com/kien/rainbow_parentheses.vim.git
 [submodule ".vim/bundle/gundo"]
 	path = .vim/bundle/gundo
-	url = https://github.com/sjl/gundo.vim.git
+	url = http://github.com/sjl/gundo.vim.git
 [submodule ".vim/bundle/minibufexpl"]
 	path = .vim/bundle/minibufexpl
-	url = https://github.com/fholgado/minibufexpl.vim.git
+	url = http://github.com/fholgado/minibufexpl.vim.git
 [submodule ".vim/bundle/tagbar"]
 	path = .vim/bundle/tagbar
-	url = https://github.com/majutsushi/tagbar.git
+	url = http://github.com/majutsushi/tagbar.git
 [submodule ".vim/bundle/vim-multiple-cursors"]
 	path = .vim/bundle/vim-multiple-cursors
 	url = http://github.com/terryma/vim-multiple-cursors.git
@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/rainbow"]
 	path = .vim/bundle/rainbow
 	url = http://github.com/oblitum/rainbow.git
+[submodule ".vim/bundle/ctrlp.vim"]
+	path = .vim/bundle/ctrlp.vim
+	url = http://github.com/kien/ctrlp.vim.git
