@@ -161,6 +161,7 @@ alias ipy='ipython -pylab -p scipy --editor="gvim"'
 # usage: cm ./build_script
 function cm()
 {
+    set -o pipefail
     $@ 2>&1 | colout -t cmake | colout -t g++
 }
 
