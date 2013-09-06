@@ -127,7 +127,10 @@ bind '"\e[B": history-search-forward'
 # Processes #
 #############
 
-alias psg='ps aux|grep -v grep | grep -i --color=auto ' # grep a process
+function psg() {
+    #        do not show grep itself           color matching string              color the PID
+    ps aux | grep -v grep | grep --ignore-case --color=always $1 | colout '^\S+\s+([0-9]+).*$' blue
+}
 
 
 ##########
@@ -162,7 +165,7 @@ alias ipy='ipython -pylab -p scipy --editor="gvim"'
 function cm()
 {
     set -o pipefail
-    $@ 2>&1 | colout -t cmake | colout -t g++
+    $@ 2>&1  | colout -t cmake | colout -t g++
 }
 
 
@@ -232,3 +235,4 @@ source ~/.liquidprompt
 # Added by autojump install.sh
 #source /etc/profile.d/autojump.bash
 
+export TCLLIBPATH=~/.local/share/tkthemes
