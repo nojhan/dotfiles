@@ -133,6 +133,19 @@ function psg() {
 }
 
 
+# Notify when a command is completed, with an audio and visual warning.
+function notify() {
+    cmd="$1"
+    $@
+    if [[ $? ]] ; then
+        msg="Your \"$cmd\" command is completed"
+    else
+        msg="There was an error in your \"$cmd\" command"
+    fi
+    espeak -s 110 "$msg" 2>&1 > /dev/null & zenity --info --text "$msg\n\n$(date)"
+}
+
+
 ##########
 # Coding #
 ##########
@@ -205,7 +218,7 @@ echo "tree : nice alternative to 'ls'"
 echo "ff [pattern] : find a file with a pattern in name"
 echo "myip : show the IP address of eth0"
 echo "repeat [n] [command] : repeat n times command"
-echo "clean : remove backip files (*~)"
+echo "clean : remove backup files (*~)"
 echo "psg : ps aux | grep "
 echo "rcp : copy with rsync/ssh"
 }
