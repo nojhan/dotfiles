@@ -197,6 +197,17 @@ function git_ignore()
     git ls-files --other --exclude-standard >> .gitignore
 }
 
+# Take a snapshot of the current git repository and zip it.
+# The archive file name has the current date in its name.
+function git_archive()
+{
+    today=`date --iso-8601`
+    project=$(basename $(pwd))
+    name=${project}_${today}
+    git archive --prefix=$name/ --format zip master > $name.zip
+    echo $name.zip
+}
+
 #################
 # Configuration #
 #################
