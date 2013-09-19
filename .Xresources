@@ -35,3 +35,5 @@ URxvt*color12:    DodgerBlue
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
 
+*TkTheme: clearlooks
+
