@@ -79,7 +79,7 @@ nnoremap <leader>t :set noexpandtab<CR>
 nnoremap <leader>T :set expandtab<CR>
 
 " Yank the line, comment it, paste it
-nmap <leader>g yygccp
+nmap <leader>g yypgcc
 
 " When jumping to a given line, center the screen
 nnoremap G Gzz
@@ -124,7 +124,11 @@ nnoremap <leader>ç :set guifont=Deja\ Vu\ Sans\ Mono\ 11<CR>
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
-map <leader>p :CtrlP %%<cr>
+
+" Ctrl-P config
+let g:ctrlp_working_path_mode = 'ra' " search for files from the nearest ancestor that contains a VCS
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files'] " list only files versionned within GIT
+map <leader>p :CtrlP<cr>
 
 " semantic selection expansion/shrink
 map + <Plug>(expand_region_expand)
@@ -166,6 +170,7 @@ else
   au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,.emacs,.sawfishrc,*.pddl setf lisp
 endif
 
+au BufRead,BufNewFile *.thrift setfiletype thrift
 
 " move the current line up or down with the Ctrl-arrow keys
 nmap <C-Down> :<C-u>move .+1<CR>
@@ -273,5 +278,7 @@ set completeopt=menuone,menu,longest,preview
 
 " close the buffer without deleting its window
 ":runtime bundle/bclose.vim
-nmap :bc <Plug>Kwbd
+" nmap :bc <Plug>Kwbd
+" nmap <leader>d :b#<bar>bd#<CR>
+" nmap :bc<CR> :b#<bar>bd#<CR>
 
