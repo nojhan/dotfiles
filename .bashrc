@@ -188,6 +188,7 @@ alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[re
 # Pretty git log
 alias git_log="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
+# ignore all files that are not versioned in a git repository
 function git_ignore()
 {
     if [[ ! -f .gitignore ]] ; then
