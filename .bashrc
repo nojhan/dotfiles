@@ -119,9 +119,12 @@ function md() {
 }
 
 
-# use up/down to search history, matching the current line start
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
+# if in an interactive shell
+if [[ $- == *i* ]]; then
+    # use up/down to search history, matching the current line start
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
+fi
 
 #############
 # Processes #
@@ -179,8 +182,14 @@ function cm()
 {
     set -o pipefail
     $@ 2>&1  | colout -t cmake | colout -t g++
+    #| less
 }
 
+function cpy()
+{
+    set -o pipefail
+    $@ 2>&1  | colout -t python
+}
 
 # shortcut to display the url config of remote repo in a git root
 alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
@@ -201,9 +210,9 @@ function git_ignore()
 # The archive file name has the current date in its name.
 function git_archive()
 {
-    today=`date --iso-8601`
+    last_commit_date=$(git log -1 --format=%ci | awk '{print $1"_"$2;}')
     project=$(basename $(pwd))
-    name=${project}_${today}
+    name=${project}_${last_commit_date}
     git archive --prefix=$name/ --format zip master > $name.zip
     echo $name.zip
 }
@@ -253,11 +262,14 @@ HISTTIMEFORMAT='%F %T '
 # Manually switch to the bépo keyboard layout
 alias bepo="setxkbmap -layout fr -variant bepo -option"
 
-# Super nice prompt
-source ~/.liquidpromptrc
-source ~/.liquidprompt
+if [[ $- == *i* ]]; then
+    # Super nice prompt
+    source ~/.liquidpromptrc
+    source ~/.liquidprompt
+fi
 
 # Added by autojump install.sh
 #source /etc/profile.d/autojump.bash
 
-export TCLLIBPATH=~/.local/share/tkthemes
+export TCLLIBPATH="~/.local/share/tkthemes"
+
