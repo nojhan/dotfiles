@@ -35,7 +35,16 @@ syn keyword cppBoolean		true false
 syn match cppBraces display '[{}()\[\]]'
 syn keyword cppOperator		and bitor or xor compl bitand and_eq or_eq xor_eq not not_eq
 syn keyword cppOperator		operator typeid
-syn match cppOperator "+\|-\|\*\|;\|:\|,\|<\|>\|&\||\|!\|\~\|%\|=\|\." " \* bug comments
+syn match cppOperator "+\|-\|\*\|:\|,\|<\|>\|&\||\|!\|\~\|%\|=\|\." " \* bug comments
+syn match cppEndline ";"
+
+" nojhan adhoc
+syn match cppTrailingSpace "\s*$"
+syn match cppMacro "\s*DBG[A-Z]*\s*(.*);$"
+syn match cppOperator "\<\(ITEMS\|VERTICES\|EDGES\)\>"
+syn match cppOperator "\<EACH_\(ITEMS\|VERTICES\|EDGES\)\>"
+syn keyword cppOperator IN ROC
+
 
 " The minimum and maximum operators in GNU C++
 syn match cppMinMax "[<>]?"
@@ -52,6 +61,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppCast		cppStatement
   HiLink cppExceptions		Exception
   HiLink cppOperator		Operator
+  HiLink cppEndline		Operator
   HiLink cppStatement		Statement
   HiLink cppSTL			Identifier
   HiLink cppNCBI		Special
@@ -60,6 +70,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppStructure		Structure
   HiLink cppNumber		Number
   HiLink cppBoolean		Boolean
+  HiLink cppMacro		PreProc
   delcommand HiLink
 endif
 
