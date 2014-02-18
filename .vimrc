@@ -6,7 +6,8 @@ set guifont=Deja\ Vu\ Sans\ Mono\ 9
 
 syntax on             " syntax coloring by default
 
-color solarized
+let base16colorspace=256
+color base16-railscasts-noj
 set background=dark
 
 if &t_Co >= 256 && ! has("gui_running")
