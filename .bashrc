@@ -32,6 +32,9 @@ function myip()
     echo $MY_IP
 }
 
+# copy a stream in the X clipboard, e.g. "cat file | xcopy"
+alias xcopy="xclip -i -selection clipboard"
+
 # baskcup shortcuts
 alias rcp='rsync -avz --ignore-existing --progress --rsh "ssh -l nojhan" '
 alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443 -l nojhan" '
@@ -110,7 +113,7 @@ export LESS="-FX -R"
 export LESSOPEN='|~/code/dotfiles/lessfilter.sh %s'
 
 # nautilus file manager in browser mode without destkop management
-alias nautile='nautilus --no-desktop --browser'
+alias Ex='nautilus --no-desktop --browser .'
 
 # Make a directory and move to it
 function md() {
@@ -138,6 +141,8 @@ function psg() {
 
 # Notify when a command is completed, with an audio and visual warning.
 function notify() {
+    s=$SECONDS
+
     cmd="$1"
     $@
     if [[ $? ]] ; then
@@ -145,7 +150,14 @@ function notify() {
     else
         msg="There was an error in your \"$cmd\" command"
     fi
-    espeak -s 110 "$msg" 2>&1 > /dev/null & zenity --info --text "$msg\n\n$(date)"
+    zenity --info --text "$msg\nin $((e-s)) s\n$(date)" &
+
+    # if the command has run more than a minute
+    # then say loudly that it ended
+    e=$SECONDS
+    if [[ $((e-s)) -ge 60 ]] ; then
+        espeak -s 110 "$msg" 2>/dev/null >/dev/null
+    fi
 }
 
 
@@ -155,6 +167,7 @@ function notify() {
 
 alias agrep="ag"
 alias ag="~/apps/the_silver_searcher-master/ag"
+alias kak="/home/nojhan/code/kakoune/src/kak"
 
 # repeat n times command
 # repeat 10 echo "ok"
@@ -245,7 +258,7 @@ echo "rcp : copy with rsync/ssh"
 }
 
 # do not permits to recall dangerous commands in bash history
-export HISTIGNORE='&:[bf]g:exit:*>|*::*rm*-rf*:*rm*-f*'
+export HISTIGNORE='&:[bf]g:exit:*>|*:*rm*-rf*:*rm*-f*'
 # append history rather than overwrite
 shopt -s histappend
 # one command per line
@@ -262,14 +275,17 @@ HISTTIMEFORMAT='%F %T '
 # Manually switch to the bépo keyboard layout
 alias bepo="setxkbmap -layout fr -variant bepo -option"
 
+# Use liquidprompt only if in an interactive shell
 if [[ $- == *i* ]]; then
     # Super nice prompt
     source ~/.liquidpromptrc
     source ~/.liquidprompt
 fi
 
-# Added by autojump install.sh
-#source /etc/profile.d/autojump.bash
+# Use autojump only if in an interactive shell
+if [[ $- == *i* ]] ; then
+    source /etc/profile.d/autojump.bash
+fi
 
 export TCLLIBPATH="~/.local/share/tkthemes"
 
