@@ -54,7 +54,7 @@ function ff()
 function del()
 {
     for i in $* ; do
-        mv $i ~/.Trash
+        mv $i ~/.local/share/Trash/files/
     done
 }
 
@@ -184,9 +184,9 @@ function notify() {
 # Coding #
 ##########
 
-alias agrep="ag"
-alias ag="~/apps/the_silver_searcher/ag"
-alias kak="/home/nojhan/code/kakoune/src/kak"
+#alias agrep="ag"
+#alias ag="~/apps/the_silver_searcher/ag"
+#alias kak="/home/nojhan/code/kakoune/src/kak"
 
 # repeat n times command
 # repeat 10 echo "ok"
@@ -203,7 +203,8 @@ function repeat()
 export EDITOR='gvim --nofork'
 
 # aliases to manage vim in server mode
-alias gvimtex="gvim --servername LATEX "
+alias latexed="gvim --servername LATEX "
+alias ide="gvim --servername IDE "
 
 # print a vim fortune at startup
 #/usr/games/fortune vimtips
@@ -245,7 +246,7 @@ function git_ignore()
 # The archive file name has the current date in its name.
 function git_archive()
 {
-    last_commit_date=$(git log -1 --format=%ci | awk '{print $1"_"$2;}')
+    last_commit_date=$(git log -1 --format=%ci | awk '{print $1"_"$2;}' | sed "s/:/-/g")
     project=$(basename $(pwd))
     name=${project}_${last_commit_date}
     git archive --prefix=$name/ --format zip master > $name.zip
@@ -319,7 +320,7 @@ fi
 
 # Use autojump only if in an interactive shell
 if [[ $- == *i* ]] ; then
-    source /etc/profile.d/autojump.bash
+    source /usr/share/autojump/autojump.bash
 fi
 
 export TCLLIBPATH="~/.local/share/tkthemes"
