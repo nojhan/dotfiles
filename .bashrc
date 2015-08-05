@@ -38,6 +38,7 @@ alias xcopy="xclip -i -selection clipboard"
 # baskcup shortcuts
 alias rcp='rsync -avz --ignore-existing --progress --rsh "ssh -l nojhan" '
 alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443 -l nojhan" '
+alias rcp_80='rsync -avz --ignore-existing --progress --rsh "ssh -p 80 -l nojhan" '
 
 
 ###################
@@ -47,7 +48,7 @@ alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443 -l nojh
 # Find a file with a pattern in name from the current directory
 # ff name
 function ff()
-{ find . -type f -iname '*'$*'*' -ls ; }
+{ find . -type f -iname "'*'$*'*'" -ls ; }
 
 # move to ~/.Trash instead of rm a file
 function del()
@@ -74,7 +75,25 @@ alias ..='cd ..'
 alias ...='cd ../../'
 
 # move backup files to trash
-alias clean='mv *~ ~/.Trash/'
+clean()
+{
+    local globs='*~ .*.swp *.cpp.o'
+
+    while true; do
+        read -p "Supprimer récursivement les fichiers '$globs' à partir de $(pwd) ?" yn
+        case $yn in
+            [YyOo]* ) break;;
+            [Nn]* ) exit;;
+            * ) echo "Répondez par oui ou par non";;
+        esac
+    done
+
+    for g in $globs ; do
+        echo -n "$g ..."
+        find . -name "$g" -delete
+        echo " done"
+    done
+}
 
 # Prevents accidentally clobbering files.
 alias mv='mv -i'
@@ -166,7 +185,7 @@ function notify() {
 ##########
 
 alias agrep="ag"
-alias ag="~/apps/the_silver_searcher-master/ag"
+alias ag="~/apps/the_silver_searcher/ag"
 alias kak="/home/nojhan/code/kakoune/src/kak"
 
 # repeat n times command
@@ -182,6 +201,9 @@ function repeat()
 
 # default editor
 export EDITOR='gvim --nofork'
+
+# aliases to manage vim in server mode
+alias gvimtex="gvim --servername LATEX "
 
 # print a vim fortune at startup
 #/usr/games/fortune vimtips
@@ -230,11 +252,24 @@ function git_archive()
     echo $name.zip
 }
 
+
+# Intuitive calculator on the command line
+# $ = 3 × 5.1 ÷ 2
+# 7,65
+calc() {
+    calc="$@"
+    # We can use the unicode signs × and ÷
+    calc="${calc//×/*}"
+    calc="${calc//÷//}"
+    echo -e "$calc\nquit" | gcalccmd | sed 's/^> //g'
+}
+
+
 #################
 # Configuration #
 #################
 
-alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoclean -y && sudo apt-get clean"
+alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y && sudo apt-get autoclean -y && sudo apt-get clean"
 
 # alias I want to learn
 function h()
