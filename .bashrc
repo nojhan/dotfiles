@@ -227,6 +227,13 @@ function cpy()
     $@ 2>&1  | colout -t python
 }
 
+function ctex()
+{
+    set -o pipefail
+    $@ 2>&1  | colout -t latex
+}
+
+
 # shortcut to display the url config of remote repo in a git root
 alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
 
