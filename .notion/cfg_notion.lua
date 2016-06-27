@@ -101,6 +101,18 @@ defbindings("WFrame.toplevel", {
     kpress(META.."A", "ioncore.tagged_attach(_)")
 })
 
+defbindings("WTiling", {
+    bdoc("Split current frame horizontally."),
+    kpress(META.."S", "WTiling.split_at(_, _sub, 'right', true)"),
+
+    bdoc("Split current frame vertically."),
+    kpress(META.."Shift+S", "WTiling.split_at(_, _sub, 'bottom', true)"),
+
+    bdoc("Unsplit (destroy) current frame."),
+    kpress(META.."D", "WTiling.unsplit_at(_, _sub)"),
+})
+
+
 -- pour mettre la stalonetray dans le dock
-defwinprop {class="stalonetray", statusbar="dock"}
+-- defwinprop {class="stalonetray", statusbar="dock"}
 
