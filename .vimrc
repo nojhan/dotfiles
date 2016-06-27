@@ -15,6 +15,8 @@ if &t_Co >= 256 && ! has("gui_running")
     colorscheme inkpot
 endif
 
+set sessionoptions-=options " Because pathogen.
+
 set textwidth=120
 set wrap            " auto wrap line view, but not text itself
 
@@ -99,6 +101,9 @@ nnoremap <leader>s <C-w>v<C-w>l:bn<CR>
 " ,S will split horizontally and swith over the new panel
 nnoremap <leader>S <C-w>s<C-w>l:bn<CR>
 
+nnoremap <leader><HOME> <C-w><left>
+nnoremap <leader><END> <C-w><right>
+
 " Wrap a paragraph and justify it
 :runtime macros/justify.vim
 nnoremap <leader>j gw}{V}:call Justify('tw',4)<CR>
@@ -111,7 +116,10 @@ nnoremap <leader>r :RainbowToggle<CR>
 nnoremap <leader>u :GundoToggle<CR>
 
 " remove all C/C++ comments and blank lines
-nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s*\n//<CR>
+" nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s*\n//<CR>
+nnoremap <leader>c :close<CR>
+
+nnoremap <leader>n :noh<CR>
 
 " set a tiny guifont size
 nnoremap <leader>h :set guifont=Deja\ Vu\ Sans\ Mono\ 4<CR>
@@ -181,8 +189,8 @@ imap <C-Up>   <C-o>:<C-u>move .-2<CR>
 vmap <C-Down> :move '>+1<CR>gv
 vmap <C-Up> :move '<-2<CR>gv
 
-filetype plugin on
-set ofu=syntaxcomplete#Complete
+" filetype plugin on
+" set ofu=syntaxcomplete#Complete
 
 au BufRead,BufNewFile *.mwiki setf Wikipedia
 au BufRead,BufNewFile *.wikipedia.org.* setf Wikipedia
@@ -249,33 +257,46 @@ nnoremap <leader>b :TagbarToggle<CR>
 map <F11> :NERDTreeToggle<cr>
 " nnoremap <leader>t :NERDTreeToggle<cr>
 
+
+" go to definition and center screen (navigate forward in the tags stack)
+nnoremap <leader><Up> :YcmCompleter GoTo<CR>zz
+" jump back from definition (navigate backward in the jumps stack)
+nnoremap <leader><Down> <C-O>
+" open the definition in a vertical split and center screen
+nnoremap <leader><Right> :vsp <CR>:exec(":YcmCompleter GoTo")<CR>zz
+
+nnoremap <leader>? :YcmCompleter GetDoc<CR>
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<C-s>"
+
 " configure tags - add additional tags here or comment out not-used ones
-set tags+=./tags;$HOME
-set tags+=~/code/paradiseo/tags
-set tags+=~/.vim/tags/cpp
+" set tags+=./tags;$HOME
+" set tags+=~/code/paradiseo/tags
+" set tags+=~/.vim/tags/cpp
 
 " build tags of your own project with CTRL+F12
-map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " go to definition and center screen (navigate forward in the tags stack)
-nnoremap <leader><Up> <C-]>zz
+" nnoremap <leader><Up> <C-]>zz
 " jump back from definition (navigate backward in the tags stack)
-nnoremap <leader><Down> <C-T>
+"nnoremap <leader><Down> <C-T>
 " open the definition in a vertical split and center screen
-nnoremap <leader><Right> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>zz
+" nnoremap <leader><Right> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>zz
 
 " OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" let OmniCpp_NamespaceSearch = 1
+" let OmniCpp_GlobalScopeSearch = 1
+" let OmniCpp_ShowAccess = 1
+" let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+" let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+" let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+" let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+" let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
 " automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
+" au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+" set completeopt=menuone,menu,longest,preview
 
 " close the buffer without deleting its window
 ":runtime bundle/bclose.vim

@@ -10,9 +10,6 @@
 [submodule ".vim/bundle/supertab"]
 	path = .vim/bundle/supertab
 	url = http://github.com/ervandew/supertab.git
-[submodule ".vim/bundle/Command-T"]
-	path = .vim/bundle/Command-T
-	url = http://github.com/wincent/Command-T.git
 [submodule ".vim/bundle/tlib_vim"]
 	path = .vim/bundle/tlib_vim
 	url = http://github.com/tomtom/tlib_vim.git
@@ -58,3 +55,12 @@
 [submodule ".vim/bundle/ctrlp.vim"]
 	path = .vim/bundle/ctrlp.vim
 	url = http://github.com/kien/ctrlp.vim.git
+[submodule ".vim/bundle/YouCompleteMe"]
+	path = .vim/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule ".vim/bundle/ultisnips"]
+	path = .vim/bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
+[submodule ".vim/bundle/vim-snippets"]
+	path = .vim/bundle/vim-snippets
+	url = https://github.com/honza/vim-snippets.git
