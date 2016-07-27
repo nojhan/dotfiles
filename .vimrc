@@ -257,6 +257,35 @@ nnoremap <leader>b :TagbarToggle<CR>
 map <F11> :NERDTreeToggle<cr>
 " nnoremap <leader>t :NERDTreeToggle<cr>
 
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg)
+    let a:name = 'ndhf_' . substitute(a:extension, "\\.", "_", "")
+    exec 'autocmd FileType nerdtree highlight '.a:name.' ctermbg='.'NONE'.' ctermfg='.a:fg.' guibg='.'NONE'.' guifg='.a:fg
+    exec 'autocmd FileType nerdtree syn match '.a:name.' #^\s\+.*'.a:extension.'\**$#'
+endfunction
+
+" doc
+call NERDTreeHighlightFile('README', 'green')
+call NERDTreeHighlightFile('md'    , 'green')
+" source files
+call NERDTreeHighlightFile('c'  , 'cyan')
+call NERDTreeHighlightFile('cc' , 'cyan')
+call NERDTreeHighlightFile('cpp', 'cyan')
+call NERDTreeHighlightFile('mm' , 'cyan')
+" headers
+call NERDTreeHighlightFile('h'  , 'lightmagenta')
+call NERDTreeHighlightFile('hpp', 'lightmagenta')
+" shell scripts
+call NERDTreeHighlightFile('sh'  , 'lightgreen')
+call NERDTreeHighlightFile('bash', 'lightgreen')
+" scripts
+call NERDTreeHighlightFile('py'  , 'yellow')
+" makefiles
+call NERDTreeHighlightFile('CMakeLists.txt', 'red')
+call NERDTreeHighlightFile('makefile'      , 'lightred')
+call NERDTreeHighlightFile('Makefile'      , 'lightred')
+
+
 
 " go to definition and center screen (navigate forward in the tags stack)
 nnoremap <leader><Up> :YcmCompleter GoTo<CR>zz
