@@ -18,6 +18,15 @@ function proxy()
     echo ${proxy_url##*@}
 }
 
+function proxy_app()
+{
+    proxy_url="$(~/proxy_app.sh)"
+    export  http_proxy="$proxy_url"
+    export https_proxy="$proxy_url"
+    export   ftp_proxy="$proxy_url"
+    echo ${proxy_url##*@}
+}
+
 function noproxy()
 {
     export http_proxy=""
