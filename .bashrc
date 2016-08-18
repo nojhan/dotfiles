@@ -226,7 +226,7 @@ alias ipy='ipython -pylab -p scipy --editor="gvim"'
 function cm()
 {
     set -o pipefail
-    $@ 2>&1  | colout -t cmake | colout -t g++
+    $@ 2>&1  | colout -t cmake | colout -t g++ | colout -t ctest
     #| less
 }
 
