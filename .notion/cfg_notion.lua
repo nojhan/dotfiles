@@ -25,7 +25,7 @@ defbindings("WMPlex.toplevel", {
     kpress("F12", "nil"),
 
 	-- lancement xterm
-    kpress(META.."F1", "ioncore.exec_on(_, XTERM or 'xterm')"),
+    kpress(META.."F1", "ioncore.exec_on(_, XTERM or 'urxvt')"),
 
 	-- exec
     kpress(META.."F2", "mod_query.query_exec(_)"),
