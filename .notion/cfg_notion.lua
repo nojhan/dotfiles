@@ -36,8 +36,11 @@ defbindings("WMPlex.toplevel", {
 	-- firefox
     kpress(META.."F4", "ioncore.exec_on(_, 'firefox')"),
 
-	-- firefox
+	-- Nautilus
     kpress(META.."F5", "ioncore.exec_on(_, 'nautilus --no-desktop')"),
+
+	-- Lock
+    kpress(META.."l", "ioncore.exec_on(_, 'gnome-screensaver-command -l')"),
 
 	-- menu général ion3
     kpress(META.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')")
