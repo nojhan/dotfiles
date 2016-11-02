@@ -64,3 +64,6 @@
 [submodule ".vim/bundle/vim-snippets"]
 	path = .vim/bundle/vim-snippets
 	url = https://github.com/honza/vim-snippets.git
+[submodule ".vim/bundle/color_coded"]
+	path = .vim/bundle/color_coded
+	url = https://github.com/jeaye/color_coded.git
