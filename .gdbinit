@@ -114,7 +114,7 @@ end
 
 define hook-frame
     #shell cat /tmp/coloutPipe | colout "^(#)([0-9]+)\s+(0x\S+ )*(in )*(.*) (at) (.*/)?(?:$|(.+?)(?:(\.[^.]*)|)):([0-9]+)" red,red,blue,red,green,red,magenta,none,white,white,yellow normal,bold,normal,normal,bold,normal,normal,bold,bold,bold | colout "^([0-9]+)\s+(.*)$" yellow,Cpp &
-    shell cat /tmp/coloutPipe | colout "^(#)([0-9]+)\s+(0x\S+ )*(in )*(.*) (\(.*\)) (at) (.*/)?(?:$|(.+?)(?:(\.[^.]*)|)):([0-9]+)" red,red,blue,red,green,magenta,red,none,white,white,yellow normal,bold,normal,normal,normal,normal,normal,bold,bold,bold | colout "^([0-9]+)\s*(.*)$" red,Cpp &
+    shell cat /tmp/coloutPipe | colout "^(#)([0-9]+)\s+(0x\S+ )*(in )*(.*) (\(.*\)) (at) (.*/)?(?:$|(.+?)(?:(\.[^.]*)|)):([0-9]+)" red,red,blue,red,green,magenta,red,none,white,white,yellow normal,bold,normal,normal,normal,normal,normal,bold,bold,bold | colout "([\w\s]*?)(=)([^,]*?)([,\)])" yellow,blue,magenta,blue normal &
     logging_on
 end
 define hookpost-frame
@@ -128,7 +128,7 @@ define hook-quit
 end
 
 define hook-display
-    shell cat /tmp/coloutPipe | colout "^([0-9]+)(:) (.+?) (=) " red,blue,red,blue normal,normal,bold,normal | colout "(@)(0x\S+)(:)" red,blue,red normal &
+    shell cat /tmp/coloutPipe | colout "^([0-9]+)(:) (.+?) (=) " red,blue,white,blue normal,normal,bold,normal | colout "(@)(0x\S+)(:)" red,blue,red normal &
     logging_on
 end
 define hookpost-display
