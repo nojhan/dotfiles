@@ -167,12 +167,28 @@ function psg() {
 }
 
 
-# Notify when a command is completed, with an audio and visual warning.
+# Notify when a command is completed, with a visual warning.
 function notify() {
+    cmd=$(echo "$1" | sed 's/&/&amp;/g')
+    if [[ "$1" != "" ]] ; then
+        $@
+    fi
+    if [[ $? ]] ; then
+        msg="Your \"$cmd\" command is completed"
+    else
+        msg="There was an error in your \"$cmd\" command"
+    fi
+    zenity --info --text "$msg\nin $((e-s)) s\n$(date)" &
+}
+
+# Notify when a command is completed, with an audio and visual warning.
+function notice() {
     s=$SECONDS
 
-    cmd="$1"
-    $@
+    cmd=$(echo "$1" | sed 's/&/&amp;/g')
+    if [[ "$1" != "" ]] ; then
+        $@
+    fi
     if [[ $? ]] ; then
         msg="Your \"$cmd\" command is completed"
     else
@@ -183,11 +199,15 @@ function notify() {
     # if the command has run more than a minute
     # then say loudly that it ended
     e=$SECONDS
-    if [[ $((e-s)) -ge 60 ]] ; then
+    if [[ $((e-s)) -ge 1 ]] ; then
         espeak -s 110 "$msg" 2>/dev/null >/dev/null
     fi
 }
 
+# Notify with a visual warning.
+function ended() {
+    notify
+}
 
 ##########
 # Coding #
@@ -310,7 +330,7 @@ echo "rcp : copy with rsync/ssh"
 }
 
 # do not permits to recall dangerous commands in bash history
-export HISTIGNORE='&:[bf]g:exit:*>|*:*rm*-rf*:*rm*-f*'
+export HISTIGNORE='&:[bf]g:exit:*>|*:*rm*-rf*'
 # append history rather than overwrite
 shopt -s histappend
 # one command per line
