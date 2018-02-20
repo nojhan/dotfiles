@@ -84,9 +84,13 @@ end
 
 
 define hook-backtrace
-    # match the [path]file[.ext]: (.*/)?(?:$|(.+?)(?:(\.[^.]*)|))
-    # shell cat /tmp/coloutPipe | colout "^(#)([0-9]+)\s+(0x\S+ )*(in )*([^()]+[()]*) (\(.*\)) at (.*/)?(?:$|(.+?)(?:(\.[^.]*)|)):([0-9]+)" red,red,blue,none,green,cpp,none,white,white,yellow normal,bold,normal,normal,normal,normal,normal,bold,bold,bold &
-    shell cat /tmp/coloutPipe | colout "^(#)([0-9]+)\s+(0x\S+ )*(in )*(.*) (\(.*\)) (at) (.*/)?(?:$|(.+?)(?:(\.[^.]*)|)):([0-9]+)" red,red,blue,red,green,magenta,red,none,white,white,yellow normal,bold,normal,normal,normal,normal,normal,bold,bold,bold | colout "([\w\s]*?)(=)([^,]*?)([,\)])" yellow,blue,magenta,blue normal &
+    # Note: match path = [path]file[.ext] = (.*/)?(?:$|(.+?)(?:(\.[^.]*)|))
+    # This line color highlights:
+    # – lines that link to source code,
+    # – function call in green,
+    # – arguments names in yellow, values in magenta,
+    # — the parent directory in bold red (assuming that the debug session would be in a "project/build/" directory).
+    shell cat /tmp/coloutPipe | colout "^(#)([0-9]+)\s+(0x\S+ )*(in )*(.*) (\(.*\)) (at) (.*/)?(?:$|(.+?)(?:(\.[^.]*)|)):([0-9]+)" red,red,blue,red,green,magenta,red,none,white,white,yellow normal,bold,normal,normal,normal,normal,normal,bold,bold,bold | colout "([\w\s]*?)(=)([^,]*?)([,\)])" yellow,blue,magenta,blue normal | colout "/($(basename $(dirname $(pwd))))/" red bold &
     logging_on
 end
 define hookpost-backtrace
