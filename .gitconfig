@@ -8,7 +8,8 @@
     co = checkout
     # create branch
     cb = checkout -b
-    ci = commit -a -v
+    ci = commit -v
+    ca = commit -v -a
     br = branch
     sta = stash
 [pager]
