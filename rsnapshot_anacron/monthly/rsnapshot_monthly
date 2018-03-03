@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source <BASE>/rsnapshot_common
+
+# 2592000 seconds in a month, retry every 10 minutes for 8 days
+backup "691200" "monthly"
+
