@@ -19,7 +19,7 @@ ENABLE_CRON=no
 #
 SNAPSHOT_ROOT="<NOT_DEFINED>"
 
-RSNAPSHOT="/usr/bin/rsnapshot -t"
+RSNAPSHOT="/usr/bin/rsnapshot"
 
 function backup()
 {

@@ -7,21 +7,21 @@ set -euo pipefail
 
 user="$USER"
 
-mkdir -p $user/scripts
-cp -r ../anacron $user/scripts/
-cd $user/scripts/
+mkdir -p $HOME/scripts
+cp -r ../rsnapshot_anacron $HOME/scripts/
+cd $HOME/scripts/rsnapshot_anacron/
 
 base="$(pwd)"
 
 # Check installed packages
 installed="$(dpkg -l rsnapshot)|grep '^ii\srsnapshot\s'"
-if [[ "$sintalled" == "" ]]; then
+if [[ "$installed" == "" ]]; then
     echo "rsnapshot is not installed"
     echo "You should install it and edit /etc/rsnapshot.conf:"
     echo "sudo apt install rsnapshot anacron && sudo gvim /etc/rsnapshot.conf"
     exit 100
 fi
-sudo install anacron
+sudo apt install anacron
 
 
 snapshot=$(grep "^snapshot_root.*$" /etc/rsnapshot.conf|cut -f 2)
@@ -33,7 +33,7 @@ fi
 
 tag="=^=rsnapshot_anacron=^="
 if [[ $(grep "$tag" /etc/anacrontab) == "" ]]; then
-sudo echo "
+echo "
 ##########################################################
 # $tag
 # périodicité (jours),
@@ -44,10 +44,8 @@ sudo echo "
 @daily   10 backup.daily   sudo -u $user run-parts $base/daily/
 @weekly  10 backup.weekly  sudo -u $user run-parts $base/weekly/
 @monthly 10 backup.monthly sudo -u $user run-parts $base/monthly/
-" >> /etc/anacrontab
+" | sudo tee -a /etc/anacrontab
 fi
-
-ln -s $base ~/.anacron
 
 # Test if snapshot dir is set
 source $base/rsnapshot_common
