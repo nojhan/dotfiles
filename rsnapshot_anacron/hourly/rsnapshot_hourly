@@ -1,0 +1,6 @@
+#!/bin/bash
+
+source <BASE>/rsnapshot_common
+
+# 3600 seconds in an hour, retry every 10 minutes for half an hour
+backup "1800" "hourly"

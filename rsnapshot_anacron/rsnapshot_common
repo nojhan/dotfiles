@@ -1,0 +1,50 @@
+# Immediately exit if any command has a non-zero exit.
+# A reference to any variable you haven't previously defined - with the exceptions of $* and $@ - is an error.
+# If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
+set -euo pipefail
+
+# There are already cron scripts installed to automatically run rsnapshot in
+# the background on a regular hourly/daily/weekly/monthly schedule.  If this
+# is on a machine that is shutdown or goes to sleep often, then install
+# anacron.
+#
+ENABLE_CRON=no
+
+# Also run the hourly job in addition to the daily, weekly, and monthly
+#ENABLE_HOURLY=yes
+
+# Specify the disk where the backups are written to, this is the same place as
+# is specified in /etc/rsnapshot.conf as 'snapshot_root'.  This is used to
+# detect if the disk is mounted or not when rsnapshot runs in a cron job.
+#
+SNAPSHOT_ROOT="<NOT_DEFINED>"
+
+RSNAPSHOT="/usr/bin/rsnapshot"
+
+function backup()
+{
+    wait="$1" # in seconds
+    freq="$2" # hourly, daily, weekly or monthly
+
+    #retry every 10 minutes
+    every=600
+
+    if [[ "$ENABLE_CRON" == "yes" ]] ; then
+        exit 1000
+    fi
+
+    until=$(( $(date +%s) + $wait))
+    while [[ $(date +%s) < $until ]] ; do
+        test -d "$SNAPSHOT_ROOT" && break
+        sleep $every
+    done
+
+    # See ionice(1)
+    if [ -x /usr/bin/ionice ] &&
+        /usr/bin/ionice -c3 true 2>/dev/null; then
+        IONICE="/usr/bin/ionice -c3"
+    fi
+
+    test -d "$SNAPSHOT_ROOT" && \
+        nice -n 20 $IONICE $RSNAPSHOT $freq
+}

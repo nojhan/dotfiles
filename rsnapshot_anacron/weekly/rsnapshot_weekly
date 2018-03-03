@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source <BASE>/rsnapshot_common
+
+# 604800 seconds in a week, retry every 10 minutes for 4 days
+backup "345600" "weekly"
+
