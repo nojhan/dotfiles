@@ -286,7 +286,8 @@ calc() {
 # Configuration #
 #################
 
-alias upgrade="sudo apt-get update && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y && sudo apt-get autoclean -y && sudo apt-get clean"
+# Note: purge-old-kernels is in the bikeshed package
+alias upgrade="sudo apt update && sudo apt dist-upgrade -y && sudo purge-old-kernels --keep 2 && sudo apt --purge autoremove -y && sudo apt autoclean -y && sudo apt clean"
 
 # alias I want to learn
 function h()
