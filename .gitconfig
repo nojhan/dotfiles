@@ -20,3 +20,5 @@
     diff = less -R +'/^\\@\\@\\s'
 [color]
     ui = auto
+[push]
+	default = simple
