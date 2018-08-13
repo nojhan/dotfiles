@@ -166,6 +166,11 @@ function psg() {
     ps aux | grep -v grep | grep --ignore-case --color=always $1 | colout '^\S+\s+([0-9]+).*$' blue
 }
 
+function agc() {
+    ag "$1" | colout "$1"
+}
+
+
 
 # Notify when a command is completed, with a visual warning.
 function notify() {
@@ -347,6 +352,9 @@ HISTTIMEFORMAT='%F %T '
 
 # Manually switch to the bépo keyboard layout
 alias bepo="setxkbmap -layout fr -variant bepo -option"
+
+# Import the correct alias for thefuck
+eval $(thefuck --alias fuck)
 
 # Use liquidprompt only if in an interactive shell
 if [[ $- == *i* ]]; then
