@@ -251,10 +251,11 @@ map <F10> <Plug>TaskList
 " side pane of class and functions
 "map <F11> :TlistToggle<cr>
 nmap <F12> :TagbarToggle<CR>
-nnoremap <leader>b :TagbarToggle<CR>
+nnoremap <leader>é :TagbarToggle<CR>
 
 " side pane of files
 map <F11> :NERDTreeToggle<cr>
+nnoremap <leader>b :NERDTreeToggle<CR>
 " nnoremap <leader>t :NERDTreeToggle<cr>
 
 " NERDTress File highlighting
