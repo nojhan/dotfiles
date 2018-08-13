@@ -289,13 +289,13 @@ call NERDTreeHighlightFile('Makefile'      , 'lightred')
 
 
 " go to definition and center screen (navigate forward in the tags stack)
-nnoremap <leader><Up> :YcmCompleter GoTo<CR>zz
+"nnoremap <leader><Up> :YcmCompleter GoTo<CR>zz
 " jump back from definition (navigate backward in the jumps stack)
-nnoremap <leader><Down> <C-O>
+"nnoremap <leader><Down> <C-O>
 " open the definition in a vertical split and center screen
-nnoremap <leader><Right> :vsp <CR>:exec(":YcmCompleter GoTo")<CR>zz
+"nnoremap <leader><Right> :vsp <CR>:exec(":YcmCompleter GoTo")<CR>zz
 
-nnoremap <leader>? :YcmCompleter GetDoc<CR>
+"nnoremap <leader>? :YcmCompleter GetDoc<CR>
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<C-s>"
@@ -306,13 +306,13 @@ let g:UltiSnipsExpandTrigger="<C-s>"
 " set tags+=~/.vim/tags/cpp
 
 " build tags of your own project with CTRL+F12
-" map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " go to definition and center screen (navigate forward in the tags stack)
-" nnoremap <leader><Up> <C-]>zz
+nnoremap <leader><Up> <C-]>zz
 " jump back from definition (navigate backward in the tags stack)
-"nnoremap <leader><Down> <C-T>
+nnoremap <leader><Down> <C-T>
 " open the definition in a vertical split and center screen
-" nnoremap <leader><Right> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>zz
+ nnoremap <leader><Right> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>zz
 
 " OmniCppComplete
 " let OmniCpp_NamespaceSearch = 1
