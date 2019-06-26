@@ -56,7 +56,7 @@
 	path = .vim/bundle/ctrlp.vim
 	url = http://github.com/kien/ctrlp.vim.git
 [submodule ".vim/bundle/YouCompleteMe"]
-	path = .vim/bundle/YouCompleteMe
+	path = .vim/disabled/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
 [submodule ".vim/bundle/ultisnips"]
 	path = .vim/bundle/ultisnips
@@ -67,3 +67,9 @@
 [submodule ".vim/bundle/color_coded"]
 	path = .vim/bundle/color_coded
 	url = https://github.com/jeaye/color_coded.git
+[submodule ".vim/bundle/vimtex"]
+	path = .vim/bundle/vimtex
+	url = https://github.com/lervag/vimtex
+[submodule ".vim/bundle/a.vim"]
+	path = .vim/bundle/a.vim
+	url = https://github.com/vim-scripts/a.vim.git
