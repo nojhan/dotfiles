@@ -5,19 +5,23 @@
 let s:gui00 = "2b2b2b"
 let s:gui01 = "272935"
 let s:gui02 = "3a4055"
-let s:gui03 = "5a647e"
+" let s:gui03 = "5a647e"
+let s:gui03 = "6b758f"
 let s:gui04 = "d4cfc9"
 let s:gui05 = "e6e1dc"
 let s:gui06 = "f4f1ed"
 let s:gui07 = "f9f7f3"
 let s:gui08 = "da4939"
-let s:gui09 = "cc7833"
+" let s:gui09 = "cc7833"
+let s:gui09 = "cc7844"
 let s:gui0A = "ffc66d"
 let s:gui0B = "a5c261"
 let s:gui0C = "519f50"
 let s:gui0D = "6d9cbe"
 let s:gui0E = "b6b3eb"
 let s:gui0F = "bc9458"
+" let s:gui10 = "ccddff"
+let s:gui10 = "ffccbb"
 
 " Terminal color definitions
 let s:cterm00 = "00"
@@ -195,7 +199,7 @@ call <sid>hi("Special",      s:gui0C, "", s:cterm0C, "", "")
 call <sid>hi("SpecialChar",  s:gui0F, "", s:cterm0F, "", "")
 call <sid>hi("Statement",    s:gui08, "", s:cterm08, "", "")
 call <sid>hi("StorageClass", s:gui0A, "", s:cterm0A, "", "")
-call <sid>hi("String",      s:gui09, s:gui01, s:cterm09, s:cterm01, "")
+call <sid>hi("String",       s:gui09, s:gui01, s:cterm09, s:cterm01, "")
 call <sid>hi("Structure",    s:gui0E, "", s:cterm0E, "", "")
 call <sid>hi("Tag",          s:gui0A, "", s:cterm0A, "", "")
 call <sid>hi("Todo",         s:gui07, s:gui08, s:cterm07, s:cterm08, "")
@@ -211,6 +215,8 @@ call <sid>hi("cppStructure", s:gui0D, "", s:cterm0D, "", "none")
 call <sid>hi("cppEndline",   s:gui03, "", s:cterm03, "", "none")
 call <sid>hi("cppTrailingSpace", s:gui08, s:gui04, s:cterm08, s:cterm04, "")
 call <sid>hi("cppMacro",     s:gui03, "", s:cterm03, "", "none")
+" call <sid>hi("cppMember",    s:gui10, "", s:cterm06, "", "none")
+call <sid>hi("cppMember",    s:gui04, "", s:cterm06, "", "italic")
 
 " Spelling highlighting
 call <sid>hi("SpellBad",     "", s:gui00, "", s:cterm00, "undercurl")

@@ -12,19 +12,21 @@ fi
 function proxy()
 {
     proxy_url="$(~/proxy.sh)"
-    export  http_proxy="$proxy_url"
-    export https_proxy="$proxy_url"
-    export   ftp_proxy="$proxy_url"
-    echo ${proxy_url##*@}
+    IFS=' ' read -r -a proxies <<< "$proxy_url"
+    export  http_proxy="${proxies[0]}"
+    export https_proxy="${proxies[1]}"
+    export   ftp_proxy="${proxies[0]}"
+    echo ${proxies[@]}
 }
 
 function proxy_app()
 {
     proxy_url="$(~/proxy_app.sh)"
-    export  http_proxy="$proxy_url"
-    export https_proxy="$proxy_url"
-    export   ftp_proxy="$proxy_url"
-    echo ${proxy_url##*@}
+    IFS=' ' read -r -a proxies <<< "$proxy_url"
+    export  http_proxy="${proxies[0]}"
+    export https_proxy="${proxies[1]}"
+    export   ftp_proxy="${proxies[0]}"
+    echo ${proxies[@]}
 }
 
 function noproxy()
@@ -267,6 +269,13 @@ function ctex()
     $@ 2>&1  | colout -t latex
 }
 
+function m()
+{
+    set -o pipefail
+    cm cmake .. && cm make $@ && ./$@
+}
+
+
 
 # shortcut to display the url config of remote repo in a git root
 alias git_remotes="grep -A 2 \"\[remote\" .git/config|grep -v fetch|sed \"s/\[remote \\\"//\"|sed ':a;N;\$!ba;s/\"\]\n\s*url = /\t/g'"
@@ -312,7 +321,7 @@ calc() {
 #################
 
 # Note: purge-old-kernels is in the bikeshed package
-alias upgrade="sudo apt update && sudo apt dist-upgrade -y && sudo purge-old-kernels --keep 2 && sudo apt --purge autoremove -y && sudo apt autoclean -y && sudo apt clean"
+alias upgrade="sudo apt update && sudo apt dist-upgrade -y && sudo apt --purge autoremove -y && sudo apt autoclean -y && sudo apt clean"
 
 # alias I want to learn
 function h()

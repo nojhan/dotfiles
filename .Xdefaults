@@ -22,6 +22,8 @@ XTerm*termName:  xterm-256color
 !!cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
 !!green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
+! URxvt*font: *-fixed-*-*-*-18-*
+URxvt.font: xft:bitstream vera sans mono:size=12:antialias=true
 
 XTerm*background: #000000
 XTerm*foreground: #93a1a1
@@ -54,7 +56,7 @@ URxvt*color14: #519f50
 ! LightGrey + White
 URxvt*color7:  #dddddd
 URxvt*color15: #ffffff
-URxvt*cutchars: \n"'&()*,;<=>?@[]{|}:
+URxvt*cutchars: "\n\"'&()*,;<=>?@[]{|}:"
 !URxvt*transparent: true
 !URxvt*shading: 10
 

@@ -1,8 +1,52 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'scrooloose/nerdtree' " left panel with file explorer: F11 or ,b
+Plugin 'millermedeiros/vim-statline' " better buffer status line
+Plugin 'ervandew/supertab' " completion with <tab> in insert mode
+Plugin 'tomtom/tlib_vim' " utilities library for other plugins
+Plugin 'tomtom/tcomment_vim' " easy comments: gcc or gc<move>
+Plugin 'tpope/vim-eunuch' " proxy to Linux commands, most notably :SudoWrite
+Plugin 'tpope/vim-surround' " new moves: i (inside) and a (around)
+Plugin 'oblitum/rainbow' " rainbow parentheses: ,r
+" Plugin 'kien/rainbow_parentheses' " superseeded by rainbow
+" Plugin 'sjl/gundo' " multiple path tree undo history
+Plugin 'fholgado/minibufexpl' " bottom « tabs » flat list of opened buffers
+Plugin 'majutsushi/tagbar' " right panel with functions/classes: ,é
+" Plugin 'terryma/vim-multiple-cursors' " Not enough vimesque, either `Ctrl-V` or `:%s` are sufficient.
+" Plugin 'airblade/vim-gitgutter' " Not enough useful compared to plain old `git diff`, at the end.
+Plugin 'terryma/vim-expand-region' " expand/shrink the current visual selection: + and -
+" Plugin 'tomtom/quickfixsigns_vim' " gutter with various symbols (too slow)
+" Plugin 'vim-scripts/TaskList'
+" Plugin 'kien/ctrlp'
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
+" Plugin 'jeaye/color_coded'
+Plugin 'lervag/vimtex'
+Plugin 'vim-scripts/a.vim' " alternate between header/code files: :A
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 set nocompatible    " do not try to be vi-compatible
 
-call pathogen#infect()
+" call pathogen#infect()
+" set sessionoptions-=options " Because pathogen.
 
-set guifont=Deja\ Vu\ Sans\ Mono\ 9
+set guifont=Deja\ Vu\ Sans\ Mono\ 12
 
 syntax on             " syntax coloring by default
 
@@ -15,7 +59,6 @@ if &t_Co >= 256 && ! has("gui_running")
     colorscheme inkpot
 endif
 
-set sessionoptions-=options " Because pathogen.
 
 set textwidth=120
 set wrap            " auto wrap line view, but not text itself
@@ -74,6 +117,7 @@ set virtualedit=block
 set matchpairs+=<:>
 
 let mapleader = "," " leader key is comma
+let maplocalleader = "\<space>"
 
 " xx will delete the line without copying it into the default register
 nnoremap xx "_dd
@@ -82,7 +126,7 @@ nnoremap <leader>t :set noexpandtab<CR>
 nnoremap <leader>T :set expandtab<CR>
 
 " Yank the line, comment it, paste it
-nmap <leader>g yypgcc
+nmap <leader>g yygccp
 
 " When jumping to a given line, center the screen
 nnoremap G Gzz
@@ -117,6 +161,7 @@ nnoremap <leader>u :GundoToggle<CR>
 
 " remove all C/C++ comments and blank lines
 " nnoremap <leader>c :%s/\/\*\_.*\*\/\n\{,1}\|^\s*\/\/.*\n\|\s*\/\/.*//<CR>:%s/^\s*\n//<CR>
+
 nnoremap <leader>c :close<CR>
 
 nnoremap <leader>n :noh<CR>
@@ -125,14 +170,28 @@ nnoremap <leader>n :noh<CR>
 nnoremap <leader>h :set guifont=Deja\ Vu\ Sans\ Mono\ 4<CR>
 
 " set a normal guifont size
-nnoremap <leader>f :set guifont=Deja\ Vu\ Sans\ Mono\ 9<CR>
+nnoremap <leader>f :set guifont=Deja\ Vu\ Sans\ Mono\ 12<CR>
 
 " set a big guifont size
-nnoremap <leader>ç :set guifont=Deja\ Vu\ Sans\ Mono\ 11<CR>
+nnoremap <leader>ç :set guifont=Deja\ Vu\ Sans\ Mono\ 16<CR>
 
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+" Put plugins and dictionaries in this dir (also on Windows)
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undodir')
+    " Create dirs
+    call system('mkdir ' . vimDir)
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+endif
 
 " Ctrl-P config
 let g:ctrlp_working_path_mode = 'ra' " search for files from the nearest ancestor that contains a VCS
@@ -257,6 +316,8 @@ nnoremap <leader>é :TagbarToggle<CR>
 map <F11> :NERDTreeToggle<cr>
 nnoremap <leader>b :NERDTreeToggle<CR>
 " nnoremap <leader>t :NERDTreeToggle<cr>
+"
+" let NERDTreeSortOrder=['\.h$','\.hpp$','\.cpp$']
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg)
@@ -269,13 +330,13 @@ endfunction
 call NERDTreeHighlightFile('README', 'green')
 call NERDTreeHighlightFile('md'    , 'green')
 " source files
-call NERDTreeHighlightFile('c'  , 'cyan')
-call NERDTreeHighlightFile('cc' , 'cyan')
-call NERDTreeHighlightFile('cpp', 'cyan')
-call NERDTreeHighlightFile('mm' , 'cyan')
+call NERDTreeHighlightFile('c'  , 'lightmagenta')
+call NERDTreeHighlightFile('cc' , 'lightmagenta')
+call NERDTreeHighlightFile('cpp', 'lightmagenta')
+call NERDTreeHighlightFile('mm' , 'lightmagenta')
+call NERDTreeHighlightFile('hpp', 'lightblue')
 " headers
-call NERDTreeHighlightFile('h'  , 'lightmagenta')
-call NERDTreeHighlightFile('hpp', 'lightmagenta')
+call NERDTreeHighlightFile('h'  , 'cyan')
 " shell scripts
 call NERDTreeHighlightFile('sh'  , 'lightgreen')
 call NERDTreeHighlightFile('bash', 'lightgreen')
@@ -283,6 +344,8 @@ call NERDTreeHighlightFile('bash', 'lightgreen')
 call NERDTreeHighlightFile('py'  , 'yellow')
 " makefiles
 call NERDTreeHighlightFile('CMakeLists.txt', 'red')
+call NERDTreeHighlightFile('Doxyfile.in',    'red')
+call NERDTreeHighlightFile('Doxyfile',       'lightred')
 call NERDTreeHighlightFile('makefile'      , 'lightred')
 call NERDTreeHighlightFile('Makefile'      , 'lightred')
 
@@ -334,3 +397,5 @@ nnoremap <leader><Down> <C-T>
 " nmap <leader>d :b#<bar>bd#<CR>
 " nmap :bc<CR> :b#<bar>bd#<CR>
 
+let g:tex_flavor = 'latex'
+nmap <leader>lt <plug>(vimtex-toc-toggle)

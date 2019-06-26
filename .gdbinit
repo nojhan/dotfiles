@@ -26,7 +26,8 @@ define logging_on
   # Instead of printing on stdout only, log everything...
   set logging redirect on
   # ... in our named pipe.
-  set logging on /tmp/coloutPipe
+  set logging file /tmp/coloutPipe
+  set logging on
 end
 
 define logging_off
