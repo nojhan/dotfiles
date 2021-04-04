@@ -1,15 +1,15 @@
 [user]
-    name = nojhan
-    email = nojhan@nojhan.net
+	name = nojhan
+	email = nojhan@nojhan.net
 [alias]
-    up = pull origin
     st = status
-    di = diff
-    co = checkout
-    # create branch
-    cb = checkout -b
     ci = commit -v
+    cb = checkout -b # create branch
     ca = commit -v -a
+    co = checkout
+    lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+    up = pull origin
+    di = diff
     br = branch
     sta = stash
 [pager]
@@ -21,4 +21,8 @@
 [color]
     ui = auto
 [push]
-	default = simple
+    default = simple
+[rebase]
+	instructionFormat = (%an <%ae>) %s
+[credential]
+	helper = store
