@@ -1,0 +1,223 @@
+#################################
+# Convenience functions
+#################################
+
+define-command filetype-hook -params 2 %{
+    hook global WinSetOption "filetype=(%arg{1})" "%arg(2)"
+}
+
+#################################
+# Generic mappings
+#################################
+
+# Comments
+map global normal '$'     -docstring 'Comment the selected lines' ': comment-line<ret>'
+map global normal '<a-$>' -docstring 'Comment the selected block with begin/end characters' ': comment-block<ret>'
+
+map global normal '*' -docstring 'Select all occurrences of the current selection set' 'bw*%s<ret>'
+
+define-command cq -docstring 'Quit with an (arbitrary) error code' %{q 666}
+
+# define-command pwd -docstring 'Print the current working directory' %{ evaluate-commands %sh{ echo "echo -markup {Information}$PWD" } }
+
+# Use Tab and Shift-Tab to navigate completion in insert mode.
+hook global InsertCompletionShow .* %{
+    try %{
+        execute-keys -draft 'h<a-K>\h<ret>'
+        map window insert <tab> <c-n>
+        map window insert <s-tab> <c-p>
+        hook -once -always window InsertCompletionHide .* %{
+            map window insert <tab> <tab>
+            map window insert <s-tab> <s-tab>
+        }
+    }
+}
+
+map global normal <tab>   -docstring 'Swap selections cursor and anchor' '<a-;>'
+map global normal <a-tab> -docstring 'Ensure selection cursor is after anchor' '<a-:>'
+
+
+#################################
+# Generic config
+#################################
+
+set-option -add global ui_options ncurses_assistant=none
+set-option -add global ui_options ncurses_set_title=yes
+
+# Indent with 2 spaces and make tabs appear as 2 spaces.
+set-option global tabstop 4
+set-option global indentwidth 4
+
+# tabs to spaces
+hook global InsertChar \t %{
+    exec -draft h@
+}
+
+# keep space around cursor
+set-option global scrolloff 10,10
+
+# Add characters as matching pairs
+set-option -add global matching_pairs ‹ › « » “ ” ‘ ’
+
+# Autoformat (indent) line (if formatcmd is defined for the current filetype).
+map global normal '=' ': format<ret>' -docstring 'format'
+
+# Paths
+map global prompt <a-?> -docstring 'Current buffer name' '<c-r>%'
+map global prompt <a-/> -docstring 'Current buffer directory' '%sh(dirname "$kak_bufname")<a-!>/'
+
+hook global ModuleLoaded x11 %{
+    set global termcmd 'terminator -e '
+    alias global terminal x11-terminal
+}
+
+# Persistent history across sessions.
+hook global KakEnd .* %{ echo -to-file .kak_history -quoting kakoune reg : %reg{:} }
+hook global KakBegin .* %{ try %{ source .kak_history } }
+
+
+
+#################################
+# Highlighting
+#################################
+
+add-highlighter global/matching show-matching
+add-highlighter global/wrap wrap -word -indent -marker ⤷
+add-highlighter global/suspicicous-whitespaces show-whitespaces -tab ⭲ -nbsp · -spc " " -lf " "
+add-highlighter global/trailing-whitespaces regex '\h+$' 0:error
+
+colorscheme nojhan
+
+# Highlight generic tags
+hook global WinSetOption comment_line=(.+) %{
+    add-highlighter -override window/here  regex "(HERE)"   1:rgb:ffff00,rgb:ff0000+FB
+    add-highlighter -override window/fixme regex "(FIXME)"  1:rgb:ffff00,rgb:ff0000+Fb
+    add-highlighter -override window/todo  regex "(TODO)"   1:rgb:000000,rgb:ff00ff+Fb
+    add-highlighter -override window/note  regex "(NOTE)"   1:rgb:000000,rgb:a5c261+Fb
+}
+
+# Show line numbers (and highlight current cursor line)
+hook global WinCreate ^[^*]+$ %{
+    add-highlighter window/ number-lines # -hlcursor
+}
+
+
+#################################
+# Language specifics
+#################################
+
+filetype-hook makefile %{
+    set-option window indentwidth 0
+}
+
+filetype-hook latex %{
+    set-option buffer autowrap_column 80
+    autowrap-enable
+}
+
+filetype-hook markdown %{
+    set-option buffer autowrap_column 80
+    autowrap-enable
+}
+
+filetype-hook c|cpp %{
+    clang-enable-autocomplete
+    clang-enable-diagnostics
+    alias window lint clang-parse
+    alias window lint-next-error clang-diagnostics-next
+    set-option buffer formatcmd "clang-format -style='WebKit'"
+    map global normal A ': c-family-alternative-file'
+}
+
+filetype-hook python %{
+    jedi-enable-autocomplete
+    lint-enable
+    set-option global lintcmd 'flake8'
+}
+
+
+#################################
+# Plugins
+#################################
+
+# Autoinstall plug.kak if necessary.
+evaluate-commands %sh{
+    plugins="$HOME/.config/kak/plugins"
+    mkdir -p $plugins
+    [ ! -e "$plugins/plug.kak" ] && \
+        git clone -q https://github.com/andreyorst/plug.kak "$plugins/plug.kak"
+    printf "%s\n" "source '$plugins/plug.kak/rc/plug.kak'"
+}
+# Load the plugin manager.
+plug "andreyorst/plug.kak" noload
+
+# Buffers list.
+plug 'delapouite/kakoune-buffers' %{
+    hook global WinDisplay .* info-buffers
+    map global normal à ': enter-buffers-mode<ret>' -docstring 'buffers'
+    map global normal À ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
+}
+
+# Multi-select all identical characters in the column.
+plug 'occivink/kakoune-vertical-selection' %{
+    map global user <down> -docstring "Select all identical characters in the column downward" ': vertical-selection-down<ret>'
+    map global user <up>   -docstring "Select all identical characters in the column upward"   ': vertical-selection-up<ret>'
+}
+
+# System clipboard integration.
+plug "lePerdu/kakboard" %{
+    hook global WinCreate .* %{ kakboard-enable }
+}
+
+# Fuzzy search
+plug "andreyorst/fzf.kak" %{
+    map global normal <c-p> ': fzf-mode<ret>'
+}
+
+# ctags tagbar FIXME does not work out of tmux
+plug "andreyorst/tagbar.kak" defer "tagbar" %{
+    set-option global tagbar_sort false
+    set-option global tagbar_size 40
+    set-option global tagbar_display_anon false
+} config %{
+    # if you have wrap highlighter enamled in you configuration
+    # files it's better to turn it off for tagbar, using this hook:
+    hook global WinSetOption filetype=tagbar %{
+        remove-highlighter window/wrap
+        # you can also disable rendering whitespaces here, line numbers, and
+        # matching characters
+    }
+}
+
+plug 'delapouite/kakoune-cd' %{
+  # Suggested mapping
+  map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
+  # Suggested aliases
+  alias global cdb change-directory-current-buffer
+  alias global cdr change-directory-project-root
+  alias global ecd edit-current-buffer-directory
+  alias global pwd print-working-directory
+}
+# Automatically change working directory to be the buffer's one.
+hook global WinDisplay .* %{
+    # require delapouite/kakoune-cd
+    change-directory-current-buffer
+}
+
+# Like alexherbo2/search-highlighter.kak, but which actually works.
+# face global Search white,yellow
+def search-highlight-enable %{
+  hook window -group search-highlight NormalKey [/?*nN]|<a-[/?*nN]> %{ try %{
+    addhl window/search dynregex '%reg{/}' 0:Search
+  }}
+  hook window -group search-highlight NormalKey <esc> %{ rmhl window/search}
+}
+def search-highlight-disable %{
+  rmhl window/search
+  rmhooks window search-highlight
+}
+# Always highlight search.
+hook global WinDisplay .* %{
+    search-highlight-enable
+}
+

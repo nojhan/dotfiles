@@ -37,7 +37,7 @@ function noproxy()
 }
 
 # get the current IP adresses on eth0
-function myip() 
+function myip()
 {
     MY_IP=$(/sbin/ifconfig eth0 | awk '/inet/ { print $2 } ' | sed -e s/adr:// | sed -e s/inet6://)
     echo $MY_IP
@@ -113,7 +113,7 @@ alias mkdir='mkdir -p'
 # The 'ls' family (this assumes you use the GNU ls))
 # Mispelling on azerty keyboards
 alias lks='ls'
-alias ks='ls'
+# alias ks='ls'
 alias ms='ls'
 
 alias ls='ls -hF --color'       # add colors for filetype recognition
@@ -216,6 +216,18 @@ function ended() {
     notify
 }
 
+function forever() {
+    cmd="$1"
+    while [[ 1 ]]; do
+        echo "$cmd"
+        $cmd
+        if [[ $? > 128 ]]; then
+            break;
+        fi
+    done
+}
+
+
 ##########
 # Coding #
 ##########
@@ -240,7 +252,8 @@ export EDITOR='gvim --nofork'
 
 # aliases to manage vim in server mode
 alias latexed="gvim --servername LATEX "
-alias ide="gvim --servername IDE "
+# alias ide="gvim --servername IDE "
+alias ide="kak -s ide -e 'rename-client main'"
 
 # print a vim fortune at startup
 #/usr/games/fortune vimtips
@@ -275,6 +288,12 @@ function m()
     cm cmake .. && cm make $@ && ./$@
 }
 
+function ma()
+{
+    set -o pipefail
+    N=$(($(nproc)-1))
+    cm cmake .. && cm make -j $N $@ && cm ctest -j $N
+}
 
 
 # shortcut to display the url config of remote repo in a git root
@@ -298,9 +317,11 @@ function git_archive()
 {
     last_commit_date=$(git log -1 --format=%ci | awk '{print $1"_"$2;}' | sed "s/:/-/g")
     project=$(basename $(pwd))
-    name=${project}_${last_commit_date}
-    git archive --prefix=$name/ --format zip master > $name.zip
-    echo $name.zip
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    name=${project}_${branch}_${last_commit_date}
+    git config tar.tar.xz.command "xz -c"
+    git archive --prefix=$name/ --format tar.xz ${branch} > $name.tar.xz
+    echo $name.tar.xz
 }
 
 
@@ -345,7 +366,8 @@ echo "rcp : copy with rsync/ssh"
 }
 
 # do not permits to recall dangerous commands in bash history
-export HISTIGNORE='&:[bf]g:exit:*>|*:*rm*-rf*'
+# export HISTIGNORE='&:[bf]g:exit:*>|*:*rm*-rf*'
+export HISTIGNORE='&:[bf]g:exit:*>|*'
 # append history rather than overwrite
 shopt -s histappend
 # one command per line
@@ -368,8 +390,10 @@ eval $(thefuck --alias fuck)
 # Use liquidprompt only if in an interactive shell
 if [[ $- == *i* ]]; then
     # Super nice prompt
-    source ~/.liquidpromptrc
-    source ~/.liquidprompt
+    source ~/.liquidprompt --no-activate
+    lp_activate #--no-config
+    DOTMATRIX_VARIANT="chevron"
+    source ~/code/liquidprompt/themes/dotmatrix/dotmatrix.theme && lp_theme dotmatrix
 fi
 
 # Use autojump only if in an interactive shell
@@ -379,3 +403,7 @@ fi
 
 export TCLLIBPATH="~/.local/share/tkthemes"
 
+# Add pip bin dir to path:
+export PATH="$PATH:/home/nojhan/.local/bin/"
+
+# export PYTHONPATH="$PYTHONPATH:/home/nojhan/code/terminator/"
