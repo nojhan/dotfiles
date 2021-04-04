@@ -4,10 +4,14 @@ dopath("cfg_defaults")
 dopath("mod_statusbar")
 
 -- Mod1 = Alt
--- Mod4 = Window
+-- Mod2 = number lock
+-- Mod3 = caps lock
+-- Mod4 = super (aka windows)
+-- Mod5 = level 3 shift (aka AltGr, Opt)
 -- rajouter "+" après le code pour les concaténations suivantes
 ALTMETA="Mod5+" 
-META="Mod1+" 
+-- META="Mod1+"
+META="Mod4+"
 
 
 ioncore.set{
@@ -27,7 +31,8 @@ defbindings("WMPlex.toplevel", {
     kpress("F12", "nil"),
 
 	-- lancement xterm
-    kpress(META.."F1", "ioncore.exec_on(_, XTERM or 'urxvt')"),
+    -- kpress(META.."F1", "ioncore.exec_on(_, XTERM or 'urxvt')"),
+    kpress(META.."F1", "ioncore.exec_on(_, XTERM or 'terminator --no-dbus')"),
 
 	-- exec
     kpress(META.."F2", "mod_query.query_exec(_)"),
@@ -40,6 +45,12 @@ defbindings("WMPlex.toplevel", {
 
 	-- Nautilus
     kpress(META.."F5", "ioncore.exec_on(_, 'nautilus --no-desktop')"),
+
+	-- kakoune
+    kpress(META.."F6", "ioncore.exec_on(_, 'terminator -p kakoune -e /home/nojhan/.local/bin/ks')"),
+
+	-- vifm
+    kpress(META.."F7", "ioncore.exec_on(_, 'terminator -p kakoune -e vifm')"),
 
 	-- Lock
     kpress(META.."l", "ioncore.exec_on(_, 'gnome-screensaver-command -l')"),
@@ -57,13 +68,13 @@ defbindings("WMPlex", {
 defbindings("WScreen", {
 
 	-- Aller à l'écran physique précédent/suivant
-    kpress(META.."twosuperior", "ioncore.goto_prev_screen()"),
+    kpress(META.."dollar", "ioncore.goto_prev_screen()"),
     kpress(META.."Next", "ioncore.goto_next_screen()"),
-    
+
 	-- aller au nième écran physique (attention, inversion pour 2e écran à gauche)
     kpress(META.."Shift+2", "ioncore.goto_nth_screen(0)"),
     kpress(META.."Shift+1", "ioncore.goto_nth_screen(1)"),
-    
+
 	-- Aller au cadre suivant/précédent
     kpress(META.."Right", "ioncore.goto_next(_chld, 'right')", "_chld:non-nil"),
     kpress(META.."Left", "ioncore.goto_next(_chld, 'left')", "_chld:non-nil"),
