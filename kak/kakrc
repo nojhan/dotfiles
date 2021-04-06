@@ -43,6 +43,8 @@ map global normal <a-tab> -docstring 'Ensure selection cursor is after anchor' '
 
 set-option -add global ui_options ncurses_assistant=none
 set-option -add global ui_options ncurses_set_title=yes
+set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼
+set-option -add global ui_options ncurses_padding_fill=yes
 
 # Indent with 2 spaces and make tabs appear as 2 spaces.
 set-option global tabstop 4
@@ -186,6 +188,10 @@ plug "andreyorst/tagbar.kak" defer "tagbar" %{
         remove-highlighter window/wrap
         # you can also disable rendering whitespaces here, line numbers, and
         # matching characters
+    }
+    # To see what filetypes are supported use `ctags --list-kinds | awk '/^\w+/'
+    hook global WinSetOption filetype=(c|cpp|rust) %{
+        tagbar-enable
     }
 }
 
