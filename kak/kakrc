@@ -13,12 +13,16 @@ define-command filetype-hook -params 2 %{
 # Comments
 map global normal '$'     -docstring 'Comment the selected lines' ': comment-line<ret>'
 map global normal '<a-$>' -docstring 'Comment the selected block with begin/end characters' ': comment-block<ret>'
+map global normal '#' -docstring 'duplicate and comment line' 'xyp: comment-line<ret>j'
 
-map global normal '*' -docstring 'Select all occurrences of the current selection set' 'bw*%s<ret>'
+map global normal '*' -docstring 'select all occurrences of the word under cursor' 'be*n<ret>'
 
-define-command cq -docstring 'Quit with an (arbitrary) error code' %{q 666}
+map global normal '=' -docstring 'indent like the line above' '<a-C>gi<a-&><space>jgi'
 
-# define-command pwd -docstring 'Print the current working directory' %{ evaluate-commands %sh{ echo "echo -markup {Information}$PWD" } }
+map global normal '<c-up>'   -docstring 'move line down' 'xdkPk'
+map global normal '<c-down>' -docstring 'move line down' 'xdpj'
+
+define-command cq -docstring 'Quit with an (arbitrary) error code' %{q! 666}
 
 # Use Tab and Shift-Tab to navigate completion in insert mode.
 hook global InsertCompletionShow .* %{
@@ -33,9 +37,21 @@ hook global InsertCompletionShow .* %{
     }
 }
 
-map global normal <tab>   -docstring 'Swap selections cursor and anchor' '<a-;>'
+# Cursor switch.
+map global normal <tab>   -docstring 'Swap selections cursor and anchor'       '<a-;>'
 map global normal <a-tab> -docstring 'Ensure selection cursor is after anchor' '<a-:>'
 
+# Go to paragraph/indents.
+map global goto 'p' -docstring 'select to next paragraph'   '<esc>]p' 
+map global goto 'P' -docstring 'extend to next paragraph'   '<esc>}p' 
+map global goto 'o' -docstring 'select to prev paragraph'   '<esc>[p' 
+map global goto 'O' -docstring 'extend to prev paragraph'   '<esc>{p' 
+map global goto 't' -docstring 'select to indent end'       '<esc>]i' 
+map global goto 'T' -docstring 'select to indent beginning' '<esc>[i' 
+
+# Paths.
+map global prompt <a-?> -docstring 'Current buffer name' '<c-r>%'
+map global prompt <a-/> -docstring 'Current buffer directory' '%sh(dirname "$kak_bufname")<a-!>/'
 
 #################################
 # Generic config
@@ -43,7 +59,6 @@ map global normal <a-tab> -docstring 'Ensure selection cursor is after anchor' '
 
 set-option -add global ui_options ncurses_assistant=none
 set-option -add global ui_options ncurses_set_title=yes
-set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼
 set-option -add global ui_options ncurses_padding_fill=yes
 
 # Indent with 2 spaces and make tabs appear as 2 spaces.
@@ -55,18 +70,11 @@ hook global InsertChar \t %{
     exec -draft h@
 }
 
-# keep space around cursor
-set-option global scrolloff 10,10
+# Keep space around cursor when scrolling.
+set-option global scrolloff 3,3
 
-# Add characters as matching pairs
+# Add characters as matching pairs.
 set-option -add global matching_pairs ‹ › « » “ ” ‘ ’
-
-# Autoformat (indent) line (if formatcmd is defined for the current filetype).
-map global normal '=' ': format<ret>' -docstring 'format'
-
-# Paths
-map global prompt <a-?> -docstring 'Current buffer name' '<c-r>%'
-map global prompt <a-/> -docstring 'Current buffer directory' '%sh(dirname "$kak_bufname")<a-!>/'
 
 hook global ModuleLoaded x11 %{
     set global termcmd 'terminator -e '
@@ -74,9 +82,8 @@ hook global ModuleLoaded x11 %{
 }
 
 # Persistent history across sessions.
-hook global KakEnd .* %{ echo -to-file .kak_history -quoting kakoune reg : %reg{:} }
-hook global KakBegin .* %{ try %{ source .kak_history } }
-
+hook global KakEnd .* %{ echo -to-file ~/.kak_history -quoting kakoune reg : %reg{:} }
+hook global KakBegin .* %{ try %{ source ~/.kak_history } }
 
 
 #################################
@@ -88,7 +95,7 @@ add-highlighter global/wrap wrap -word -indent -marker ⤷
 add-highlighter global/suspicicous-whitespaces show-whitespaces -tab ⭲ -nbsp · -spc " " -lf " "
 add-highlighter global/trailing-whitespaces regex '\h+$' 0:error
 
-colorscheme nojhan
+colorscheme kalolo
 
 # Highlight generic tags
 hook global WinSetOption comment_line=(.+) %{
@@ -100,7 +107,7 @@ hook global WinSetOption comment_line=(.+) %{
 
 # Show line numbers (and highlight current cursor line)
 hook global WinCreate ^[^*]+$ %{
-    add-highlighter window/ number-lines # -hlcursor
+    add-highlighter window/ number-lines -hlcursor -min-digits 3
 }
 
 
@@ -176,11 +183,11 @@ plug "andreyorst/fzf.kak" %{
     map global normal <c-p> ': fzf-mode<ret>'
 }
 
-# ctags tagbar FIXME does not work out of tmux
 plug "andreyorst/tagbar.kak" defer "tagbar" %{
     set-option global tagbar_sort false
     set-option global tagbar_size 40
     set-option global tagbar_display_anon false
+    set-option global tagbar_show_details true
 } config %{
     # if you have wrap highlighter enamled in you configuration
     # files it's better to turn it off for tagbar, using this hook:
@@ -227,3 +234,48 @@ hook global WinDisplay .* %{
     search-highlight-enable
 }
 
+plug "kak-lsp/kak-lsp" do %{
+        cargo install --locked --force --path .
+} config %{
+
+    # uncomment to enable debugging
+    # eval %sh{echo ${kak_opt_lsp_cmd} >> /tmp/kak-lsp.log}
+    # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+
+    # ,l will display a specific menu for LSP
+    map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
+
+    # lsp-enable
+    set-option global lsp_server_configuration pyls.configurationSources=["flake8"]
+
+    set global lsp_diagnostic_line_error_sign '║'
+    set global lsp_diagnostic_line_warning_sign '┊'
+
+    # define-command ne -docstring 'go to next error/warning from lsp' %{ lsp-find-error --include-warnings }
+    # define-command pe -docstring 'go to previous error/warning from lsp' %{ lsp-find-error --previous --include-warnings }
+    # define-command ee -docstring 'go to current error/warning from lsp' %{ lsp-find-error --include-warnings; lsp-find-error --previous --include-warnings }
+
+    define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+
+    hook global WinSetOption filetype=(c|cpp|python) %{
+        # Show matching objects?
+        set-option window lsp_auto_highlight_references false
+        map global '<s-*>' -docstring 'Highlight related references' ': lsp-highlight-references<ret>'
+        
+        # Hint window next to the cursor?
+        set-option window lsp_hover_anchor false
+        
+        lsp-auto-hover-enable
+        lsp-enable-window
+    }
+
+    hook global KakEnd .* lsp-exit
+}
+
+set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼ ╲╱╳╲╱
+
+add-highlighter global/ scrollbar
+add-highlighter global/scrollbar/ scrollbar-indicator red,default lsp_error_lines
+add-highlighter global/scrollbar/ scrollbar-indicator yellow,default lint_flags
+# add-highlighter global/scrollbar/ scrollbar-indicator red,default git_diff_flags
+# git show-diff
