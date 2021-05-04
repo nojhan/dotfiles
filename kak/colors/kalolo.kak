@@ -1,7 +1,7 @@
 
 # Blues
-declare-option -hidden  str kalolo_shiny_blue   rgb:b7dbff
-declare-option -hidden  str kalolo_light_blue   rgb:87bbff
+declare-option -hidden str kalolo_shiny_blue    rgb:b7dbff
+declare-option -hidden str kalolo_light_blue    rgb:87bbff
 declare-option -hidden str kalolo_blue          rgb:6f9dfe
 declare-option -hidden str kalolo_dark_blue     rgb:4f7dde
 
@@ -16,13 +16,15 @@ declare-option -hidden str kalolo_yellow        rgb:efcd45
 declare-option -hidden str kalolo_dark_yellow   rgb:cf8200
 
 # Greens
+declare-option -hidden str kalolo_shiny_green   rgb:b1cfb1
 declare-option -hidden str kalolo_light_green   rgb:b5d271
 declare-option -hidden str kalolo_green         rgb:a5c261
 declare-option -hidden str kalolo_dark_green    rgb:529f50
 
 # Reds
-declare-option -hidden str kalolo_light_red     rgb:fb5949
+declare-option -hidden str kalolo_light_red     rgb:ff5949
 declare-option -hidden str kalolo_red           rgb:db4939
+declare-option -hidden str kalolo_dark_red      rgb:cb3929
 
 # Orange-ish
 declare-option -hidden str kalolo_cream         rgb:bf8753
@@ -63,7 +65,7 @@ set-face global module             "%opt{kalolo_dark_blue},default"
 # String are ubiquitous, they have their own color,
 # with a different background, to easily spot multiline strings.
 # set-face global string             "%opt{kalolo_cream},%opt{kalolo_dark_cream}"
-set-face global string             "%opt{kalolo_mid_white},%opt{kalolo_mid_black}"
+set-face global string             "%opt{kalolo_shiny_green},%opt{kalolo_mid_black}"
 
 # More or less single-character delimiter which are everywhere.
 set-face global operator           "%opt{kalolo_light_magenta},default"
@@ -139,33 +141,33 @@ set-face global Search             "%opt{kalolo_black},%opt{kalolo_light_green}+
 
 # Cursors varying with mode
 # Default normal
-set-face global PrimarySelection   "%opt{kalolo_light_white},%opt{kalolo_dark_yellow}"
-set-face global PrimaryCursor      "%opt{kalolo_black},%opt{kalolo_yellow}+F"
+set-face global PrimarySelection   "default,rgba:cf820075"
+set-face global PrimaryCursor      "%opt{kalolo_black},%opt{kalolo_light_yellow}+F"
 set-face global PrimaryCursorEol   "default,%opt{kalolo_light_red}+F"
 
-set-face global SecondarySelection "%opt{kalolo_light_black},%opt{kalolo_yellow}"
-set-face global SecondaryCursor    "%opt{kalolo_black},%opt{kalolo_light_yellow}+F"
-set-face global SecondaryCursorEol "default,%opt{kalolo_red}+F"
+set-face global SecondarySelection "default,rgba:cf820045"
+set-face global SecondaryCursor    "%opt{kalolo_white},%opt{kalolo_dark_yellow}+F"
+set-face global SecondaryCursorEol "default,%opt{kalolo_dark_red}+F"
 
 # Switching to normal = shades of yellows
 hook global ModeChange '.*:normal' %{
-    set-face global PrimarySelection   "%opt{kalolo_light_white},%opt{kalolo_dark_yellow}"
-    set-face global PrimaryCursor      "%opt{kalolo_black},%opt{kalolo_yellow}+F"
+    set-face global PrimarySelection   "default,rgba:cf820075"
+    set-face global PrimaryCursor      "%opt{kalolo_black},%opt{kalolo_light_yellow}+F"
     set-face global PrimaryCursorEol   "default,%opt{kalolo_light_red}+F"
-    
-    set-face global SecondarySelection "%opt{kalolo_light_black},%opt{kalolo_yellow}"
-    set-face global SecondaryCursor    "%opt{kalolo_black},%opt{kalolo_light_yellow}+F"
-    set-face global SecondaryCursorEol "default,%opt{kalolo_red}+F"
+
+    set-face global SecondarySelection "default,rgba:cf820045"
+    set-face global SecondaryCursor    "%opt{kalolo_white},%opt{kalolo_dark_yellow}+F"
+    set-face global SecondaryCursorEol "default,%opt{kalolo_dark_red}+F"
 }
 
 # Switching to insert = shades of blue
 hook global ModeChange '.*:insert' %{
-    set-face global PrimarySelection   "%opt{kalolo_light_white},%opt{kalolo_dark_blue}"
-    set-face global PrimaryCursor      "%opt{kalolo_light_white},%opt{kalolo_light_blue}+F"
+    set-face global PrimarySelection   "default,rgba:6f9dfe75"
+    set-face global PrimaryCursor      "%opt{kalolo_dark_black},%opt{kalolo_light_blue}+F"
     set-face global PrimaryCursorEol   "default,%opt{kalolo_light_magenta}+F"
 
-    set-face global SecondarySelection "%opt{kalolo_light_black},%opt{kalolo_light_blue}"
-    set-face global SecondaryCursor    "%opt{kalolo_light_black},%opt{kalolo_blue}+F"
+    set-face global SecondarySelection "default,rgba:6f9dfe45"
+    set-face global SecondaryCursor    "%opt{kalolo_light_white},%opt{kalolo_dark_blue}+F"
     set-face global SecondaryCursorEol "default,%opt{kalolo_magenta}+F"
 }
 
