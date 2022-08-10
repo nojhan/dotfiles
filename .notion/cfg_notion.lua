@@ -51,9 +51,15 @@ defbindings("WMPlex.toplevel", {
 
 	-- vifm
     kpress(META.."F7", "ioncore.exec_on(_, 'terminator -p kakoune -e vifm')"),
+    
+	-- kakoune
+    kpress(META.."F8", "ioncore.exec_on(_, 'terminator -p kakoune -e /home/nojhan/.local/bin/ks')"),
+
+	-- vifm
+    kpress(META.."F9", "ioncore.exec_on(_, 'terminator -p kakoune -e vifm')"),
 
 	-- Lock
-    kpress(META.."l", "ioncore.exec_on(_, 'gnome-screensaver-command -l')"),
+    kpress(META.."l", "ioncore.exec_on(_, 'cinnamon-screensaver & cinnamon-screensaver-command -l')"),
 
 	-- menu général ion3
     kpress(META.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')")
