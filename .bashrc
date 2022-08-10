@@ -116,18 +116,34 @@ alias lks='ls'
 # alias ks='ls'
 alias ms='ls'
 
-alias ls='ls -hF --color'       # add colors for filetype recognition
-alias l='ls -1'
-alias la='ls -Al'               # show hidden files
-alias lx='ls -lXB'              # sort by extension
-alias lk='ls -lSr'              # sort by size
-alias lc='ls -lcr'              # sort by change time
-alias lu='ls -lur'              # sort by access time
-alias lr='ls -lR'               # recursive ls
-alias lt='ls -ltr'              # sort by date
-alias lm='ls -al --color=none|less'  # pipe through 'less'
-alias ll='ls -l'
-alias tree='tree -Csu'          # nice alternative to 'ls'
+# alias ls='ls -hF --color'       # add colors for filetype recognition
+# alias l='ls -1'
+# alias la='ls -Al'               # show hidden files
+# alias lx='ls -lXB'              # sort by extension
+# alias lk='ls -lSr'              # sort by size
+# alias lc='ls -lcr'              # sort by change time
+# alias lu='ls -lur'              # sort by access time
+# alias lr='ls -lR'               # recursive ls
+# alias lt='ls -ltr'              # sort by date
+# alias lm='ls -al --color=none|less'  # pipe through 'less'
+# alias ll='ls -l'
+# alias tree='tree -Csu'          # nice alternative to 'ls'
+
+export PATH="$PATH:$HOME/.cargo/bin"
+exadef="--icons --modified --git"
+exal="--long --all --group --modified --header --level 2"
+alias ls='exa ${exadef}'       # add colors for filetype recognition
+alias  l='exa ${exadef} -1'
+alias la='exa ${exadef} --all'               # show hidden files
+alias lx='exa ${exadef} ${exal} --sort extension'              # sort by extension
+alias lk='exa ${exadef} ${exal} --sort size'              # sort by size
+alias lc='exa ${exadef} ${exal} --sort modified'              # sort by change time
+alias lu='exa ${exadef} ${exal} --sort accessed'              # sort by access time
+alias lt='exa ${exadef} ${exal} --sort created'              # sort by date
+alias lr='exa ${exadef} ${exal} --recurse'               # recursive ls
+alias lm='exa ${exadef} ${exal} | kak'  # pipe through editor
+alias ll='exa ${exadef} ${exal}'
+alias tree='exa ${xadef} ${exal} --tree'          # nice alternative to 'ls'
 
 # changes the default head/tail behaviour to output x lines,
 # where x is the number of lines currently displayed on your terminal
@@ -248,7 +264,7 @@ function repeat()
 }
 
 # default editor
-export EDITOR='gvim --nofork'
+export EDITOR='kak'
 
 # aliases to manage vim in server mode
 alias latexed="gvim --servername LATEX "
@@ -407,3 +423,4 @@ export TCLLIBPATH="~/.local/share/tkthemes"
 export PATH="$PATH:/home/nojhan/.local/bin/"
 
 # export PYTHONPATH="$PYTHONPATH:/home/nojhan/code/terminator/"
+export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/"
