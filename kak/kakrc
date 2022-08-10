@@ -21,6 +21,24 @@ map global normal '=' -docstring 'indent like the line above' '<a-C>gi<a-&><spac
 
 map global normal '<c-up>'   -docstring 'move line down' 'xdkPk'
 map global normal '<c-down>' -docstring 'move line down' 'xdpj'
+map global insert '<c-up>'   -docstring 'move line down' '<esc>xdkPki'
+map global insert '<c-down>' -docstring 'move line down' '<esc>xdpji'
+
+map global insert '<c-right>' -docstring 'one word right in insert mode' '<esc>eli'
+map global insert '<c-left>'  -docstring 'one word left in insert mode'  '<esc>bi'
+map global insert '<c-u>' -docstring 'kill line in insert mode' '<esc>GIc'
+
+map global normal 'è' -docstring 'select the inner sequence enclosed by matching characters' 'mL<a-;>H'
+
+def -params 1 extend-line-up %{
+    exec "<a-:><a-;>%arg{1}K<a-;>"
+    try %{
+        exec -draft ';<a-K>\n<ret>'
+        exec X
+    }
+    exec '<a-;><a-X>'
+}
+map global normal Y -docstring 'Extend selection to the previous line' ':extend-line-up %val{count}<ret>'
 
 define-command cq -docstring 'Quit with an (arbitrary) error code' %{q! 666}
 
@@ -42,12 +60,12 @@ map global normal <tab>   -docstring 'Swap selections cursor and anchor'       '
 map global normal <a-tab> -docstring 'Ensure selection cursor is after anchor' '<a-:>'
 
 # Go to paragraph/indents.
-map global goto 'p' -docstring 'select to next paragraph'   '<esc>]p' 
-map global goto 'P' -docstring 'extend to next paragraph'   '<esc>}p' 
-map global goto 'o' -docstring 'select to prev paragraph'   '<esc>[p' 
-map global goto 'O' -docstring 'extend to prev paragraph'   '<esc>{p' 
-map global goto 't' -docstring 'select to indent end'       '<esc>]i' 
-map global goto 'T' -docstring 'select to indent beginning' '<esc>[i' 
+map global goto 'p' -docstring 'select to next paragraph'   '<esc>]p'
+map global goto 'P' -docstring 'extend to next paragraph'   '<esc>}p'
+map global goto 'o' -docstring 'select to prev paragraph'   '<esc>[p'
+map global goto 'O' -docstring 'extend to prev paragraph'   '<esc>{p'
+map global goto 't' -docstring 'select to indent end'       '<esc>]i'
+map global goto 'T' -docstring 'select to indent beginning' '<esc>[i'
 
 # Paths.
 map global prompt <a-?> -docstring 'Current buffer name' '<c-r>%'
@@ -93,16 +111,23 @@ hook global KakBegin .* %{ try %{ source ~/.kak_history } }
 add-highlighter global/matching show-matching
 add-highlighter global/wrap wrap -word -indent -marker ⤷
 add-highlighter global/suspicicous-whitespaces show-whitespaces -tab ⭲ -nbsp · -spc " " -lf " "
-add-highlighter global/trailing-whitespaces regex '\h+$' 0:error
+#add-highlighter global/trailing-whitespaces regex '\h+$' 0:error
+
+define-command -hidden show-trailing-whitespaces %{ try %{ add-highlighter global/trailing-whitespaces regex '\h+$' 0:default,red } }
+define-command -hidden hide-trailing-whitespaces %{ try %{ remove-highlighter global/trailing-whitespaces } }
+hook global WinDisplay .*              show-trailing-whitespaces
+hook global ModeChange 'insert:normal' show-trailing-whitespaces
+hook global ModeChange 'normal:insert' hide-trailing-whitespaces
+
 
 colorscheme kalolo
 
 # Highlight generic tags
 hook global WinSetOption comment_line=(.+) %{
-    add-highlighter -override window/here  regex "(HERE)"   1:rgb:ffff00,rgb:ff0000+FB
-    add-highlighter -override window/fixme regex "(FIXME)"  1:rgb:ffff00,rgb:ff0000+Fb
-    add-highlighter -override window/todo  regex "(TODO)"   1:rgb:000000,rgb:ff00ff+Fb
-    add-highlighter -override window/note  regex "(NOTE)"   1:rgb:000000,rgb:a5c261+Fb
+    add-highlighter -override window/here  regex "\b(HERE)\b"   1:rgb:ffff00,rgb:ff0000+FB # WHERE
+    add-highlighter -override window/fixme regex "\b(FIXME)\b"  1:rgb:ffff00,rgb:ff0000+Fb
+    add-highlighter -override window/todo  regex "\b(TODO)\b"   1:rgb:000000,rgb:ff00ff+Fb
+    add-highlighter -override window/note  regex "\b(NOTE)\b"   1:rgb:000000,rgb:a5c261+Fb
 }
 
 # Show line numbers (and highlight current cursor line)
@@ -120,13 +145,13 @@ filetype-hook makefile %{
 }
 
 filetype-hook latex %{
-    set-option buffer autowrap_column 80
+    set-option buffer autowrap_column 160
     autowrap-enable
 }
 
 filetype-hook markdown %{
-    set-option buffer autowrap_column 80
-    autowrap-enable
+    # set-option buffer autowrap_column 80
+    # autowrap-enable
 }
 
 filetype-hook c|cpp %{
@@ -261,10 +286,10 @@ plug "kak-lsp/kak-lsp" do %{
         # Show matching objects?
         set-option window lsp_auto_highlight_references false
         map global '<s-*>' -docstring 'Highlight related references' ': lsp-highlight-references<ret>'
-        
+
         # Hint window next to the cursor?
         set-option window lsp_hover_anchor false
-        
+
         lsp-auto-hover-enable
         lsp-enable-window
     }
@@ -272,7 +297,21 @@ plug "kak-lsp/kak-lsp" do %{
     hook global KakEnd .* lsp-exit
 }
 
-set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼ ╲╱╳╲╱
+plug "dmerejkowsky/kak-spell" config %{
+  declare-user-mode kak-spell
+  map global user s ': enter-user-mode -lock kak-spell<ret>' -docstring 'enter spell user mode'
+  map global kak-spell a ': kak-spell-add<ret>' -docstring 'add the selection to the user dict'
+  map global kak-spell d ': kak-spell-disable<ret>' -docstring 'clear spelling highlighters'
+  map global kak-spell e ': kak-spell-enable en_US<ret> :kak-spell <ret>' -docstring 'enable spell check in English'
+  map global kak-spell f ': kak-spell-enable fr_FR<ret> :kak-spell <ret>' -docstring 'run spell check in French'
+  map global kak-spell l ': kak-spell-list <ret>' -docstring 'list spelling errors in a buffer'
+  map global kak-spell n ': kak-spell-next<ret>' -docstring 'go to next spell error'
+  map global kak-spell p ': kak-spell-previous<ret>' -docstring 'go to next spell error'
+  map global kak-spell r ': kak-spell-replace<ret>' -docstring 'suggest a list of replacements'
+  map global kak-spell x ': kak-spell-remove<ret>' -docstring 'remove the selection from the user dict'
+}
+
+set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼ ╲
 
 add-highlighter global/ scrollbar
 add-highlighter global/scrollbar/ scrollbar-indicator red,default lsp_error_lines
