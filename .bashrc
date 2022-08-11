@@ -403,6 +403,12 @@ alias bepo="setxkbmap -layout fr -variant bepo -option"
 # Import the correct alias for thefuck
 eval $(thefuck --alias fuck)
 
+# Alias for forcing screen on/off.
+alias screenon="xset -display :0.0 dpms force on"
+alias screenoff="xset -display :0.0 dpms force off"
+# Lock the screens and turn them off.
+alias afk="cinnamon-screensaver & cinnamon-screensaver-command -l & xset -display :0.0 dpms force off"
+
 # Use liquidprompt only if in an interactive shell
 if [[ $- == *i* ]]; then
     # Super nice prompt
