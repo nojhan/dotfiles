@@ -36,6 +36,7 @@ Plugin 'terryma/vim-expand-region' " expand/shrink the current visual selection:
 " Plugin 'jeaye/color_coded'
 Plugin 'lervag/vimtex'
 Plugin 'vim-scripts/a.vim' " alternate between header/code files: :A
+Plugin 'leafgarland/typescript-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -46,7 +47,7 @@ set nocompatible    " do not try to be vi-compatible
 " call pathogen#infect()
 " set sessionoptions-=options " Because pathogen.
 
-set guifont=Deja\ Vu\ Sans\ Mono\ 12
+set guifont=Deja\ Vu\ Sans\ Mono\ 10
 
 syntax on             " syntax coloring by default
 
@@ -89,7 +90,9 @@ set guioptions-=T   "remove toolbar
 
 set colorcolumn=72,120  " highligth the 80th and 120th column
 
-"set cursorline " highlight current line
+hi CursorLine gui=underline term=underline guibg=NONE ctermbg=NONE
+" The `!` implements a toggle
+nnoremap <leader>l :set cursorline!<CR>
 
 " all operations such as yy, D, and P work with the clipboard.
 " No need to prefix them with "* or "+
@@ -175,6 +178,9 @@ nnoremap <leader>f :set guifont=Deja\ Vu\ Sans\ Mono\ 12<CR>
 " set a big guifont size
 nnoremap <leader>ç :set guifont=Deja\ Vu\ Sans\ Mono\ 16<CR>
 
+" highligth git merge marks
+nnoremap <leader>m /[<=>]\{7\}<CR>
+
 " double percentage sign in command mode is expanded
 " to directory of current file - http://vimcasts.org/e/14
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -213,7 +219,8 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 set listchars=trail:·,nbsp:·,tab:˲\ ,extends:»,precedes:«,
 set list
 
-au VimEnter * echomsg system('/usr/games/fortune vimtweets')
+
+" au VimEnter * echomsg system('/usr/games/fortune vimtweets')
 
 "au FocusLost * :wa   " save every opened buffer when the window lost focus
 
@@ -239,6 +246,8 @@ else
 endif
 
 au BufRead,BufNewFile *.thrift setfiletype thrift
+au BufRead,BufNewFile *.ts   setfiletype typescript
+
 
 " move the current line up or down with the Ctrl-arrow keys
 nmap <C-Down> :<C-u>move .+1<CR>
@@ -321,9 +330,10 @@ nnoremap <leader>b :NERDTreeToggle<CR>
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg)
-    let a:name = 'ndhf_' . substitute(a:extension, "\\.", "_", "")
-    exec 'autocmd FileType nerdtree highlight '.a:name.' ctermbg='.'NONE'.' ctermfg='.a:fg.' guibg='.'NONE'.' guifg='.a:fg
-    exec 'autocmd FileType nerdtree syn match '.a:name.' #^\s\+.*'.a:extension.'\**$#'
+    let a_name = 'ndhf_' . substitute(a:extension, "\\.", "_", "")
+    exec 'autocmd FileType nerdtree highlight '.a_name.' ctermbg='.'NONE'.' ctermfg='.a:fg.' guibg='.'NONE'.' guifg='.a:fg
+    exec 'autocmd FileType nerdtree syn match '.a_name.' #^\s\+.*'.a:extension.'\W\**$#'
+    exec 'autocmd FileType nerdtree syn match '.a_name.' #^\s\+.*'.a:extension.'$#'
 endfunction
 
 " doc
@@ -334,7 +344,7 @@ call NERDTreeHighlightFile('c'  , 'lightmagenta')
 call NERDTreeHighlightFile('cc' , 'lightmagenta')
 call NERDTreeHighlightFile('cpp', 'lightmagenta')
 call NERDTreeHighlightFile('mm' , 'lightmagenta')
-call NERDTreeHighlightFile('hpp', 'lightblue')
+call NERDTreeHighlightFile('hpp', 'lightred')
 " headers
 call NERDTreeHighlightFile('h'  , 'cyan')
 " shell scripts
