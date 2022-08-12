@@ -199,9 +199,15 @@ plug 'occivink/kakoune-vertical-selection' %{
 }
 
 # System clipboard integration.
-plug "lePerdu/kakboard" %{
-    hook global WinCreate .* %{ kakboard-enable }
-}
+# FIXME bug: does not allow correct multi-cursors paste.
+#plug "lePerdu/kakboard" %{
+#    hook global WinCreate .* %{ kakboard-enable }
+#}
+# Keep the 1 register in sync with the system clipboard .
+# FIXME: does not work either.
+# hook global RegisterModified '1' %{ nop %sh{
+#     printf %s "$kak_main_reg_dquote" | xsel --input --clipboard
+# }}
 
 # Fuzzy search
 plug "andreyorst/fzf.kak" %{
