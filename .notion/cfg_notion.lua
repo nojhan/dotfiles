@@ -60,6 +60,7 @@ defbindings("WMPlex.toplevel", {
 
 	-- Lock
     kpress(META.."l", "ioncore.exec_on(_, 'cinnamon-screensaver & cinnamon-screensaver-command -l')"),
+    kpress(META.."Shift+l", "ioncore.exec_on(_, 'cinnamon-screensaver & cinnamon-screensaver-command -l & xset -display :0.0 dpms force off')"),
 
 	-- menu général ion3
     kpress(META.."F12", "mod_query.query_menu(_, _sub, 'mainmenu', 'Main menu:')")
