@@ -415,7 +415,7 @@ if [[ $- == *i* ]]; then
     source ~/.liquidprompt --no-activate
     lp_activate #--no-config
     DOTMATRIX_VARIANT="chevron"
-    source ~/code/liquidprompt/themes/dotmatrix/dotmatrix.theme && lp_theme dotmatrix
+    source ~/code/lp-dotmatrix/dotmatrix.theme && lp_theme dotmatrix
 fi
 
 # Use autojump only if in an interactive shell
