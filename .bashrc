@@ -47,9 +47,9 @@ function myip()
 alias xcopy="xclip -i -selection clipboard"
 
 # baskcup shortcuts
-alias rcp='rsync -avz --ignore-existing --progress --rsh "ssh -l nojhan" '
-alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443 -l nojhan" '
-alias rcp_80='rsync -avz --ignore-existing --progress --rsh "ssh -p 80 -l nojhan" '
+alias rcp='rsync -avz --ignore-existing --progress --rsh "ssh" '
+alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443" '
+alias rcp_80='rsync -avz --ignore-existing --progress --rsh "ssh -p 80" '
 
 
 ###################
@@ -131,24 +131,25 @@ alias ms='ls'
 
 export PATH="$PATH:$HOME/.cargo/bin"
 exadef="--icons --modified --git"
-exal="--long --all --group --modified --header --level 2"
+exal="--long --all --group --modified --header --level 2 --time-style=long-iso --binary"
 alias ls='exa ${exadef}'       # add colors for filetype recognition
-alias  l='exa ${exadef} -1'
+alias  l='exa ${exadef} -1 --no-icons'
 alias la='exa ${exadef} --all'               # show hidden files
 alias lx='exa ${exadef} ${exal} --sort extension'              # sort by extension
-alias lk='exa ${exadef} ${exal} --sort size'              # sort by size
+alias lk='exa ${exadef} ${exal} --sort size --reverse'              # sort by size
 alias lc='exa ${exadef} ${exal} --sort modified'              # sort by change time
+alias lm='exa ${exadef} ${exal} --sort=modified --reverse'
 alias lu='exa ${exadef} ${exal} --sort accessed'              # sort by access time
 alias lt='exa ${exadef} ${exal} --sort created'              # sort by date
 alias lr='exa ${exadef} ${exal} --recurse'               # recursive ls
-alias lm='exa ${exadef} ${exal} | kak'  # pipe through editor
+alias le='exa ${exadef} ${exal} | kak'  # pipe through editor
 alias ll='exa ${exadef} ${exal}'
 alias tree='exa ${xadef} ${exal} --tree'          # nice alternative to 'ls'
 
 # changes the default head/tail behaviour to output x lines,
 # where x is the number of lines currently displayed on your terminal
-alias head='head -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
-alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 2))'
+alias head='head -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 15))'
+alias tail='tail -n $((${LINES:-`tput lines 2>/dev/null||echo -n 12`} - 15))'
 
 # If the output is smaller than the screen height is smaller,
 # less will just cat it
@@ -160,6 +161,8 @@ export LESSOPEN='|~/code/dotfiles/lessfilter.sh %s'
 
 # nautilus file manager in browser mode without destkop management
 alias Ex='nautilus --no-desktop --browser .'
+
+alias k="kanban"
 
 # Make a directory and move to it
 function md() {
@@ -412,16 +415,35 @@ alias afk="cinnamon-screensaver & cinnamon-screensaver-command -l & xset -displa
 # Use liquidprompt only if in an interactive shell
 if [[ $- == *i* ]]; then
     # Super nice prompt
-    source ~/.liquidprompt --no-activate
-    lp_activate #--no-config
-    DOTMATRIX_VARIANT="chevron"
-    source ~/code/lp-dotmatrix/dotmatrix.theme && lp_theme dotmatrix
+    source ~/.liquidprompt
+    if [[ -f ~/code/lp-dotmatrix/dotmatrix.theme ]] ; then
+        source ~/code/lp-dotmatrix/presets/variant-chevron.conf
+        # source ~/code/lp-dotmatrix/presets/colors_dark_high-contrast.conf
+        # DOTMATRIX_LINE="⣀⠔⠉⠢"
+        source ~/code/lp-dotmatrix/dotmatrix.theme && lp_theme dotmatrix
+    fi
 fi
 
-# Use autojump only if in an interactive shell
 if [[ $- == *i* ]] ; then
+    # Use autojump only if in an interactive shell
     source /usr/share/autojump/autojump.bash
 fi
+
+if [[ $- == *i* ]] ; then
+    for f in /etc/bash_completion.d/* ; do
+        source "$f"
+    done
+    # for f in /usr/share/bash-completion/completions/*; do
+        # source "$f"
+    # done
+    bcp="/usr/share/bash-completion/completions"
+    enabled=("apt" "autossh" "c++" "chmod" "chown" "file-roller" "find" "g++" "git" "gitk" "htop" "inkscape" "iwconfig" "jq" "jsonschema" "kill" "killall" "lftp" "make" "man" "mktemp" "mount" "python" "python3" "pyvenv" "R" "rsync" "sh" "shellcheck" "ssh" "ssh-copy-id" "sudo" "su" "tar" "umount" "useradd" "usermod" "valgrind" "vifm" "wget" "wine")
+    for f in $enabled; do
+        source "$bcp/$f"
+    done
+fi
+
+
 
 export TCLLIBPATH="~/.local/share/tkthemes"
 
@@ -456,3 +478,8 @@ function qwatch()
     fi
     watch --interval 10 --color "sacct --starttime=$since --format=jobid,state --noheader|grep -v 'ba+'|grep -v 'ex+'|awk '{print \$2}'|sort|uniq -c|sort -n -r|colout -t slurm16"
 }
+
+. "$HOME/.cargo/env"
+
+# export TERMINAL="/usr/local/bin/terminator"
+export TERMINAL="terminator"

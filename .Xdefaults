@@ -23,17 +23,22 @@ XTerm*termName:  xterm-256color
 !!green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
 ! URxvt*font: *-fixed-*-*-*-18-*
-URxvt.font: xft:bitstream vera sans mono:size=12:antialias=true
+! URxvt.font: xft:bitstream vera sans mono:size=10:antialias=true
+URxvt.font: xft:MesloLGS NF:style=Regular:size=10:antialias=true
+XTerm.font: xft:MesloLGS NF:style=Regular:size=10:antialias=true
 
+! XTerm*background: Black
 XTerm*background: #000000
 XTerm*foreground: #93a1a1
 XTerm*color4:     DodgerBlue
 XTerm*color12:    DodgerBlue
 
-URxvt*background: #2b2b2b
+! URxvt*background: #2b2b2b
+URxvt*background: #1c1c1c
 URxvt*foreground: #d4cfc9
 ! Black + DarkGrey
-URxvt*color0:  #2b2b2b
+! URxvt*color0:  #2b2b2b
+URxvt*color0:  #000000
 URxvt*color8:  #5a647e
 ! DarkRed + Red
 URxvt*color1:  #c93828
@@ -66,9 +71,13 @@ URxvt.perl-ext-common: default,matcher
 URxvt.urlLauncher: gvim
 URxvt.matcher.button: 1
 URxvt.matcher.pattern.1: \\B(/\\S+?):(\\d+)
-URxvt.matcher.launcher.1: gvim --servername IDE --remote +$2 $1
+URxvt.matcher.launcher.1:gvim --servername IDE --remote +$2 $1
+! URxvt.matcher.launcher.1:gvim --servername IDE --remote +$2 $1
 URxvt.matcher.pattern.2: \\B(/\\S+?\\.py)\\S{2}\\sline\\s(\\d+)
 URxvt.matcher.launcher.2: gvim --servername IDE --remote +$2 $1
+URxvt.matcher.pattern.3: \\B(\\./\\S+?):(\\d+)
+URxvt.matcher.launcher.3:gvim --servername IDE --remote +$2 $1
+! URxvt.matcher.launcher.3:gvim --servername IDE --remote +$2 $1
 
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight
