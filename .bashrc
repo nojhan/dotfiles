@@ -430,3 +430,29 @@ export PATH="$PATH:/home/nojhan/.local/bin/"
 
 # export PYTHONPATH="$PYTHONPATH:/home/nojhan/code/terminator/"
 export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/"
+
+# Detailled state of current SLURM jobs.
+function qstat()
+{
+    sacct --format=jobid,jobname,partition,qos,state,start,end,elapse,reqmem,exitcode "$@" | colout -t sacct
+}
+
+# Permanent view on the state of current SLURM jobs.
+function qwatch()
+{
+    local since=$(date -I)
+    if [[ -z "$1" ]]; then
+        # Today by default if no argument.
+        since="$today"
+    else
+        # If an argument, attempt at interpreting it as a relative sentence.
+        when=$(date -I -d "$today $1")
+        if [[ "$?" == "0" ]]; then
+            since="$when"
+        else
+            # Else fallback to passing it directly.
+            since="$1"
+        fi
+    fi
+    watch --interval 10 --color "sacct --starttime=$since --format=jobid,state --noheader|grep -v 'ba+'|grep -v 'ex+'|awk '{print \$2}'|sort|uniq -c|sort -n -r|colout -t slurm16"
+}
