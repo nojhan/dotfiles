@@ -32,3 +32,5 @@
     textconv=odt2txt
 [diff]
 	algorithm = histogram
+[init]
+	defaultBranch = main
