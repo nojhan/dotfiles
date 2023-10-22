@@ -425,11 +425,6 @@ if [[ $- == *i* ]]; then
 fi
 
 if [[ $- == *i* ]] ; then
-    # Use autojump only if in an interactive shell
-    source /usr/share/autojump/autojump.bash
-fi
-
-if [[ $- == *i* ]] ; then
     for f in /etc/bash_completion.d/* ; do
         source "$f"
     done
@@ -448,10 +443,13 @@ fi
 export TCLLIBPATH="~/.local/share/tkthemes"
 
 # Add pip bin dir to path:
-export PATH="$PATH:/home/nojhan/.local/bin/"
+export PATH="$PATH:/home/nojhan/.local/bin/:/home/nojhan/go/bin/"
+
+# Add neo4j path
+export PATH="$PATH:/home/nojhan/apps/neo4j/packaging/standalone/target/neo4j-community-5.11.0-SNAPSHOT/bin/"
 
 # export PYTHONPATH="$PYTHONPATH:/home/nojhan/code/terminator/"
-export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/"
+export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/:/home/nojhan/code/biocypher"
 
 # Detailled state of current SLURM jobs.
 function qstat()
@@ -483,3 +481,13 @@ function qwatch()
 
 # export TERMINAL="/usr/local/bin/terminator"
 export TERMINAL="terminator"
+
+alias t="python3 ~/code/taskwarrior-deluxe/taskwarrior-deluxe.py"
+alias task="TASKDATA=.task task"
+
+eval "$(direnv hook bash)"
+
+if [[ $- == *i* ]] ; then
+    # Use autojump only if in an interactive shell
+    source /usr/share/autojump/autojump.bash
+fi
