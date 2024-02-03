@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Use Pygments to get syntax colorization in less
 # export LESS=" -R"

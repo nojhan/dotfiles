@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/nojhan/code/paradiseo/mo/src/problems/eval'
+let g:netrw_dirhist_4='/home/nojhan/code/paradiseo/mo/src/problems'
+let g:netrw_dirhist_3='/home/nojhan/code/paradiseo/mo/src'
+let g:netrw_dirhist_2='/home/nojhan/code/paradiseo/mo/src/eval'
+let g:netrw_dirhist_1='/home/nojhan/code/paradiseo/mo/src'
+let g:netrw_dirhist_0='/home/nojhan/code/paradiseo/mo'
+let g:netrw_dirhist_9='/home/nojhan/code/paradiseo/mo/tutorial'
+let g:netrw_dirhist_8='/home/nojhan/code/paradiseo/mo/tutorial/Lesson1'
+let g:netrw_dirhist_7='/home/nojhan/code/paradiseo/mo/src/eval'
+let g:netrw_dirhist_6='/home/nojhan/code/paradiseo/mo/src'

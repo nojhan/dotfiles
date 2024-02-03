@@ -1,18 +1,23 @@
 
 # STL pretty-printers
-#python
-#import sys
+# python
+# import sys
 #sys.path.insert(0, '/local/nojhan/CGAL-4.6-beta1/auxiliary/gdb/python/CGAL')
 #import printers #FIXME
-#sys.path.insert(0, '')
-#from libstdcxx.v6.printers import register_libstdcxx_printers
-#register_libstdcxx_printers (None)
-#end
+
+# sys.path.insert(0, '')
+# from libstdcxx.v6.printers import register_libstdcxx_printers
+# register_libstdcxx_printers(None)
+
+# sys.path.insert(0,'/home/nojhan/code/dotfiles/gdb/')
+# from nlohmannjson import register_json_printer
+# register_json_printer()
+# end
 
 set confirm off
 
 # Reversed yellow >>>, underlined green frame name, yellow »»»
-set extended-prompt \[\e[7;33m\]>>>\[\e[0m\]\[\] \[\e[4;32m\]\f\[\e[0m\]\[\]\[\e[0;33m\] \n»»» \[\e[0m\]
+# set extended-prompt \[\e[7;33m\]>>>\[\e[0m\]\[\] \[\e[4;32m\]\f\[\e[0m\]\[\]\[\e[0;33m\] \n»»» \[\e[0m\]
 
 
 # Don't wrap line or the coloring regexp won't work.

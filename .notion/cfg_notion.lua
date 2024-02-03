@@ -38,7 +38,7 @@ defbindings("WMPlex.toplevel", {
     kpress(META.."F2", "mod_query.query_exec(_)"),
 
 	-- nouveau bureau
-    kpress(META.."F3", "mod_query.query_workspace(_)"),
+    kpress(META.."F11", "mod_query.query_workspace(_)"),
 
 	-- firefox
     kpress(META.."F4", "ioncore.exec_on(_, 'firefox')"),
@@ -79,8 +79,8 @@ defbindings("WScreen", {
     kpress(META.."Next", "ioncore.goto_next_screen()"),
 
 	-- aller au nième écran physique (attention, inversion pour 2e écran à gauche)
-    kpress(META.."Shift+2", "ioncore.goto_nth_screen(0)"),
-    kpress(META.."Shift+1", "ioncore.goto_nth_screen(1)"),
+    kpress(META.."Shift+1", "ioncore.goto_nth_screen(0)"),
+    kpress(META.."Shift+2", "ioncore.goto_nth_screen(1)"),
 
 	-- Aller au cadre suivant/précédent
     kpress(META.."Right", "ioncore.goto_next(_chld, 'right')", "_chld:non-nil"),

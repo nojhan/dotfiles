@@ -8,7 +8,7 @@ hook global WinSetOption filetype=(cpp) %[
               else for goto if 
               return switch
               throw try while
-              assert static_assert
+              assert static_assert ASSERT
         '
         state='
             alignas alignof asm compl const_cast decltype
@@ -28,9 +28,9 @@ hook global WinSetOption filetype=(cpp) %[
         types='
            bool byte char char8_t char16_t char32_t double float int long
            max_align_t nullptr_t ptrdiff_t short signed size_t size_type unsigned void
-           wchar_t uint32_t
+           wchar_t uint32_t critical error warning progress note info debug xdebug
         '
-        values='NULL false nullptr this true'
+        values='NULL false nullptr this true CLUTCHLOG CLUTCHLOGD CLUTCHCODE CLUTCHFUNC'
 
         STL='
            abort abs accumulate acos adjacent_difference adjacent_find adjacent_find_if any append

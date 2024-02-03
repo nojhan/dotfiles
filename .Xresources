@@ -22,15 +22,19 @@ XTerm*termName:  xterm-256color
 !!cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
 !!green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
 
-XTerm*background: #002b36
+! XTerm*background: #002b36
+! XTerm*background: #4e4e4e
+XTerm*background: #000000
 XTerm*foreground: #93a1a1
 XTerm*color4:     DodgerBlue
 XTerm*color12:    DodgerBlue
 
-URxvt*background: #002b36
-URxvt*foreground: #93a1a1
-URxvt*color4:     DodgerBlue
-URxvt*color12:    DodgerBlue
+! URxvt*background: #002b36
+!URxvt*background: #4e4e4e
+!URxvt*foreground: #93a1a1
+!URxvt*color4:     DodgerBlue
+!URxvt*color12:    DodgerBlue
+URxvt.scrollBar:   false
 
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintslight

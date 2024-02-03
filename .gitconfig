@@ -26,3 +26,11 @@
 	instructionFormat = (%an <%ae>) %s
 [credential]
 	helper = store
+[pull]
+	rebase = true
+[diff "odf"]
+    textconv=odt2txt
+[diff]
+	algorithm = histogram
+[init]
+	defaultBranch = main
