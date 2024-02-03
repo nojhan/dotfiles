@@ -15,7 +15,7 @@ map global normal '$'     -docstring 'Comment the selected lines' ': comment-lin
 map global normal '<a-$>' -docstring 'Comment the selected block with begin/end characters' ': comment-block<ret>'
 map global normal '#' -docstring 'duplicate and comment line' 'xyp: comment-line<ret>j'
 
-map global normal '*' -docstring 'select all occurrences of the word under cursor' 'be*n<ret>'
+map global normal '*' -docstring 'select all occurrences of the word under cursor' 'be*n<ret>vv'
 
 map global normal '=' -docstring 'indent like the line above' '<a-C>gi<a-&><space>jgi'
 
@@ -147,11 +147,19 @@ filetype-hook makefile %{
 filetype-hook latex %{
     set-option buffer autowrap_column 160
     autowrap-enable
+    addhl buffer/ column 160 white,black
 }
 
 filetype-hook markdown %{
     # set-option buffer autowrap_column 80
     # autowrap-enable
+    addhl buffer/ column 80 white,black
+}
+
+filetype-hook restructuredtext %{
+    # set-option buffer autowrap_column 80
+    # autowrap-enable
+    addhl buffer/ column 80 white,black
 }
 
 filetype-hook c|cpp %{
@@ -218,7 +226,7 @@ plug "andreyorst/tagbar.kak" defer "tagbar" %{
     set-option global tagbar_sort false
     set-option global tagbar_size 40
     set-option global tagbar_display_anon false
-    set-option global tagbar_show_details true
+    set-option global tagbar_show_details false
 } config %{
     # if you have wrap highlighter enamled in you configuration
     # files it's better to turn it off for tagbar, using this hook:
@@ -317,10 +325,27 @@ plug "dmerejkowsky/kak-spell" config %{
   map global kak-spell x ': kak-spell-remove<ret>' -docstring 'remove the selection from the user dict'
 }
 
+map global user g '/[<lt><gt>=]{7}<ret>vv' -docstring 'Search for Git conflict markers'
+
 set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼ ╲
 
-add-highlighter global/ scrollbar
-add-highlighter global/scrollbar/ scrollbar-indicator red,default lsp_error_lines
-add-highlighter global/scrollbar/ scrollbar-indicator yellow,default lint_flags
-# add-highlighter global/scrollbar/ scrollbar-indicator red,default git_diff_flags
-# git show-diff
+# add-highlighter global/ scrollbar
+# add-highlighter global/scrollbar/ scrollbar-indicator red,default lsp_error_lines
+# add-highlighter global/scrollbar/ scrollbar-indicator yellow,default lint_flags
+# # add-highlighter global/scrollbar/ scrollbar-indicator red,default git_diff_flags
+# # git show-diff
+
+
+# Force `liquidprompt` to be a shell filetype.
+hook global BufCreate (.*/)?liquidprompt %{
+        set buffer filetype sh
+}
+
+# Force liquidprompt's *.theme files to be a shell filetype.
+hook global BufCreate .*\.theme %{
+        set buffer filetype sh
+}
+hook global BufCreate .*\.conf %{
+        set buffer filetype sh
+}
+
