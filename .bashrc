@@ -47,9 +47,9 @@ function myip()
 alias xcopy="xclip -i -selection clipboard"
 
 # baskcup shortcuts
-alias rcp='rsync -avz --ignore-existing --progress --rsh "ssh -l nojhan" '
-alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443 -l nojhan" '
-alias rcp_80='rsync -avz --ignore-existing --progress --rsh "ssh -p 80 -l nojhan" '
+alias rcp='rsync -avz --ignore-existing --progress --rsh=ssh '
+alias rcp_443='rsync -avz --ignore-existing --progress --rsh "ssh -p 443" '
+alias rcp_80='rsync -avz --ignore-existing --progress --rsh "ssh -p 80" '
 
 
 ###################
@@ -414,19 +414,45 @@ if [[ $- == *i* ]]; then
     # Super nice prompt
     source ~/.liquidprompt --no-activate
     lp_activate #--no-config
-    DOTMATRIX_VARIANT="chevron"
-    source ~/code/liquidprompt/themes/dotmatrix/dotmatrix.theme && lp_theme dotmatrix
+    # source ~/code/lp-dotmatrix/presets/variant-slant.conf
+    source ~/code/lp-dotmatrix/presets/variant-chevron.conf
+    LP_ENABLE_SSH_COLORS=0
+    LP_ENABLE_HYPERLINKS=0
+    LP_ENABLE_CMAKE=1
+    LP_ENABLE_ERROR_MEANING=1
+    LP_ENABLE_ERROR_MEANING_EXTENDED=1
+    LP_ENABLE_DISK=1
+    LP_ENABLE_VCS_REMOTE=1
+    LP_ENABLE_SUDO=1
+    LP_ENABLE_DIRSTACK=1
+    LP_ENABLE_WIFI_STRENGTH=0
+    LP_ENABLE_OS_ARCH=1
+    LP_ENABLE_OS_FAMILY=1
+    LP_ENABLE_OS_DISTRIB=1
+    LP_ENABLE_OS_KERNEL=1
+    LP_ENABLE_OS=0
+    source ~/code/lp-dotmatrix/dotmatrix.theme && lp_theme dotmatrix
 fi
 
 # Use autojump only if in an interactive shell
-if [[ $- == *i* ]] ; then
-    source /usr/share/autojump/autojump.bash
-fi
+#if [[ $- == *i* ]] ; then
+#    source /usr/share/autojump/autojump.bash
+#fi
 
 export TCLLIBPATH="~/.local/share/tkthemes"
 
 # Add pip bin dir to path:
-export PATH="$PATH:/home/nojhan/.local/bin/"
+export PATH="$PATH:$HOME/.local/bin/:$HOME/code/colout/colout/"
+
+alias colout="colout.py"
 
 # export PYTHONPATH="$PYTHONPATH:/home/nojhan/code/terminator/"
 export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+. "$HOME/.cargo/env"
+
+alias t="~/code/taskwarrior-deluxe/taskwarrior-deluxe.py"
+alias task="TASKDATA=.task task"
