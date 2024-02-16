@@ -1,5 +1,5 @@
 *customization: -color
-XTerm*termName:  xterm-256color
+XTerm*termName: xterm-256color
 
 !! drop in Solarized colorscheme for Xresources/Xdefaults
 
@@ -24,10 +24,15 @@ XTerm*termName:  xterm-256color
 
 ! XTerm*background: #002b36
 ! XTerm*background: #4e4e4e
+! XTerm*font: MesloLGLDZ Nerd Font Mono:regular:size=12:antialias=true
+XTerm*faceName: MesloLGLDZ Nerd Font Mono
 XTerm*background: #000000
 XTerm*foreground: #93a1a1
 XTerm*color4:     DodgerBlue
 XTerm*color12:    DodgerBlue
+XTerm*colorMode:     on
+XTerm*dynamicColors: on
+
 
 ! URxvt*background: #002b36
 !URxvt*background: #4e4e4e
