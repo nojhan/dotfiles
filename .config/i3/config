@@ -5,10 +5,13 @@
 # this file and re-run i3-config-wizard(1).
 #
 
+exec "setxkbmap -model pc105 -layout fr -variant bepo -options lv3:ralt_switch,compose:caps,terminate:ctrl_alt_bksp"
+
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# Alt = Mod1, Win = Mod4
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -140,8 +143,8 @@ bindsym $mod+space scratchpad show
 set $ws1 "1: comm"
 set $ws2 "2: music"
 set $ws3 "3: work"
-set $ws4 "4"
-set $ws5 "5"
+set $ws4 "4: dev"
+set $ws5 "5: misc"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -240,11 +243,11 @@ client.urgent           #db4939 #cb3929 #ffffff #ff5949   #ff5949
 workspace_auto_back_and_forth no
 
 # Laptop: eDP-1-1, side screen: HDMI-1-2
-workspace $ws1 output eDP-1-1
-workspace $ws2 output eDP-1-1
-workspace $ws3 output HDMI-1-2
-bindsym $mod+Shift+z move workspace to output eDP-1-1
-bindsym $mod+Shift+w move workspace to output HDMI-1-2
+#workspace $ws1 output eDP-1-1
+#workspace $ws2 output eDP-1-1
+#workspace $ws3 output HDMI-1-2
+#bindsym $mod+Shift+z move workspace to output eDP-1-1
+#bindsym $mod+Shift+w move workspace to output HDMI-1-2
 
 # assign [class="firefox"] $ws1
 assign [class="Pavucontrol"] $ws2
@@ -272,5 +275,4 @@ exec "terminator --profile 'small font' --role btop --command btop"
 # exec "terminator --profile 'small font' --role boinc --command 'boinc | colout -t boinc'"
 
 for_window [window_role="scratchpad"] move window to scratchpad
-exec terminator --role scratchpad
-
+exec terminator --role scratchpad#
