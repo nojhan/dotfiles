@@ -13,22 +13,25 @@ define-command filetype-hook -params 2 %{
 # Comments
 map global normal '$'     -docstring 'Comment the selected lines' ': comment-line<ret>'
 map global normal '<a-$>' -docstring 'Comment the selected block with begin/end characters' ': comment-block<ret>'
-map global normal '#' -docstring 'duplicate and comment line' 'xyp: comment-line<ret>j'
+map global normal '#' -docstring 'duplicate and comment line' 'xyP: comment-line<ret>j'
+map global normal '–' -docstring 'comment selection with /*…*/' '<a-:><a-;>i/*<esc><a-;>a*/<esc>'
 
 map global normal '*' -docstring 'select all occurrences of the word under cursor' 'be*n<ret>vv'
 
 map global normal '=' -docstring 'indent like the line above' '<a-C>gi<a-&><space>jgi'
 
-map global normal '<c-up>'   -docstring 'move line down' 'xdkPk'
-map global normal '<c-down>' -docstring 'move line down' 'xdpj'
-map global insert '<c-up>'   -docstring 'move line down' '<esc>xdkPki'
-map global insert '<c-down>' -docstring 'move line down' '<esc>xdpji'
+map global normal '<c-up>'   -docstring 'move line down' 'xdkP'
+map global normal '<c-down>' -docstring 'move line down' 'xdp'
+map global insert '<c-up>'   -docstring 'move line down' '<esc>xdkPi'
+map global insert '<c-down>' -docstring 'move line down' '<esc>xdpi'
 
 map global insert '<c-right>' -docstring 'one word right in insert mode' '<esc>eli'
 map global insert '<c-left>'  -docstring 'one word left in insert mode'  '<esc>bi'
 map global insert '<c-u>' -docstring 'kill line in insert mode' '<esc>GIc'
 
 map global normal 'è' -docstring 'select the inner sequence enclosed by matching characters' 'mL<a-;>H'
+
+alias global bd delete-buffer
 
 def -params 1 extend-line-up %{
     exec "<a-:><a-;>%arg{1}K<a-;>"
@@ -57,7 +60,7 @@ hook global InsertCompletionShow .* %{
 
 # Cursor switch.
 map global normal <tab>   -docstring 'Swap selections cursor and anchor'       '<a-;>'
-map global normal <a-tab> -docstring 'Ensure selection cursor is after anchor' '<a-:>'
+map global normal <s-tab> -docstring 'Ensure selection cursor is after anchor' '<a-:>'
 
 # Go to paragraph/indents.
 map global goto 'p' -docstring 'select to next paragraph'   '<esc>]p'
@@ -241,20 +244,20 @@ plug "andreyorst/tagbar.kak" defer "tagbar" %{
     }
 }
 
-plug 'delapouite/kakoune-cd' %{
-  # Suggested mapping
-  map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
-  # Suggested aliases
-  alias global cdb change-directory-current-buffer
-  alias global cdr change-directory-project-root
-  alias global ecd edit-current-buffer-directory
-  alias global pwd print-working-directory
-}
+#plug 'delapouite/kakoune-cd' %{
+#  # Suggested mapping
+#  map global user c ': enter-user-mode cd<ret>' -docstring 'cd'
+#  # Suggested aliases
+#  alias global cdb change-directory-current-buffer
+#  alias global cdr change-directory-project-root
+#  alias global ecd edit-current-buffer-directory
+#  alias global pwd print-working-directory
+#}
 # Automatically change working directory to be the buffer's one.
-hook global WinDisplay .* %{
-    # require delapouite/kakoune-cd
-    change-directory-current-buffer
-}
+#hook global WinDisplay .* %{
+#    # require delapouite/kakoune-cd
+#    change-directory-current-buffer
+#}
 
 # Like alexherbo2/search-highlighter.kak, but which actually works.
 # face global Search white,yellow
