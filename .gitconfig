@@ -1,6 +1,6 @@
 [user]
-	name = nojhan
-	email = nojhan@nojhan.net
+    name = nojhan
+    email = nojhan@nojhan.net
 [alias]
     st = status
     ci = commit -v
@@ -23,14 +23,17 @@
 [push]
     default = simple
 [rebase]
-	instructionFormat = (%an <%ae>) %s
+    instructionFormat = (%an <%ae>) %s
 [credential]
-	helper = store
+    helper = store
 [pull]
-	rebase = true
+    rebase = true
 [diff "odf"]
     textconv=odt2txt
 [diff]
-	algorithm = histogram
+    algorithm = histogram
 [init]
-	defaultBranch = main
+    defaultBranch = main
+
+[includeIf "gitdir:~/travail/**"]
+    path = ~/travail/.gitconfig
