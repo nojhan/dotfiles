@@ -130,7 +130,7 @@ alias ms='ls'
 # alias tree='tree -Csu'          # nice alternative to 'ls'
 
 export PATH="$PATH:$HOME/.cargo/bin"
-exadef="--icons --modified --git"
+exadef="--icons --modified "
 exal="--long --all --group --modified --header --level 2 --time-style=long-iso --binary"
 alias ls='exa ${exadef}'       # add colors for filetype recognition
 alias  l='exa ${exadef} -1 --no-icons'
@@ -417,14 +417,13 @@ if [[ $- == *i* ]]; then
     # Super nice prompt
     source ~/.liquidprompt --no-activate
     lp_activate #--no-config
-    # source ~/code/lp-dotmatrix/presets/variant-slant.conf
-    source ~/code/lp-dotmatrix/presets/variant-chevron.conf
+    source ~/code/lp-jolly/presets/variant-chevron.conf
     LP_ENABLE_SSH_COLORS=0
     LP_ENABLE_HYPERLINKS=0
     LP_ENABLE_CMAKE=1
     LP_ENABLE_ERROR_MEANING=1
     LP_ENABLE_ERROR_MEANING_EXTENDED=1
-    LP_ENABLE_DISK=1
+    LP_ENABLE_DISK=0
     LP_ENABLE_VCS_REMOTE=1
     LP_ENABLE_SUDO=1
     LP_ENABLE_DIRSTACK=1
@@ -434,7 +433,7 @@ if [[ $- == *i* ]]; then
     LP_ENABLE_OS_DISTRIB=1
     LP_ENABLE_OS_KERNEL=1
     LP_ENABLE_OS=0
-    source ~/code/lp-dotmatrix/dotmatrix.theme && lp_theme dotmatrix
+    source ~/code/lp-jolly/jolly.theme && lp_theme jolly
 fi
 
 if [[ $- == *i* ]] ; then
@@ -467,18 +466,19 @@ export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/"
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
 alias t="~/code/taskwarrior-deluxe/taskwarrior-deluxe.py"
 alias task="TASKDATA=.task task"
 
 # Add neo4j path
-export PATH="$PATH:/home/nojhan/apps/neo4j/packaging/standalone/target/neo4j-community-5.11.0-SNAPSHOT/bin/"
+export PATH="$PATH:/home/nojhan/apps/neo4j/packaging/standalone/target/neo4j-community-5.13.0-SNAPSHOT/bin/"
+export NEO4J_HOME="/home/nojhan/apps/neo4j/packaging/standalone/target/neo4j-community-5.13.0-SNAPSHOT/"
+
+export PATH="$PATH:/usr/local/bin/"
 
 # export PYTHONPATH="$PYTHONPATH:/home/nojhan/code/terminator/"
-export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/:/home/nojhan/code/biocypher"
-
-. "$HOME/.cargo/env"
+export PYTHONPATH="$PYTHONPATH:/opt/pyAgrum/lib/python3.8/site-packages/:/home/nojhan/travail/code/biocypher:/home/nojhan/travail/code/ontoweaver/src/"
 
 # export TERMINAL="/usr/local/bin/terminator"
 export TERMINAL="terminator"
@@ -488,4 +488,13 @@ eval "$(direnv hook bash)"
 if [[ $- == *i* ]] ; then
     # Use autojump only if in an interactive shell
     source /usr/share/autojump/autojump.bash
-fi
+    fi
+
+
+export PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
+ulimit -n 40000
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
