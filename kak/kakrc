@@ -327,7 +327,6 @@ plug "dmerejkowsky/kak-spell" config %{
 
 map global user g '/[<lt><gt>=]{7}<ret>vv' -docstring 'Search for Git conflict markers'
 
-<<<<<<< HEAD
 set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼ ╲
 
 # add-highlighter global/ scrollbar
@@ -335,16 +334,6 @@ set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ �
 # add-highlighter global/scrollbar/ scrollbar-indicator yellow,default lint_flags
 # # add-highlighter global/scrollbar/ scrollbar-indicator red,default git_diff_flags
 # # git show-diff
-=======
-#set-option -add global ui_options ncurses_padding_char=╱ # Examples: ▚ ╳ ╱ ┼ ╲
-set-option -add global ui_options ncurses_padding_char=/ # Examples: ▚ ╳ ╱ ┼ ╲
-
-add-highlighter global/ scrollbar
-add-highlighter global/scrollbar/ scrollbar-indicator red,default lsp_error_lines
-add-highlighter global/scrollbar/ scrollbar-indicator yellow,default lint_flags
-# add-highlighter global/scrollbar/ scrollbar-indicator red,default git_diff_flags
-# git show-diff
->>>>>>> eb1e2f43fd3a3995350a6bd207f2884271c5aa4a
 
 
 # Force `liquidprompt` to be a shell filetype.
