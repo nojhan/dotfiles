@@ -1,0 +1,15 @@
+
+list.filtered=no
+
+layout.subsections = Vertical
+layout.subsections.group = priority
+layout.sections.group.show = H,M,L,
+
+layout.sections = Horizontal
+layout.sections.group = status
+layout.sections.group.show = pending,started
+
+layout.stack.sort=urgency
+
+include ~/code/taskwarrior-deluxe/presets/colors_nojhan.conf
+include ~/code/taskwarrior-deluxe/presets/icons_ascii.conf
