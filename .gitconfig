@@ -1,6 +1,13 @@
 [user]
     name = nojhan
     email = nojhan@nojhan.net
+[includeIf "gitdir:~/travail/**"]
+    path = ~/travail/.gitconfig
+[credential]
+    helper = store
+[commit]
+    # Adds -v to commit by default
+    verbose = true
 [alias]
     st = status
     ci = commit -v
@@ -22,18 +29,43 @@
     ui = auto
 [push]
     default = simple
-[rebase]
-    instructionFormat = (%an <%ae>) %s
-[credential]
-    helper = store
+    # push new tags along with commits being pushed
+    followtags = true
 [pull]
     rebase = true
+[rebase]
+    instructionFormat = (%an <%ae>) %s
+    # You commit it with git commit --fixup OLD_COMMIT_ID,
+    # which gives the new commit the commit message fixup! add parsing code
+    # Now, when you run git rebase --autosquash main,
+    # it will automatically combine all the fixup! commits with their targets
+    autosquash = true
 [diff "odf"]
     textconv=odt2txt
 [diff]
     algorithm = histogram
+    #  uses different colours to highlight lines in diffs that have been “moved”
+    colorMoved = default
+[merge]
+    # Adds a middle section in 3-ways conflict sections.
+    conflictstyle = zdiff3
+    tool = meld
 [init]
     defaultBranch = main
-
-[includeIf "gitdir:~/travail/**"]
-    path = ~/travail/.gitconfig
+[help]
+    # run the spelling suggestions automatically, you can set:
+    # - help.autocorrect to 1 (run after 0.1 seconds),
+    # - 10 (run after 1 second),
+    # - immediate (run immediately),
+    # - or prompt (run after prompting)
+    autocorrect = prompt
+[core]
+    # Pager with syntax highlighting.
+    pager = delta
+[status]
+    submoduleSummary = true
+[branch]
+    # makes git branch sort by most recently used branches instead of alphabetical
+    sort = comitterdate
+[log]
+    date = iso
