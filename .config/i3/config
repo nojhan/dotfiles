@@ -200,7 +200,12 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
+# Switch to resize mode.
 bindsym $mod+r mode "resize"
+
+# Set the focused window to be of a fixed size.
+bindsym $mod+v resize set 300 px
+bindsym $mod+Shift+v resize set 400 px
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
