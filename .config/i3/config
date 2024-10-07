@@ -77,23 +77,11 @@ bindsym $mod+x kill
 bindsym $mod+Return exec "rofi -modi drun,run -show drun"
 # bindsym $mod+Shift+Return exec dmenu_run -i -l 10 -p '> ' -nb '#4f7dde' -nf '#f8f8f8' -sb '#cf8200' -sf '#f8f8f8'
 
-# change focus
-# bindsym $mod+j focus left
-# bindsym $mod+k focus down
-# bindsym $mod+l focus up
-# bindsym $mod+semicolon focus right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
-# move focused window
-# bindsym $mod+Shift+J move left
-# bindsym $mod+Shift+K move down
-# bindsym $mod+Shift+L move up
-# bindsym $mod+Shift+colon move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -116,8 +104,11 @@ bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # bindsym $mod+s layout stacking
-bindsym $mod+Tab layout tabbed
+bindsym $mod+Shift+Tab layout tabbed
 bindsym $mod+b layout toggle split
+
+# Forgiving shortcut when in tab layout
+bindsym $mod+Tab focus left
 
 # toggle tiling / floating
 bindsym $mod+a floating toggle
@@ -125,15 +116,17 @@ bindsym $mod+a floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+u focus mode_toggle
 
-# focus the parent container
+# focus on the parent container
 bindsym $mod+i focus parent
+
+# focus on the child (undo focusing on parent)
+bindsym $mod+Shift+i focus child
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+space move scratchpad
 
 # Show the first scratchpad window
 bindsym $mod+space scratchpad show
-
 
 # focus the child container
 #bindsym $mod+d focus child
