@@ -49,9 +49,6 @@
 [submodule ".vim/bundle/TaskList.vim"]
 	path = .vim/bundle/TaskList.vim
 	url = http://github.com/vim-scripts/TaskList.vim.git
-[submodule ".vim/bundle/rainbow"]
-	path = .vim/bundle/rainbow
-	url = http://github.com/oblitum/rainbow.git
 [submodule ".vim/bundle/ctrlp.vim"]
 	path = .vim/bundle/ctrlp.vim
 	url = http://github.com/kien/ctrlp.vim.git
