@@ -19,12 +19,6 @@
     di = diff
     br = branch
     sta = stash
-[pager]
-    #  use less as pager
-    # -R is necessary to display colors in less
-    # the '+' calls a command at start, that will jump to the first diff section
-    # then, you just have to type 'n' to iterate over diff sections
-    diff = less -R +'/^\\@\\@\\s'
 [color]
     ui = auto
 [push]
@@ -59,13 +53,44 @@
     # - immediate (run immediately),
     # - or prompt (run after prompting)
     autocorrect = prompt
-[core]
-    # Pager with syntax highlighting.
-    pager = delta
 [status]
     submoduleSummary = true
 [branch]
     # makes git branch sort by most recently used branches instead of alphabetical
-    sort = comitterdate
+    sort = committerdate
 [log]
     date = iso
+
+[core]
+    # delta will used as the default pager for git
+    # and ov as the default pager for delta
+    # the pager will be overloaded via the [pager] section for a few commands
+    pager = delta --pager='ov -F'
+
+[pager]
+    # overload delta pager for some commands
+    show = delta --pager='ov -F --header 3'
+
+    # We are now overloading some commands via "delta features"
+    # This allows us to use different pager per git command
+    # It allows to maintain a simpler config file and avoid escaping quotes
+    diff = delta --features ov-diff
+    log  = delta --features ov-log
+
+[delta]
+    navigate = true
+    side-by-side = true
+    file-style = yellow
+
+# we define the delta feature "ov-diff" we are using for git diff
+[delta "ov-diff"]
+    # the idea is to overload the pager used by delta when using git diff
+    # we are using the same pattern used by delta when the default pager (less) is used
+    # using ov section feature brings a better experience
+    pager=ov -F --section-delimiter '^(commit|added:|removed:|renamed:|Δ)' --section-header --pattern '•'
+
+# we define the delta feature "ov-log" we are using for git log
+[delta "ov-log"]
+    # the idea is to overload the pager used by delta when using git log
+    # using ov section feature brings a better experience
+    pager=ov -F --section-delimiter '^commit' --section-header-num 3
