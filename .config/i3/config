@@ -168,6 +168,18 @@ bindsym $mod+Shift+8 move container to workspace number $ws8 , workspace number 
 bindsym $mod+Shift+9 move container to workspace number $ws9 , workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10 , workspace number $ws10
 
+# move focused container to workspace
+bindsym $mod+Ctrl+Shift+1 move container to workspace number $ws1
+bindsym $mod+Ctrl+Shift+2 move container to workspace number $ws2
+bindsym $mod+Ctrl+Shift+3 move container to workspace number $ws3
+bindsym $mod+Ctrl+Shift+4 move container to workspace number $ws4
+bindsym $mod+Ctrl+Shift+5 move container to workspace number $ws5
+bindsym $mod+Ctrl+Shift+6 move container to workspace number $ws6
+bindsym $mod+Ctrl+Shift+7 move container to workspace number $ws7
+bindsym $mod+Ctrl+Shift+8 move container to workspace number $ws8
+bindsym $mod+Ctrl+Shift+9 move container to workspace number $ws9
+bindsym $mod+Ctrl+Shift+0 move container to workspace number $ws10
+
 # reload the configuration file
 bindsym $mod+Shift+C reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -259,6 +271,8 @@ assign [class="Terminator" window_role="boinc"] $ws1
 # Video as background
 # exec --no-startup-id "mpv --wid=0 --loop --no-terminal --speed=0.5 --video-align-x=0.5 --no-audio --video-sync=display-resample --interpolation --tscale=oversample ~/Vidéos/Blue_Turn_notitle.mp4"
 
+# Wallpaper as background
+exec --no-startup-id feh --bg-scale /home/nojhan/Images/Wood.png
 
 # Sound controller
 exec pavucontrol
@@ -274,3 +288,5 @@ exec "terminator --profile 'small font' --role btop --command btop"
 
 for_window [window_role="scratchpad"] move window to scratchpad
 exec terminator --role scratchpad#
+
+bindsym $mod+m exec "i3_balance_workspace"
