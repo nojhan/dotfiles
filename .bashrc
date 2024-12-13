@@ -404,7 +404,7 @@ HISTTIMEFORMAT='%F %T '
 alias bepo="setxkbmap -layout fr -variant bepo -option"
 
 # Import the correct alias for thefuck
-eval $(thefuck --alias fuck)
+# eval $(thefuck --alias fuck)
 
 # Alias for forcing screen on/off.
 alias screenon="xset -display :0.0 dpms force on"
@@ -450,6 +450,12 @@ if [[ $- == *i* ]] ; then
     done
 fi
 
+# Always connect to a tmux session when SSH.
+if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
+  tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+fi
+# In case of problem, just connect with bash --norc:
+# ssh -t myname@myserver bash --norc
 
 
 export TCLLIBPATH="~/.local/share/tkthemes"
@@ -457,6 +463,7 @@ export TCLLIBPATH="~/.local/share/tkthemes"
 # Add pip bin dir to path:
 export PATH="$PATH:$HOME/.local/bin/:$HOME/code/colout/colout/"
 export PATH="$PATH:/home/nojhan/.local/bin/:/home/nojhan/go/bin/"
+export PATH="$PATH:/home/nojhan/apps/csv-validator-distribution-1.3.0-bin/"
 
 alias colout="colout.py"
 
@@ -498,3 +505,5 @@ ulimit -n 40000
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+alias cat="/usr/bin/batcat"
