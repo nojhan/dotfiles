@@ -417,22 +417,9 @@ if [[ $- == *i* ]]; then
     # Super nice prompt
     source ~/.liquidprompt --no-activate
     lp_activate #--no-config
+    JOLLY_SPACE_LINE="‎" # empty character
+    JOLLY_ITEMS=("" "┃" "━")
     source ~/code/lp-jolly/presets/variant-chevron.conf
-    LP_ENABLE_SSH_COLORS=0
-    LP_ENABLE_HYPERLINKS=0
-    LP_ENABLE_CMAKE=1
-    LP_ENABLE_ERROR_MEANING=1
-    LP_ENABLE_ERROR_MEANING_EXTENDED=1
-    LP_ENABLE_DISK=0
-    LP_ENABLE_VCS_REMOTE=1
-    LP_ENABLE_SUDO=1
-    LP_ENABLE_DIRSTACK=1
-    LP_ENABLE_WIFI_STRENGTH=0
-    LP_ENABLE_OS_ARCH=1
-    LP_ENABLE_OS_FAMILY=1
-    LP_ENABLE_OS_DISTRIB=1
-    LP_ENABLE_OS_KERNEL=1
-    LP_ENABLE_OS=0
     source ~/code/lp-jolly/jolly.theme && lp_theme jolly
 fi
 
