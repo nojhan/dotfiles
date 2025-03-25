@@ -134,10 +134,10 @@ bindsym $mod+space scratchpad show
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: comm"
-set $ws2 "2: music"
-set $ws3 "3: work"
-set $ws4 "4: dev"
-set $ws5 "5: misc"
+set $ws2 "2: work"
+set $ws3 "3: dev"
+set $ws4 "4: misc"
+set $ws5 "5: music"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -219,6 +219,10 @@ bindsym $mod+r mode "resize"
 bindsym $mod+v resize set 300 px
 bindsym $mod+Shift+v resize set 400 px
 
+# Binding to balance all windows' sizes
+bindsym $mod+m exec "i3_balance_workspace"
+
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -260,10 +264,6 @@ workspace_auto_back_and_forth no
 #bindsym $mod+Shift+w move workspace to output HDMI-1-2
 
 # assign [class="firefox"] $ws1
-assign [class="Pavucontrol"] $ws2
-assign [class="Blueman-manager"] $ws2
-assign [class="Terminator" window_role="btop"] $ws1
-assign [class="Terminator" window_role="boinc"] $ws1
 
 # Xscreensaver as background
 # exec --no-startup-id "/usr/libexec/xscreensaver/intermomentary -root -draw-delay 30000 -num-discs 150 -max-riders 50 -max-radius 5000"
@@ -274,19 +274,32 @@ assign [class="Terminator" window_role="boinc"] $ws1
 # Wallpaper as background
 exec --no-startup-id feh --bg-scale /home/nojhan/Images/Wood.png
 
+exec firefox
+
 # Sound controller
+assign [class="Pavucontrol"] $ws4
 exec pavucontrol
 
 # Bluetooth controller
+assign [class="Blueman-manager"] $ws4
 exec blueman-manager
 
 # btop system monitor
+assign [class="Terminator" window_role="btop"] $ws4
 exec "terminator --profile 'small font' --role btop --command btop"
 
 # colored boinc client
 # exec "terminator --profile 'small font' --role boinc --command 'boinc | colout -t boinc'"
+# assign [class="Terminator" window_role="boinc"] $ws4
+
+assign [class="Thunderbird"] $ws1
+exec thunderbird
+for_window [class="Thunderbird"] resize set 500px
+
+assign [class="Signal"] $ws1
+exec signal-desktop
+for_window [class="Signal"] resize set 500px
 
 for_window [window_role="scratchpad"] move window to scratchpad
 exec terminator --role scratchpad#
 
-bindsym $mod+m exec "i3_balance_workspace"

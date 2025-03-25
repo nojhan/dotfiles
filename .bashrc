@@ -131,9 +131,9 @@ alias ms='ls'
 
 export PATH="$PATH:$HOME/.cargo/bin"
 exadef="--icons --modified "
-exal="--long --all --group --modified --header --level 2 --time-style=long-iso --binary"
+exal="--long --all --group --modified --header --time-style=long-iso --binary"
 alias ls='exa ${exadef}'       # add colors for filetype recognition
-alias  l='exa ${exadef} -1 --no-icons'
+alias l1='exa ${exadef} -1 --no-icons'
 alias la='exa ${exadef} --all'               # show hidden files
 alias lx='exa ${exadef} ${exal} --sort extension'              # sort by extension
 alias lk='exa ${exadef} ${exal} --sort size --reverse'              # sort by size
@@ -144,7 +144,9 @@ alias lt='exa ${exadef} ${exal} --sort created'              # sort by date
 alias lr='exa ${exadef} ${exal} --recurse'               # recursive ls
 alias le='exa ${exadef} ${exal} | kak'  # pipe through editor
 alias ll='exa ${exadef} ${exal}'
-alias tree='exa ${xadef} ${exal} --tree'          # nice alternative to 'ls'
+alias LL='exa ${exadef} ${exal} --links --extended --git'
+alias l='exa ${exadef} --long --no-user --all --modified --time-style=iso --binary'
+alias tree='exa ${xadef} ${exal} --tree --level 2'          # nice alternative to 'tree'
 
 # changes the default head/tail behaviour to output x lines,
 # where x is the number of lines currently displayed on your terminal
@@ -417,6 +419,7 @@ if [[ $- == *i* ]]; then
     # Super nice prompt
     source ~/.liquidprompt --no-activate
     lp_activate #--no-config
+    source ~/code/liquidprompt-powerline/powerline.theme
     JOLLY_SPACE_LINE="‎" # empty character
     JOLLY_ITEMS=("" "┃" "━")
     source ~/code/lp-jolly/presets/variant-chevron.conf
@@ -493,4 +496,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-alias cat="/usr/bin/batcat"
+alias bat="/usr/bin/batcat --style=header-filesize,header-filename,grid --color=always"

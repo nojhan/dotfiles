@@ -489,3 +489,7 @@ nnoremap <f8> :delete<cr>
 "     vifm --server-name "$VIFM_SERVER_NAME" --remote +"cd '$PWD'"
 "
 " let $VIFM_SERVER_NAME = v:servername
+
+" type "b" followed by the bookmark to jump.
+nnoremap b :bmgo<space>
+
