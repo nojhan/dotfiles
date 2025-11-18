@@ -31,7 +31,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --image=/home/nojhan/Images/Wood.png
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork --image=$(shuf -n 1 -e ~/Images/background/WLE_2025/*)
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -222,6 +222,9 @@ bindsym $mod+Shift+v resize set 400 px
 # Binding to balance all windows' sizes
 bindsym $mod+m exec "i3_balance_workspace"
 
+# Close all notifications
+bindsym $mod+y exec "dunstctl close-all"
+bindsym $mod+Shift+y "dunstctl set-pause toggle"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -272,7 +275,8 @@ workspace_auto_back_and_forth no
 # exec --no-startup-id "mpv --wid=0 --loop --no-terminal --speed=0.5 --video-align-x=0.5 --no-audio --video-sync=display-resample --interpolation --tscale=oversample ~/Vidéos/Blue_Turn_notitle.mp4"
 
 # Wallpaper as background
-exec --no-startup-id feh --bg-scale /home/nojhan/Images/Wood.png
+# exec --no-startup-id feh --bg-scale /home/nojhan/Images/Wood.png
+exec --no-startup-id feh --bg-scale --randomize --auto-zoom /home/nojhan/Images/background/WLE_2025/*
 
 exec firefox
 

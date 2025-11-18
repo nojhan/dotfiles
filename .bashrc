@@ -358,6 +358,21 @@ calc() {
 }
 
 
+# Concatenate movie files without re-encoding.
+mp4_concat() {
+    rm -f MVIs.txt
+    for f in $@ ; do
+        echo "file '$f'" >> MVIs.txt
+    done
+
+    ffmpeg -safe 0 -f concat -i MVIs.txt -c copy output.mp4
+
+    rm -f MVIs.txt
+
+    echo "RESULTS IN output.mp4"
+}
+
+
 #################
 # Configuration #
 #################
@@ -422,6 +437,10 @@ if [[ $- == *i* ]]; then
     source ~/code/liquidprompt-powerline/powerline.theme
     JOLLY_SPACE_LINE="‎" # empty character
     JOLLY_ITEMS=("" "┃" "━")
+    _lp_connection
+    if [[ "$lp_connection" == "ssh" || "$lp_multiplexer" == "tmux" ]] ; then
+        JOLLY_SPACED=0
+    fi
     source ~/code/lp-jolly/presets/variant-chevron.conf
     source ~/code/lp-jolly/jolly.theme && lp_theme jolly
 fi
@@ -441,9 +460,11 @@ if [[ $- == *i* ]] ; then
 fi
 
 # Always connect to a tmux session when SSH.
-if [[ $- =~ i ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_TTY" ]]; then
-  tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
-fi
+# if [[ -n "$SSH_TTY" ]]; then
+#     if [[ "x${-##*i}" != "x$-" ]]; then
+#       tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+#     fi
+# fi
 # In case of problem, just connect with bash --norc:
 # ssh -t myname@myserver bash --norc
 
@@ -497,3 +518,17 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias bat="/usr/bin/batcat --style=header-filesize,header-filename,grid --color=always"
+
+pdfcompress ()
+{
+    res="${2:-110}"
+    echo "Resolution: ${res}ppp" 2>&1
+    out="${1%.*}.compressed.pdf"
+    gs -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dColorImageDownsampleType=/Bicubic -dColorImageResolution=$res -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=$res -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=$res -sOutputFile="$out" "$1"
+
+    sko=$(\ls -s $out | cut -d " " -f 1)
+    sh=$(\ls -s -h $out | cut -d " " -f 1)
+    echo "Final size: ${sh} / ${sko}Kb" 2>&1
+}
+
+fortune anarchism
